@@ -1,0 +1,225 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Casa Naga — Sayulita, Nayarit</title>
+<link href="https://fonts.googleapis.com/css2?family=Playfair+Display:ital,wght@0,400;0,700;0,900;1,400;1,700&family=Cormorant+Garamond:ital,wght@0,300;1,400;1,600&family=Montserrat:wght@300;400;600&display=swap" rel="stylesheet">
+<style>
+*, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+
+:root {
+  --gold:  #d4a853;
+  --goldl: #e9c46a;
+  --dark:  #0a0a0a;
+  --dark2: #111111;
+  --text:  #f0ece4;
+  --muted: #a89880;
+}
+
+body { font-family: 'Montserrat', sans-serif; background: #000; color: var(--text); }
+
+@media print {
+  @page { size: A4 portrait; margin: 0; }
+  body { background:#000; -webkit-print-color-adjust:exact; print-color-adjust:exact; }
+  .page { page-break-after:always; page-break-inside:avoid; }
+  .no-print { display:none !important; }
+}
+
+.page {
+  width: 210mm;
+  min-height: 297mm;
+  position: relative;
+  overflow: hidden;
+  display: flex;
+  flex-direction: column;
+  background: var(--dark);
+  margin: 0 auto;
+}
+
+/* ── Corner frames ── */
+.frame > .fi::before, .frame > .fi::after,
+.frame > .fi > .fb::before, .frame > .fi > .fb::after {
+  content:''; position:absolute;
+  width:16mm; height:16mm;
+  border-color:var(--gold); border-style:solid; opacity:.5; z-index:20;
+}
+.frame > .fi::before  { top:7mm; left:7mm;   border-width:1px 0 0 1px; }
+.frame > .fi::after   { top:7mm; right:7mm;  border-width:1px 1px 0 0; }
+.frame > .fi > .fb::before { bottom:7mm; left:7mm;  border-width:0 0 1px 1px; }
+.frame > .fi > .fb::after  { bottom:7mm; right:7mm; border-width:0 1px 1px 0; }
+.fi { position:absolute; inset:0; }
+.fb { position:absolute; inset:0; }
+
+/* ── Typography ── */
+h1, h2 { font-family:'Playfair Display', serif; }
+
+.label {
+  font-size:7.5pt; letter-spacing:.28em; color:var(--gold);
+  text-transform:uppercase; margin-bottom:5mm; text-align:center;
+}
+.label::before, .label::after { content:'—'; margin:0 7px; opacity:.6; }
+
+.divider { display:flex; align-items:center; gap:3.5mm; margin:4mm 0 6mm; }
+.divider::before, .divider::after { content:''; flex:1; height:.3mm; background:var(--gold); opacity:.4; }
+.diamond { width:3.5mm; height:3.5mm; background:var(--gold); transform:rotate(45deg); flex-shrink:0; }
+
+p { font-size:9.5pt; line-height:1.8; color:#c5bbb0; margin-bottom:4mm; }
+p.it { font-family:'Cormorant Garamond',serif; font-style:italic; font-size:11.5pt; color:var(--muted); line-height:1.6; }
+
+/* ══ P1 — PORTADA ══ */
+.cover-img { position:absolute; inset:0; width:100%; height:100%; object-fit:cover; opacity:.62; }
+.cover-ov  { position:absolute; inset:0; background:linear-gradient(to top,rgba(0,0,0,.88) 28%,rgba(0,0,0,.15) 65%); }
+.cover-ct  { position:relative; z-index:5; display:flex; flex-direction:column; justify-content:flex-end; height:297mm; padding:18mm 16mm 20mm; }
+.cover-tag { font-size:7pt; letter-spacing:.3em; color:var(--gold); margin-bottom:6mm; }
+.cover-h1  { font-size:46pt; font-weight:900; line-height:1.05; color:#fff; margin-bottom:4mm; }
+.cover-sub { font-family:'Cormorant Garamond',serif; font-style:italic; font-size:16pt; color:var(--goldl); margin-bottom:9mm; }
+.cover-bs  { display:flex; font-size:7pt; letter-spacing:.18em; color:rgba(255,255,255,.5); text-transform:uppercase; }
+.cover-bs span+span::before { content:' · '; margin:0 6px; }
+
+/* ══ P2–3 — DOS COLUMNAS ══ */
+.two { flex-direction:row; min-height:297mm; }
+.col-t { flex:1; padding:22mm 14mm 18mm; display:flex; flex-direction:column; justify-content:center; background:var(--dark2); }
+.col-i { width:48%; position:relative; overflow:hidden; }
+.col-i img { width:100%; height:100%; object-fit:cover; }
+.two h2 { font-size:24pt; font-weight:700; line-height:1.18; color:#fff; margin-bottom:2mm; }
+.ts { font-weight:900; display:block; }
+.ti { font-family:'Cormorant Garamond',serif; font-style:italic; font-size:15pt; font-weight:400; color:var(--goldl); display:block; margin-top:2mm; margin-bottom:5mm; }
+
+/* ══ P4 — AMENIDADES ══ */
+.ame-bg { position:absolute; inset:0; width:100%; height:100%; object-fit:cover; opacity:.2; }
+.ame-ct { position:relative; z-index:5; padding:18mm 16mm 16mm; display:flex; flex-direction:column; justify-content:flex-end; min-height:297mm; }
+.ame-grid { display:grid; grid-template-columns:1fr 1fr; gap:4.5mm 10mm; margin-top:6mm; }
+.ame-item { display:flex; flex-direction:column; padding-bottom:4mm; border-bottom:.3mm solid rgba(212,168,83,.2); }
+.ame-t { font-size:8.5pt; font-weight:600; color:var(--gold); margin-bottom:1mm; letter-spacing:.04em; }
+.ame-d { font-size:8pt; color:var(--muted); line-height:1.5; }
+
+/* ══ P6 — QUOTE ══ */
+.q-bg { position:absolute; inset:0; width:100%; height:100%; object-fit:cover; opacity:.28; }
+.q-ct { position:relative; z-index:5; display:flex; align-items:center; justify-content:center; min-height:297mm; padding:20mm; text-align:center; }
+.q-tx { font-family:'Playfair Display',serif; font-style:italic; font-size:34pt; color:#fff; line-height:1.3; }
+
+/* ══ P7 — CTA ══ */
+.cta-ct { position:relative; z-index:5; display:flex; flex-direction:column; align-items:center; justify-content:center; min-height:297mm; padding:22mm 18mm; text-align:center; }
+.cta-h { font-size:40pt; font-weight:900; color:#fff; line-height:1.05; margin-bottom:4mm; }
+.cta-h span { display:block; font-weight:300; font-size:34pt; }
+.cta-p { font-family:'Cormorant Garamond',serif; font-style:italic; font-size:13pt; color:var(--muted); line-height:1.85; margin-bottom:9mm; max-width:130mm; }
+.cta-btn { display:inline-block; border:.4mm solid var(--gold); color:var(--gold); font-size:7pt; letter-spacing:.25em; padding:4mm 10mm; text-decoration:none; margin-bottom:9mm; font-family:'Montserrat',sans-serif; }
+.cta-pie { position:absolute; bottom:12mm; left:0; right:0; text-align:center; font-size:7pt; letter-spacing:.22em; color:rgba(255,255,255,.18); }
+
+/* ── Print button ── */
+.print-btn { position:fixed; bottom:24px; right:24px; background:var(--gold); color:#000; border:none; padding:13px 26px; font-family:'Montserrat',sans-serif; font-weight:600; font-size:11px; letter-spacing:.12em; cursor:pointer; z-index:999; text-transform:uppercase; box-shadow:0 4px 20px rgba(0,0,0,.4); }
+.print-btn:hover { background:var(--goldl); }
+</style>
+</head>
+<body>
+
+<button class="print-btn no-print" onclick="window.print()">🖨 Imprimir / Guardar PDF</button>
+
+<!-- ═══════ P1 — PORTADA ═══════ -->
+<div class="page frame">
+  <div class="fi"><div class="fb"></div></div>
+  <img class="cover-img" src="../prueba para fotos zenith/765cff2d-bf25-46fe-9555-0b06bafafa29.jpg" alt="Casa Naga">
+  <div class="cover-ov"></div>
+  <div class="cover-ct">
+    <div class="cover-tag">SAYULITA · RIVIERA NAYARIT · MÉXICO</div>
+    <h1 class="cover-h1">Casa<br><em>Naga</em></h1>
+    <div class="cover-sub">Donde el lujo y la selva son lo mismo.</div>
+    <div class="cover-bs">
+      <span>Privado</span><span>Exclusivo</span><span>Inolvidable</span>
+    </div>
+  </div>
+</div>
+
+<!-- ═══════ P2 — LA EXPERIENCIA ═══════ -->
+<div class="page two">
+  <div class="col-t">
+    <div class="label">La Experiencia</div>
+    <h2>
+      <span class="ts">Esto no es una villa.<br>Es un mundo aparte.</span>
+      <span class="ti">Para quienes saben que el lujo verdadero es el silencio.</span>
+    </h2>
+    <div class="divider"><div class="diamond"></div></div>
+    <p>Al final de una calle empedrada sin salida, rodeada de selva y con el Pacífico al frente, Casa Naga existe en una categoría propia. A 5 minutos de Sayulita y a 20 de Punta Mita, su ubicación es perfecta — accesible sin ser ordinaria.</p>
+    <p>Con capacidad para 10 huéspedes en 5 suites master, cada espacio fue diseñado para borrar la línea entre el interior y el exterior. Techos de palapa, terrazas privadas y una piscina infinita climatizada que parece derramarse sobre el horizonte.</p>
+    <p class="it">Tu única responsabilidad aquí es desconectarte del mundo.</p>
+  </div>
+  <div class="col-i">
+    <img src="../prueba para fotos zenith/994124a7-1805-4a6e-bddc-e22ebb6e3492.jpg" alt="Vista al mar">
+  </div>
+</div>
+
+<!-- ═══════ P3 — DISEÑO Y ARQUITECTURA ═══════ -->
+<div class="page two">
+  <div class="col-i">
+    <img src="../prueba para fotos zenith/8a437d50-4e13-433d-aecb-754346655305.jpg" alt="Terraza">
+  </div>
+  <div class="col-t">
+    <div class="label">Diseño y Arquitectura</div>
+    <h2>Construida Para<br>Desaparecer en la Selva.</h2>
+    <div class="divider"><div class="diamond"></div></div>
+    <p>La arquitectura de Casa Naga no compite con su entorno — lo celebra. Terrazas multinivel envueltas en vegetación, paredes de piedra rosada que absorben la luz del atardecer y espacios abiertos que convierten cada brisa en parte del diseño.</p>
+    <p>La cocina profesional con electrodomésticos de alta gama se abre hacia el exterior. El salón en la azotea con su hoguera cierra perfectamente cada noche. Cada detalle fue elegido para que nunca quieras salir.</p>
+    <p class="it">Arte artesanal, materiales naturales, y una vista al Pacífico que lo cambia todo.</p>
+  </div>
+</div>
+
+<!-- ═══════ P4 — AMENIDADES ═══════ -->
+<div class="page">
+  <img class="ame-bg" src="../prueba para fotos zenith/1226f0d9-11cf-4901-a0a0-5484ee300abd.jpg" alt="Amenidades">
+  <div class="ame-ct">
+    <div class="label">Amenidades de Clase Mundial</div>
+    <div class="divider"><div class="diamond"></div></div>
+    <div class="ame-grid">
+      <div class="ame-item"><span class="ame-t">Piscina Infinita Climatizada</span><span class="ame-d">Con vista al Océano Pacífico · iluminada de noche</span></div>
+      <div class="ame-item"><span class="ame-t">Chef Personal</span><span class="ame-d">Todas las comidas · cocina profesional de alto nivel</span></div>
+      <div class="ame-item"><span class="ame-t">5 Master Suites</span><span class="ame-d">Camas King · ropa de cama italiana · A/C</span></div>
+      <div class="ame-item"><span class="ame-t">Gerente Bilingüe</span><span class="ame-d">Español, inglés e italiano · atención 24/7</span></div>
+      <div class="ame-item"><span class="ame-t">Salón Azotea con Hoguera</span><span class="ame-d">El cierre perfecto para cada noche</span></div>
+      <div class="ame-item"><span class="ame-t">Sala Multimedia</span><span class="ame-d">TV 70" · Apple TV · satélite · biblioteca</span></div>
+      <div class="ame-item"><span class="ame-t">Servicio de Concierge</span><span class="ame-d">Traslados · itinerarios · renta de vehículos</span></div>
+      <div class="ame-item"><span class="ame-t">Sistema Bose</span><span class="ame-d">Audio profesional en todos los espacios</span></div>
+      <div class="ame-item"><span class="ame-t">Área de Barbacoa</span><span class="ame-d">Equipada · terraza exterior · comedor para 12</span></div>
+      <div class="ame-item"><span class="ame-t">Oficina con Vista al Mar</span><span class="ame-d">Para los que no pueden desconectarse del todo</span></div>
+    </div>
+  </div>
+</div>
+
+<!-- ═══════ P5 — LAS SUITES ═══════ -->
+<div class="page two">
+  <div class="col-t">
+    <div class="label">Las Suites</div>
+    <h2>Duerme Sobre<br>el Pacífico.</h2>
+    <div class="divider"><div class="diamond"></div></div>
+    <p>Cinco master suites, cada una con identidad propia. La suite principal en planta baja tiene jardín amurallado con bañera de mármol exterior. Las dos del segundo piso se abren a terrazas privadas con vistas que quitan el aliento.</p>
+    <p>Ropa de cama italiana, altavoces inalámbricos, caja de seguridad y aire acondicionado en cada cuarto. Los detalles artesanales mexicanos — textiles, luminarias, arte — dan a cada habitación una personalidad que ningún hotel puede replicar.</p>
+    <p class="it">Sal a tu terraza al amanecer. Deja que el Pacífico te despierte.</p>
+  </div>
+  <div class="col-i">
+    <img src="../prueba para fotos zenith/ed1a772b-f6d2-4d1b-9ffc-c678033a56cf.jpg" alt="Master Suite">
+  </div>
+</div>
+
+<!-- ═══════ P6 — QUOTE ═══════ -->
+<div class="page frame">
+  <div class="fi"><div class="fb"></div></div>
+  <img class="q-bg" src="../prueba para fotos zenith/a0b46638-7757-476c-bf2f-233eab5659ac.jpg" alt="">
+  <div class="q-ct">
+    <div class="q-tx">"Privacidad.<br>Selva.<br>Pacífico."</div>
+  </div>
+</div>
+
+<!-- ═══════ P7 — CTA ═══════ -->
+<div class="page frame">
+  <div class="fi"><div class="fb"></div></div>
+  <div class="cta-ct">
+    <div class="divider" style="width:60mm;margin-bottom:8mm"><div class="diamond"></div></div>
+    <h2 class="cta-h">Reserva Tu<span>Escape.</span></h2>
+    <p class="cta-p">Una propiedad como Casa Naga no permanece disponible por mucho tiempo. Ya sea un retiro familiar, una celebración especial o simplemente el viaje que has postergado — esta es la experiencia de la que hablarás por años.</p>
+    <a class="cta-btn" href="https://wa.me/523221234567?text=Hola,%20me%20interesa%20Casa%20Naga%20Sayulita" target="_blank">CONSULTA DISPONIBILIDAD AHORA</a>
+    <div class="cta-pie">SAYULITA · RIVIERA NAYARIT · MÉXICO</div>
+  </div>
+</div>
+
+</body>
+</html>

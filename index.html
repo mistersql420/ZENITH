@@ -1,0 +1,690 @@
+<!DOCTYPE html>
+<html lang="es" class="scroll-smooth">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <meta name="description" content="Zenith Bahia Properties – Renta y difusión de propiedades de lujo en Bahía de Banderas y Puerto Vallarta, Riviera Nayarit.">
+  <meta property="og:title" content="Zenith Bahia Properties">
+  <meta property="og:description" content="Tu propiedad, nuestra pasión. Rentas y difusión en Bahía de Banderas y Puerto Vallarta.">
+  <title>Zenith Bahia Properties | Bahía de Banderas · Puerto Vallarta</title>
+
+  <script src="https://cdn.tailwindcss.com"></script>
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:ital,wght@0,400;0,600;1,400;1,600&family=Montserrat:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+  <link href="https://unpkg.com/aos@2.3.4/dist/aos.css" rel="stylesheet">
+  <script src="https://unpkg.com/lucide@latest"></script>
+
+  <script>
+    tailwind.config = {
+      theme: {
+        extend: {
+          fontFamily: {
+            serif: ['"Cormorant Garamond"', 'Georgia', 'serif'],
+            sans:  ['Montserrat', 'system-ui', 'sans-serif'],
+          },
+          colors: {
+            ocean: { 900:'#0a2540', 800:'#0a4d68', 700:'#005f73', 500:'#0096c7', 200:'#b8d8e8', 50:'#f0f8ff' },
+            gold:  { DEFAULT:'#d4a853', light:'#e9c46a', dark:'#c5a059' },
+          }
+        }
+      }
+    }
+  </script>
+
+  <style>
+    *, *::before, *::after { box-sizing: border-box; }
+
+    body { font-family: 'Montserrat', sans-serif; }
+    h1, h2, h3 { font-family: 'Cormorant Garamond', serif; }
+
+    /* Gradiente de fondo fijo */
+    .page-bg {
+      background: linear-gradient(180deg,
+        #0a2540  0%, #003d5c 10%, #005f73 20%,
+        #4a9ab5 35%, #a8d5e8 50%,
+        #dff0f8 65%, #f0f8ff 78%,
+        #ffffff  92%, #ffffff 100%
+      );
+      background-attachment: fixed;
+    }
+
+    /* Navbar */
+    #navbar { transition: all 0.4s ease; }
+    #navbar.scrolled {
+      background: rgba(10,37,64,.90);
+      backdrop-filter: blur(20px);
+      -webkit-backdrop-filter: blur(20px);
+      box-shadow: 0 2px 32px rgba(0,0,0,.3);
+    }
+
+    /* Gold line */
+    .gold-line { width:56px; height:2px; background:linear-gradient(90deg,transparent,#d4a853,transparent); }
+
+    /* Glass */
+    .glass {
+      background: rgba(255,255,255,.10);
+      backdrop-filter: blur(20px); -webkit-backdrop-filter: blur(20px);
+      border: 1px solid rgba(255,255,255,.20);
+    }
+    .glass-dark {
+      background: rgba(10,37,64,.50);
+      backdrop-filter: blur(20px); -webkit-backdrop-filter: blur(20px);
+      border: 1px solid rgba(255,255,255,.15);
+    }
+
+    /* Propiedad card */
+    .prop-card {
+      background: white;
+      border-radius: 16px;
+      overflow: hidden;
+      border: 1px solid #eee;
+      transition: all 0.4s ease;
+    }
+    .prop-card:hover {
+      transform: translateY(-10px);
+      box-shadow: 0 24px 48px rgba(10,77,104,.14);
+      border-color: rgba(212,168,83,.4);
+    }
+    .prop-card img { transition: transform .5s ease; filter: brightness(.95); }
+    .prop-card:hover img { transform: scale(1.05); }
+
+    /* Servicio card */
+    .serv-card {
+      background: rgba(255,255,255,.80);
+      backdrop-filter: blur(12px);
+      border: 1px solid rgba(212,168,83,.15);
+      border-radius: 20px;
+      transition: all .35s ease;
+    }
+    .serv-card:hover {
+      transform: translateY(-8px);
+      box-shadow: 0 20px 40px rgba(10,77,104,.12);
+      border-color: rgba(212,168,83,.50);
+      background: rgba(255,255,255,.96);
+    }
+
+    /* Zona card */
+    .zona-card { border-radius: 20px; overflow: hidden; position: relative; }
+    .zona-card img { transition: transform .6s ease; filter: brightness(.75); }
+    .zona-card:hover img { transform: scale(1.06); }
+    .zona-overlay {
+      position: absolute; inset: 0;
+      background: linear-gradient(to top, rgba(10,37,64,.85) 0%, rgba(10,37,64,.1) 60%);
+    }
+
+    /* Btn luxury */
+    .btn-luxury {
+      background: #1a1a1a; color: white;
+      letter-spacing: 2px; text-transform: uppercase;
+      transition: background .3s ease;
+      border-radius: 9999px;
+    }
+    .btn-luxury:hover { background: #c5a059; }
+
+    /* WhatsApp */
+    @keyframes wa-pulse {
+      0%,100% { box-shadow:0 0 0 0 rgba(37,211,102,.6); }
+      60%      { box-shadow:0 0 0 16px rgba(37,211,102,0); }
+    }
+    .wa-float { animation: wa-pulse 2.8s infinite; }
+
+    /* Glass input */
+    .glass-input {
+      width: 100%;
+      background: rgba(255,255,255,.08);
+      backdrop-filter: blur(8px);
+      border: 1px solid rgba(255,255,255,.25);
+      border-radius: 10px; padding: 12px 16px;
+      color: white; font-size: 14px; font-family: 'Montserrat', sans-serif;
+      transition: all .3s ease;
+    }
+    .glass-input::placeholder { color: rgba(255,255,255,.45); }
+    .glass-input:focus { outline: none; border-color: #d4a853; box-shadow: 0 0 0 3px rgba(212,168,83,.2); }
+
+    img { border-radius: 4px; }
+  </style>
+</head>
+
+<body class="page-bg text-gray-800">
+
+<!-- ══════════════════════════════════════════
+     NAVBAR
+══════════════════════════════════════════ -->
+<nav id="navbar" class="fixed top-0 inset-x-0 z-50 px-6 py-4">
+  <div class="max-w-7xl mx-auto flex items-center justify-between">
+
+    <!-- Logo -->
+    <a href="index.html" class="flex flex-col leading-none">
+      <span class="font-serif text-white text-xl font-semibold tracking-wider">ZENITH</span>
+      <span class="text-gold text-[10px] tracking-[0.35em] uppercase font-medium">Bahia Properties</span>
+    </a>
+
+    <!-- Links desktop -->
+    <div class="hidden md:flex items-center gap-8">
+      <a href="index.html"     class="text-white text-sm tracking-wide font-medium border-b border-gold pb-0.5">Inicio</a>
+      <a href="catalogo.html"  class="text-white/70 hover:text-white text-sm tracking-wide transition">Propiedades</a>
+      <a href="#servicios"     class="text-white/70 hover:text-white text-sm tracking-wide transition">Servicios</a>
+      <a href="#zonas"         class="text-white/70 hover:text-white text-sm tracking-wide transition">Zonas</a>
+      <a href="publicar.html"  class="text-white/70 hover:text-white text-sm tracking-wide transition">Publicar</a>
+      <a href="#contacto"      class="text-white/70 hover:text-white text-sm tracking-wide transition">Contacto</a>
+    </div>
+
+    <a href="catalogo.html" class="hidden md:inline-flex items-center gap-2 bg-gold hover:bg-gold-light text-ocean-900 font-semibold text-xs px-5 py-2.5 rounded-full transition tracking-wider uppercase">
+      Ver propiedades
+    </a>
+
+    <button class="md:hidden text-white" onclick="document.getElementById('mob-menu').classList.toggle('hidden')">
+      <i data-lucide="menu" class="w-6 h-6"></i>
+    </button>
+  </div>
+
+  <!-- Mobile -->
+  <div id="mob-menu" class="hidden md:hidden mt-4 pb-4 border-t border-white/20">
+    <div class="flex flex-col gap-4 pt-4 px-2">
+      <a href="catalogo.html" class="text-white/80 hover:text-white text-sm">Propiedades</a>
+      <a href="#servicios"    class="text-white/80 hover:text-white text-sm">Servicios</a>
+      <a href="#zonas"        class="text-white/80 hover:text-white text-sm">Zonas</a>
+      <a href="#contacto"     class="text-white/80 hover:text-white text-sm">Contacto</a>
+      <a href="catalogo.html" class="bg-gold text-ocean-900 font-semibold text-sm px-5 py-2.5 rounded-full text-center tracking-wider uppercase">Ver propiedades</a>
+    </div>
+  </div>
+</nav>
+
+
+<!-- ══════════════════════════════════════════
+     HERO
+══════════════════════════════════════════ -->
+<section class="relative min-h-screen flex items-center overflow-hidden">
+
+  <!-- Foto de fondo -->
+  <div class="absolute inset-0 z-0">
+    <img src="https://images.unsplash.com/photo-1613490493576-7fde63acd811?w=1800&q=85"
+         alt="Bahía de Banderas" class="w-full h-full object-cover" style="border-radius:0; filter:brightness(.55);">
+    <div class="absolute inset-0" style="background:linear-gradient(to right, rgba(10,37,64,.85) 0%, rgba(10,37,64,.4) 60%, transparent 100%);"></div>
+  </div>
+
+  <!-- Contenido -->
+  <div class="relative z-10 max-w-7xl mx-auto px-8 md:px-16 py-32 w-full">
+    <div class="max-w-2xl">
+
+      <p class="text-gold text-xs tracking-[0.35em] uppercase font-medium mb-5"
+         data-aos="fade-down" data-aos-delay="0">
+        Bahía de Banderas · Puerto Vallarta · Riviera Nayarit
+      </p>
+
+      <h1 class="font-serif text-white text-5xl md:text-7xl font-semibold leading-[1.05] mb-6"
+          data-aos="fade-right" data-aos-delay="150">
+        Encuentra tu<br>lugar en el<br><em class="text-gold">paraíso</em>
+      </h1>
+
+      <div class="gold-line mb-6" data-aos="fade-right" data-aos-delay="280"></div>
+
+      <p class="text-white/70 text-base font-light leading-relaxed max-w-lg mb-10"
+         data-aos="fade-up" data-aos-delay="380">
+        Somos la agencia especializada en rentas y difusión de propiedades de lujo en el Pacífico mexicano. Conectamos a los mejores anfitriones con los mejores huéspedes.
+      </p>
+
+      <div class="flex flex-wrap gap-4" data-aos="fade-up" data-aos-delay="500">
+        <a href="catalogo.html"
+           class="flex items-center gap-2 bg-gold hover:bg-gold-light text-ocean-900 font-semibold text-sm px-7 py-3.5 rounded-full transition shadow-lg hover:-translate-y-0.5 tracking-wide">
+          <i data-lucide="search" class="w-4 h-4"></i>
+          Explorar propiedades
+        </a>
+        <a href="#contacto"
+           class="flex items-center gap-2 border border-white/40 text-white hover:bg-white/10 font-medium text-sm px-7 py-3.5 rounded-full transition backdrop-blur-sm tracking-wide">
+          <i data-lucide="building-2" class="w-4 h-4"></i>
+          Publicar mi propiedad
+        </a>
+      </div>
+    </div>
+  </div>
+
+  <!-- Stats flotantes -->
+  <div class="absolute bottom-8 left-0 right-0 z-10 px-8" data-aos="fade-up" data-aos-delay="600">
+    <div class="max-w-3xl mx-auto">
+      <div class="glass rounded-2xl px-6 py-5 grid grid-cols-3 gap-4 text-center">
+        <div>
+          <p class="font-serif text-white text-2xl font-semibold">2</p>
+          <p class="text-white/55 text-xs mt-0.5 tracking-widest uppercase">Zonas</p>
+        </div>
+        <div class="border-l border-white/20">
+          <p class="font-serif text-white text-2xl font-semibold">+50</p>
+          <p class="text-white/55 text-xs mt-0.5 tracking-widest uppercase">Propiedades</p>
+        </div>
+        <div class="border-l border-white/20">
+          <p class="font-serif text-white text-2xl font-semibold">100%</p>
+          <p class="text-white/55 text-xs mt-0.5 tracking-widest uppercase">Compromiso</p>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+
+<!-- ══════════════════════════════════════════
+     ZONAS
+══════════════════════════════════════════ -->
+<section id="zonas" class="max-w-6xl mx-auto px-6 py-24">
+
+  <div class="text-center mb-14" data-aos="fade-up">
+    <p class="text-gold text-xs tracking-[0.3em] uppercase font-medium mb-3">Dónde operamos</p>
+    <h2 class="font-serif text-4xl md:text-5xl text-ocean-900 font-semibold">Dos destinos,<br><em>un solo paraíso</em></h2>
+    <div class="gold-line mx-auto mt-5"></div>
+  </div>
+
+  <div class="grid md:grid-cols-2 gap-6">
+
+    <!-- Bahía de Banderas -->
+    <div class="zona-card h-80 cursor-pointer group" data-aos="fade-right" data-aos-delay="100">
+      <img src="https://images.unsplash.com/photo-1580587771525-78b9dba3b914?w=900&q=80"
+           alt="Bahía de Banderas" class="w-full h-full object-cover" style="border-radius:20px;">
+      <div class="zona-overlay" style="border-radius:20px;"></div>
+      <div class="absolute bottom-0 left-0 right-0 p-8">
+        <p class="text-gold text-xs tracking-[0.3em] uppercase mb-2">Nayarit</p>
+        <h3 class="font-serif text-white text-3xl font-semibold mb-2">Bahía de Banderas</h3>
+        <p class="text-white/70 text-sm font-light">Sayulita · Bucerias · La Cruz · Punta Mita</p>
+        <a href="catalogo.html?zona=bahia"
+           class="inline-flex items-center gap-2 mt-4 text-gold text-xs tracking-widest uppercase font-medium hover:gap-3 transition-all">
+          Ver propiedades <i data-lucide="arrow-right" class="w-3.5 h-3.5"></i>
+        </a>
+      </div>
+    </div>
+
+    <!-- Puerto Vallarta -->
+    <div class="zona-card h-80 cursor-pointer group" data-aos="fade-left" data-aos-delay="100">
+      <img src="https://images.unsplash.com/photo-1564013799919-ab600027ffc6?w=900&q=80"
+           alt="Puerto Vallarta" class="w-full h-full object-cover" style="border-radius:20px;">
+      <div class="zona-overlay" style="border-radius:20px;"></div>
+      <div class="absolute bottom-0 left-0 right-0 p-8">
+        <p class="text-gold text-xs tracking-[0.3em] uppercase mb-2">Jalisco</p>
+        <h3 class="font-serif text-white text-3xl font-semibold mb-2">Puerto Vallarta</h3>
+        <p class="text-white/70 text-sm font-light">Zona Romántica · Marina · Conchas Chinas</p>
+        <a href="catalogo.html?zona=vallarta"
+           class="inline-flex items-center gap-2 mt-4 text-gold text-xs tracking-widest uppercase font-medium hover:gap-3 transition-all">
+          Ver propiedades <i data-lucide="arrow-right" class="w-3.5 h-3.5"></i>
+        </a>
+      </div>
+    </div>
+  </div>
+</section>
+
+
+<!-- ══════════════════════════════════════════
+     PROPIEDADES DESTACADAS
+══════════════════════════════════════════ -->
+<section class="max-w-7xl mx-auto px-6 py-10 pb-24">
+
+  <div class="flex items-end justify-between mb-12" data-aos="fade-up">
+    <div>
+      <p class="text-gold text-xs tracking-[0.3em] uppercase font-medium mb-3">Disponibles ahora</p>
+      <h2 class="font-serif text-4xl md:text-5xl text-ocean-900 font-semibold">Propiedades<br><em>destacadas</em></h2>
+      <div class="gold-line mt-5"></div>
+    </div>
+    <a href="catalogo.html" class="hidden md:flex items-center gap-2 text-ocean-700 hover:text-ocean-900 text-sm font-medium tracking-wide transition">
+      Ver todas <i data-lucide="arrow-right" class="w-4 h-4"></i>
+    </a>
+  </div>
+
+  <div class="grid md:grid-cols-3 gap-7">
+
+    <!-- Card 1 -->
+    <div class="prop-card" data-aos="fade-up" data-aos-delay="0">
+      <div class="overflow-hidden h-56">
+        <img src="https://images.unsplash.com/photo-1613490493576-7fde63acd811?w=700&q=80"
+             alt="Casa Cielo Azul" class="w-full h-full object-cover" style="border-radius:0;">
+      </div>
+      <div class="p-6">
+        <div class="flex items-center justify-between mb-3">
+          <span class="text-xs bg-ocean-50 text-ocean-700 border border-ocean-200 rounded-full px-3 py-1 font-medium tracking-wide">Bahía de Banderas</span>
+          <span class="text-xs text-gold font-semibold tracking-wide">RENTA</span>
+        </div>
+        <h3 class="font-serif text-ocean-900 text-xl font-semibold mb-1">Casa Cielo Azul</h3>
+        <p class="text-gray-500 text-xs font-light mb-4">5 rec · 6 baños · 650 m² · Vista al mar</p>
+        <div class="flex items-center justify-between">
+          <p class="font-serif text-ocean-900 text-lg font-semibold">$12,000 <span class="text-xs font-sans text-gray-400 font-light">/ noche</span></p>
+          <a href="propiedades/casa-cielo-azul.html"
+             class="flex items-center gap-1.5 bg-ocean-900 hover:bg-gold text-white text-xs px-4 py-2 rounded-full transition font-medium tracking-wide">
+            Ver más <i data-lucide="arrow-right" class="w-3 h-3"></i>
+          </a>
+        </div>
+      </div>
+    </div>
+
+    <!-- Card 2 -->
+    <div class="prop-card" data-aos="fade-up" data-aos-delay="120">
+      <div class="overflow-hidden h-56">
+        <img src="https://images.unsplash.com/photo-1600585154340-be6161a56a0c?w=700&q=80"
+             alt="Villa Palmeras" class="w-full h-full object-cover" style="border-radius:0;">
+      </div>
+      <div class="p-6">
+        <div class="flex items-center justify-between mb-3">
+          <span class="text-xs bg-ocean-50 text-ocean-700 border border-ocean-200 rounded-full px-3 py-1 font-medium tracking-wide">Puerto Vallarta</span>
+          <span class="text-xs text-gold font-semibold tracking-wide">RENTA</span>
+        </div>
+        <h3 class="font-serif text-ocean-900 text-xl font-semibold mb-1">Villa Palmeras</h3>
+        <p class="text-gray-500 text-xs font-light mb-4">4 rec · 4 baños · 420 m² · Alberca</p>
+        <div class="flex items-center justify-between">
+          <p class="font-serif text-ocean-900 text-lg font-semibold">$8,500 <span class="text-xs font-sans text-gray-400 font-light">/ noche</span></p>
+          <a href="propiedades/villa-palmeras.html"
+             class="flex items-center gap-1.5 bg-ocean-900 hover:bg-gold text-white text-xs px-4 py-2 rounded-full transition font-medium tracking-wide">
+            Ver más <i data-lucide="arrow-right" class="w-3 h-3"></i>
+          </a>
+        </div>
+      </div>
+    </div>
+
+    <!-- Card 3 -->
+    <div class="prop-card" data-aos="fade-up" data-aos-delay="240">
+      <div class="overflow-hidden h-56">
+        <img src="https://images.unsplash.com/photo-1571003123894-1f0594d2b5d9?w=700&q=80"
+             alt="Penthouse Marina" class="w-full h-full object-cover" style="border-radius:0;">
+      </div>
+      <div class="p-6">
+        <div class="flex items-center justify-between mb-3">
+          <span class="text-xs bg-ocean-50 text-ocean-700 border border-ocean-200 rounded-full px-3 py-1 font-medium tracking-wide">Puerto Vallarta</span>
+          <span class="text-xs text-gold font-semibold tracking-wide">RENTA</span>
+        </div>
+        <h3 class="font-serif text-ocean-900 text-xl font-semibold mb-1">Penthouse Marina</h3>
+        <p class="text-gray-500 text-xs font-light mb-4">3 rec · 3 baños · 280 m² · Rooftop</p>
+        <div class="flex items-center justify-between">
+          <p class="font-serif text-ocean-900 text-lg font-semibold">$5,200 <span class="text-xs font-sans text-gray-400 font-light">/ noche</span></p>
+          <a href="propiedades/penthouse-marina.html"
+             class="flex items-center gap-1.5 bg-ocean-900 hover:bg-gold text-white text-xs px-4 py-2 rounded-full transition font-medium tracking-wide">
+            Ver más <i data-lucide="arrow-right" class="w-3 h-3"></i>
+          </a>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <div class="text-center mt-10" data-aos="fade-up">
+    <a href="catalogo.html" class="btn-luxury inline-flex items-center gap-3 px-8 py-4 text-sm font-medium">
+      <i data-lucide="grid" class="w-4 h-4"></i>
+      Ver catálogo completo
+    </a>
+  </div>
+</section>
+
+
+<!-- ══════════════════════════════════════════
+     SERVICIOS
+══════════════════════════════════════════ -->
+<section id="servicios" class="py-24 px-6">
+  <div class="max-w-6xl mx-auto">
+
+    <div class="text-center mb-14" data-aos="fade-up">
+      <p class="text-gold text-xs tracking-[0.3em] uppercase font-medium mb-3">Lo que hacemos</p>
+      <h2 class="font-serif text-4xl md:text-5xl text-ocean-900 font-semibold">Servicios <em>Zenith</em></h2>
+      <div class="gold-line mx-auto mt-5"></div>
+    </div>
+
+    <div class="grid md:grid-cols-3 gap-7">
+
+      <div class="serv-card p-8" data-aos="zoom-in" data-aos-delay="0">
+        <div class="w-14 h-14 rounded-2xl bg-ocean-50 flex items-center justify-center mb-6">
+          <i data-lucide="home" class="w-7 h-7 text-ocean-700"></i>
+        </div>
+        <h3 class="font-serif text-ocean-900 text-2xl font-semibold mb-3">Renta Vacacional</h3>
+        <p class="text-gray-500 text-sm font-light leading-relaxed mb-5">
+          Gestionamos la renta de tu propiedad de principio a fin: fotografía, calendario, check-in y atención a huéspedes.
+        </p>
+        <ul class="space-y-2">
+          <li class="flex items-center gap-2 text-sm text-gray-600"><i data-lucide="check" class="w-4 h-4 text-gold flex-shrink-0"></i>Fotografía profesional</li>
+          <li class="flex items-center gap-2 text-sm text-gray-600"><i data-lucide="check" class="w-4 h-4 text-gold flex-shrink-0"></i>Gestión de reservas</li>
+          <li class="flex items-center gap-2 text-sm text-gray-600"><i data-lucide="check" class="w-4 h-4 text-gold flex-shrink-0"></i>Atención 24/7</li>
+        </ul>
+      </div>
+
+      <div class="serv-card p-8" data-aos="zoom-in" data-aos-delay="120">
+        <div class="w-14 h-14 rounded-2xl bg-ocean-50 flex items-center justify-center mb-6">
+          <i data-lucide="megaphone" class="w-7 h-7 text-ocean-700"></i>
+        </div>
+        <h3 class="font-serif text-ocean-900 text-2xl font-semibold mb-3">Difusión Digital</h3>
+        <p class="text-gray-500 text-sm font-light leading-relaxed mb-5">
+          Creamos landing pages profesionales, publicidad en redes sociales y posicionamiento para maximizar la visibilidad de tu propiedad.
+        </p>
+        <ul class="space-y-2">
+          <li class="flex items-center gap-2 text-sm text-gray-600"><i data-lucide="check" class="w-4 h-4 text-gold flex-shrink-0"></i>Landing page dedicada</li>
+          <li class="flex items-center gap-2 text-sm text-gray-600"><i data-lucide="check" class="w-4 h-4 text-gold flex-shrink-0"></i>Redes sociales</li>
+          <li class="flex items-center gap-2 text-sm text-gray-600"><i data-lucide="check" class="w-4 h-4 text-gold flex-shrink-0"></i>Ficha PDF profesional</li>
+        </ul>
+      </div>
+
+      <div class="serv-card p-8 relative" data-aos="zoom-in" data-aos-delay="240">
+        <div class="absolute top-4 right-4 bg-gold text-ocean-900 text-[10px] font-bold px-3 py-1 rounded-full tracking-widest uppercase">Próximamente</div>
+        <div class="w-14 h-14 rounded-2xl bg-ocean-50 flex items-center justify-center mb-6">
+          <i data-lucide="handshake" class="w-7 h-7 text-ocean-700"></i>
+        </div>
+        <h3 class="font-serif text-ocean-900 text-2xl font-semibold mb-3">Compra & Venta</h3>
+        <p class="text-gray-500 text-sm font-light leading-relaxed mb-5">
+          Próximamente te conectamos con compradores calificados para vender tu propiedad al mejor precio en el mercado de lujo.
+        </p>
+        <ul class="space-y-2 opacity-60">
+          <li class="flex items-center gap-2 text-sm text-gray-600"><i data-lucide="check" class="w-4 h-4 text-gold flex-shrink-0"></i>Valuación profesional</li>
+          <li class="flex items-center gap-2 text-sm text-gray-600"><i data-lucide="check" class="w-4 h-4 text-gold flex-shrink-0"></i>Red de compradores</li>
+          <li class="flex items-center gap-2 text-sm text-gray-600"><i data-lucide="check" class="w-4 h-4 text-gold flex-shrink-0"></i>Asesoría legal</li>
+        </ul>
+      </div>
+    </div>
+  </div>
+</section>
+
+
+<!-- ══════════════════════════════════════════
+     POR QUÉ ZENITH
+══════════════════════════════════════════ -->
+<section class="py-20 px-6">
+  <div class="max-w-6xl mx-auto">
+    <div class="glass-dark rounded-3xl p-10 md:p-16 grid md:grid-cols-2 gap-12 items-center"
+         data-aos="fade-up">
+
+      <div>
+        <p class="text-gold text-xs tracking-[0.3em] uppercase font-medium mb-4">Por qué elegirnos</p>
+        <h2 class="font-serif text-white text-4xl md:text-5xl font-semibold leading-tight mb-6">
+          Tu propiedad,<br><em>nuestra pasión</em>
+        </h2>
+        <div class="gold-line mb-6"></div>
+        <p class="text-white/65 font-light leading-relaxed text-sm">
+          En Zenith Bahia Properties entendemos que cada propiedad es única. Combinamos tecnología, diseño y atención personalizada para que tu inmueble brille en el mercado más competitivo del Pacífico mexicano.
+        </p>
+      </div>
+
+      <div class="grid grid-cols-2 gap-5">
+        <div class="glass rounded-2xl p-5 text-center">
+          <i data-lucide="camera" class="w-7 h-7 text-gold mx-auto mb-3"></i>
+          <p class="text-white font-serif text-sm font-semibold mb-1">Fotografía Pro</p>
+          <p class="text-white/50 text-xs font-light">Sesiones profesionales incluidas</p>
+        </div>
+        <div class="glass rounded-2xl p-5 text-center">
+          <i data-lucide="globe" class="w-7 h-7 text-gold mx-auto mb-3"></i>
+          <p class="text-white font-serif text-sm font-semibold mb-1">Alcance Digital</p>
+          <p class="text-white/50 text-xs font-light">Web, redes y portales premium</p>
+        </div>
+        <div class="glass rounded-2xl p-5 text-center">
+          <i data-lucide="message-circle" class="w-7 h-7 text-gold mx-auto mb-3"></i>
+          <p class="text-white font-serif text-sm font-semibold mb-1">Atención 24/7</p>
+          <p class="text-white/50 text-xs font-light">Respondemos en minutos</p>
+        </div>
+        <div class="glass rounded-2xl p-5 text-center">
+          <i data-lucide="trending-up" class="w-7 h-7 text-gold mx-auto mb-3"></i>
+          <p class="text-white font-serif text-sm font-semibold mb-1">Máxima Renta</p>
+          <p class="text-white/50 text-xs font-light">Optimizamos tu rentabilidad</p>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+
+<!-- ══════════════════════════════════════════
+     CONTACTO
+══════════════════════════════════════════ -->
+<section id="contacto" class="py-24 px-6 relative overflow-hidden">
+  <div class="absolute top-0 left-1/4 w-96 h-96 rounded-full opacity-15 blur-3xl pointer-events-none" style="background:#005f73;"></div>
+  <div class="absolute bottom-0 right-1/4 w-72 h-72 rounded-full opacity-10 blur-3xl pointer-events-none" style="background:#d4a853;"></div>
+
+  <div class="max-w-2xl mx-auto relative z-10">
+    <div class="text-center mb-10" data-aos="fade-up">
+      <p class="text-gold text-xs tracking-[0.3em] uppercase font-medium mb-3">Hablemos</p>
+      <h2 class="font-serif text-4xl md:text-5xl text-ocean-900 font-semibold">¿Tienes una<br><em>propiedad?</em></h2>
+      <div class="gold-line mx-auto mt-5"></div>
+      <p class="text-gray-600 text-sm mt-4 font-light">Cuéntanos sobre tu inmueble y te contactamos en menos de 2 horas</p>
+    </div>
+
+    <div class="rounded-3xl p-8 md:p-10 shadow-2xl"
+         style="background:rgba(10,37,64,.38);backdrop-filter:blur(28px);-webkit-backdrop-filter:blur(28px);border:1px solid rgba(255,255,255,.16);"
+         data-aos="fade-up" data-aos-delay="150">
+      <form onsubmit="enviarContacto(event)" class="space-y-5">
+        <div class="grid sm:grid-cols-2 gap-5">
+          <div>
+            <label class="block text-white/60 text-xs tracking-widest uppercase mb-2">Nombre</label>
+            <input type="text" placeholder="Tu nombre" class="glass-input" required>
+          </div>
+          <div>
+            <label class="block text-white/60 text-xs tracking-widest uppercase mb-2">Teléfono / WhatsApp</label>
+            <input type="tel" placeholder="+52 322 000 0000" class="glass-input" required>
+          </div>
+        </div>
+        <div>
+          <label class="block text-white/60 text-xs tracking-widest uppercase mb-2">Zona de la propiedad</label>
+          <select class="glass-input" style="color:rgba(255,255,255,.7);">
+            <option value="" style="background:#0a2540">Selecciona una zona</option>
+            <option value="bahia" style="background:#0a2540">Bahía de Banderas</option>
+            <option value="vallarta" style="background:#0a2540">Puerto Vallarta</option>
+            <option value="otra" style="background:#0a2540">Otra zona</option>
+          </select>
+        </div>
+        <div>
+          <label class="block text-white/60 text-xs tracking-widest uppercase mb-2">Cuéntanos sobre tu propiedad</label>
+          <textarea rows="4" placeholder="Número de recámaras, ubicación, precio deseado, etc."
+                    class="glass-input resize-none"></textarea>
+        </div>
+        <button type="submit" id="contact-btn"
+                class="w-full flex items-center justify-center gap-3 bg-gold hover:bg-gold-light text-ocean-900 font-semibold text-sm py-4 rounded-2xl transition-all shadow-lg hover:-translate-y-0.5 tracking-wider uppercase">
+          <i data-lucide="send" class="w-4 h-4"></i>
+          Enviar mensaje
+        </button>
+      </form>
+
+      <!-- WhatsApp directo -->
+      <div class="mt-6 pt-6 border-t border-white/10 text-center">
+        <p class="text-white/40 text-xs mb-3 font-light">¿Prefieres escribirnos directo?</p>
+        <a href="https://wa.me/523221234567?text=Hola%20Zenith%2C%20quiero%20publicar%20mi%20propiedad" target="_blank"
+           class="inline-flex items-center gap-2 bg-[#25D366] hover:bg-[#1fba5c] text-white font-medium text-sm px-6 py-2.5 rounded-full transition">
+          <svg class="w-4 h-4 fill-current" viewBox="0 0 24 24"><path d="M17.472 14.382c-.297-.149-1.758-.867-2.03-.967-.273-.099-.471-.148-.67.15-.197.297-.767.966-.94 1.164-.173.199-.347.223-.644.075-.297-.15-1.255-.463-2.39-1.475-.883-.788-1.48-1.761-1.653-2.059-.173-.297-.018-.458.13-.606.134-.133.298-.347.446-.52.149-.174.198-.298.298-.497.099-.198.05-.371-.025-.52-.075-.149-.669-1.612-.916-2.207-.242-.579-.487-.5-.669-.51-.173-.008-.371-.01-.57-.01-.198 0-.52.074-.792.372-.272.297-1.04 1.016-1.04 2.479 0 1.462 1.065 2.875 1.213 3.074.149.198 2.096 3.2 5.077 4.487.709.306 1.262.489 1.694.625.712.227 1.36.195 1.871.118.571-.085 1.758-.719 2.006-1.413.248-.694.248-1.289.173-1.413-.074-.124-.272-.198-.57-.347m-5.421 7.403h-.004a9.87 9.87 0 01-5.031-1.378l-.361-.214-3.741.982.998-3.648-.235-.374a9.86 9.86 0 01-1.51-5.26c.001-5.45 4.436-9.884 9.888-9.884 2.64 0 5.122 1.03 6.988 2.898a9.825 9.825 0 012.893 6.994c-.003 5.45-4.437 9.884-9.885 9.884m8.413-18.297A11.815 11.815 0 0012.05 0C5.495 0 .16 5.335.157 11.892c0 2.096.547 4.142 1.588 5.945L.057 24l6.305-1.654a11.882 11.882 0 005.683 1.448h.005c6.554 0 11.89-5.335 11.893-11.893a11.821 11.821 0 00-3.48-8.413z"/></svg>
+          Escribir por WhatsApp
+        </a>
+      </div>
+    </div>
+  </div>
+</section>
+
+
+<!-- ══════════════════════════════════════════
+     FOOTER
+══════════════════════════════════════════ -->
+<footer class="bg-ocean-900 text-white py-14 px-6">
+  <div class="max-w-6xl mx-auto">
+    <div class="grid md:grid-cols-4 gap-10 mb-10">
+
+      <!-- Brand -->
+      <div class="md:col-span-2">
+        <div class="mb-2">
+          <span class="font-serif text-2xl font-semibold tracking-wider">ZENITH</span>
+          <span class="text-gold text-xs tracking-[0.3em] uppercase font-medium ml-2">Bahia Properties</span>
+        </div>
+        <p class="text-white/40 text-sm font-light leading-relaxed max-w-xs mt-3">
+          Especialistas en rentas y difusión de propiedades de lujo en Bahía de Banderas y Puerto Vallarta, Riviera Nayarit.
+        </p>
+        <div class="flex gap-3 mt-5">
+          <a href="#" class="w-9 h-9 rounded-full border border-white/20 flex items-center justify-center text-white/40 hover:text-gold hover:border-gold transition">
+            <i data-lucide="instagram" class="w-4 h-4"></i>
+          </a>
+          <a href="#" class="w-9 h-9 rounded-full border border-white/20 flex items-center justify-center text-white/40 hover:text-gold hover:border-gold transition">
+            <i data-lucide="facebook" class="w-4 h-4"></i>
+          </a>
+          <a href="#" class="w-9 h-9 rounded-full border border-white/20 flex items-center justify-center text-white/40 hover:text-gold hover:border-gold transition">
+            <i data-lucide="youtube" class="w-4 h-4"></i>
+          </a>
+        </div>
+      </div>
+
+      <!-- Nav -->
+      <div>
+        <p class="text-gold text-xs tracking-widest uppercase mb-4 font-medium">Navegación</p>
+        <ul class="space-y-2 text-sm text-white/50 font-light">
+          <li><a href="index.html"    class="hover:text-white transition">Inicio</a></li>
+          <li><a href="catalogo.html" class="hover:text-white transition">Propiedades</a></li>
+          <li><a href="#servicios"    class="hover:text-white transition">Servicios</a></li>
+          <li><a href="#zonas"        class="hover:text-white transition">Zonas</a></li>
+          <li><a href="#contacto"     class="hover:text-white transition">Contacto</a></li>
+        </ul>
+      </div>
+
+      <!-- Contact -->
+      <div>
+        <p class="text-gold text-xs tracking-widest uppercase mb-4 font-medium">Contacto</p>
+        <div class="space-y-3 text-sm text-white/50 font-light">
+          <a href="tel:+523221234567" class="flex items-center gap-2 hover:text-white transition">
+            <i data-lucide="phone" class="w-4 h-4 text-gold"></i>+52 322 123 4567
+          </a>
+          <a href="mailto:hola@zenithbahia.com" class="flex items-center gap-2 hover:text-white transition">
+            <i data-lucide="mail" class="w-4 h-4 text-gold"></i>hola@zenithbahia.com
+          </a>
+          <p class="flex items-start gap-2">
+            <i data-lucide="map-pin" class="w-4 h-4 text-gold flex-shrink-0 mt-0.5"></i>
+            Bahía de Banderas, Nayarit &<br>Puerto Vallarta, Jalisco
+          </p>
+        </div>
+      </div>
+    </div>
+
+    <div class="border-t border-white/10 pt-6 flex flex-col sm:flex-row justify-between items-center gap-4">
+      <p class="text-white/20 text-xs font-light">© 2025 Zenith Bahia Properties. Todos los derechos reservados.</p>
+      <p class="text-white/15 text-xs font-light">Bahía de Banderas · Puerto Vallarta · Riviera Nayarit</p>
+    </div>
+  </div>
+</footer>
+
+
+<!-- ══════════════════════════════════════════
+     FLOATING WHATSAPP
+══════════════════════════════════════════ -->
+<a href="https://wa.me/523221234567?text=Hola%20Zenith%2C%20me%20interesa%20una%20propiedad" target="_blank"
+   class="wa-float fixed bottom-6 right-6 z-50 w-14 h-14 rounded-full bg-[#25D366] hover:bg-[#1fba5c] flex items-center justify-center shadow-2xl transition-transform hover:scale-110 group">
+  <svg class="w-7 h-7 fill-white" viewBox="0 0 24 24"><path d="M17.472 14.382c-.297-.149-1.758-.867-2.03-.967-.273-.099-.471-.148-.67.15-.197.297-.767.966-.94 1.164-.173.199-.347.223-.644.075-.297-.15-1.255-.463-2.39-1.475-.883-.788-1.48-1.761-1.653-2.059-.173-.297-.018-.458.13-.606.134-.133.298-.347.446-.52.149-.174.198-.298.298-.497.099-.198.05-.371-.025-.52-.075-.149-.669-1.612-.916-2.207-.242-.579-.487-.5-.669-.51-.173-.008-.371-.01-.57-.01-.198 0-.52.074-.792.372-.272.297-1.04 1.016-1.04 2.479 0 1.462 1.065 2.875 1.213 3.074.149.198 2.096 3.2 5.077 4.487.709.306 1.262.489 1.694.625.712.227 1.36.195 1.871.118.571-.085 1.758-.719 2.006-1.413.248-.694.248-1.289.173-1.413-.074-.124-.272-.198-.57-.347m-5.421 7.403h-.004a9.87 9.87 0 01-5.031-1.378l-.361-.214-3.741.982.998-3.648-.235-.374a9.86 9.86 0 01-1.51-5.26c.001-5.45 4.436-9.884 9.888-9.884 2.64 0 5.122 1.03 6.988 2.898a9.825 9.825 0 012.893 6.994c-.003 5.45-4.437 9.884-9.885 9.884m8.413-18.297A11.815 11.815 0 0012.05 0C5.495 0 .16 5.335.157 11.892c0 2.096.547 4.142 1.588 5.945L.057 24l6.305-1.654a11.882 11.882 0 005.683 1.448h.005c6.554 0 11.89-5.335 11.893-11.893a11.821 11.821 0 00-3.48-8.413z"/></svg>
+  <span class="absolute right-16 bg-ocean-900 text-white text-xs px-3 py-1.5 rounded-full whitespace-nowrap opacity-0 group-hover:opacity-100 transition-opacity pointer-events-none shadow-lg">¡Escríbenos!</span>
+</a>
+
+
+<!-- ══════════════════════════════════════════
+     SCRIPTS
+══════════════════════════════════════════ -->
+<script src="https://unpkg.com/aos@2.3.4/dist/aos.js"></script>
+<script>
+AOS.init({ duration: 1000, easing: 'ease-out-cubic', once: true, offset: 80 });
+lucide.createIcons();
+
+// Navbar scroll
+const navbar = document.getElementById('navbar');
+window.addEventListener('scroll', () => {
+  navbar.classList.toggle('scrolled', window.scrollY > 60);
+}, { passive: true });
+
+// Form
+function enviarContacto(e) {
+  e.preventDefault();
+  const btn = document.getElementById('contact-btn');
+  btn.disabled = true;
+  btn.textContent = 'Enviando...';
+  setTimeout(() => {
+    alert('✅ ¡Mensaje recibido!\n\nUn asesor de Zenith Bahia Properties te contactará en menos de 2 horas.\n\nGracias por confiar en nosotros.');
+    e.target.reset();
+    btn.disabled = false;
+    btn.innerHTML = '<i data-lucide="send" class="w-4 h-4"></i> Enviar mensaje';
+    lucide.createIcons();
+  }, 1200);
+}
+</script>
+</body>
+</html>

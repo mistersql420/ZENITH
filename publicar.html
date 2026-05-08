@@ -1,0 +1,962 @@
+<!DOCTYPE html>
+<html lang="es" class="scroll-smooth">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <meta name="description" content="Publica tu propiedad con Zenith Bahia Properties. Difusión profesional en Bahía de Banderas y Puerto Vallarta.">
+  <title>Publicar Propiedad | Zenith Bahia Properties</title>
+
+  <script src="https://cdn.tailwindcss.com"></script>
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:ital,wght@0,400;0,600;1,400;1,600&family=Montserrat:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+  <link href="https://unpkg.com/aos@2.3.4/dist/aos.css" rel="stylesheet">
+  <script src="https://unpkg.com/lucide@latest"></script>
+
+  <script>
+    tailwind.config = {
+      theme: {
+        extend: {
+          fontFamily: {
+            serif: ['"Cormorant Garamond"', 'Georgia', 'serif'],
+            sans:  ['Montserrat', 'system-ui', 'sans-serif'],
+          },
+          colors: {
+            ocean: { 900:'#0a2540', 800:'#0a4d68', 700:'#005f73', 500:'#0096c7', 200:'#b8d8e8', 50:'#f0f8ff' },
+            gold:  { DEFAULT:'#d4a853', light:'#e9c46a', dark:'#c5a059' },
+          }
+        }
+      }
+    }
+  </script>
+
+  <style>
+    *, *::before, *::after { box-sizing: border-box; }
+    body  { font-family: 'Montserrat', sans-serif; }
+    h1, h2, h3 { font-family: 'Cormorant Garamond', serif; }
+
+    .page-bg {
+      background: linear-gradient(180deg,
+        #0a2540 0%, #003d5c 8%, #005f73 16%,
+        #4a9ab5 28%, #a8d5e8 42%,
+        #dff0f8 55%, #f8fbff 70%, #ffffff 100%
+      );
+      background-attachment: fixed;
+    }
+
+    #navbar { transition: all 0.4s ease; }
+    #navbar.scrolled {
+      background: rgba(10,37,64,.90);
+      backdrop-filter: blur(20px); -webkit-backdrop-filter: blur(20px);
+      box-shadow: 0 2px 32px rgba(0,0,0,.3);
+    }
+
+    .gold-line { width:56px; height:2px; background:linear-gradient(90deg,transparent,#d4a853,transparent); }
+
+    /* Step indicator */
+    .step-dot {
+      width: 36px; height: 36px; border-radius: 50%;
+      display: flex; align-items: center; justify-content: center;
+      font-size: 13px; font-weight: 600; transition: all .3s ease;
+      border: 2px solid rgba(255,255,255,.3);
+      color: rgba(255,255,255,.5);
+    }
+    .step-dot.active  { background: #d4a853; border-color: #d4a853; color: #0a2540; }
+    .step-dot.done    { background: #005f73; border-color: #005f73; color: white; }
+    .step-line        { flex: 1; height: 1px; background: rgba(255,255,255,.2); transition: background .3s ease; }
+    .step-line.done   { background: #d4a853; }
+
+    /* Form panel */
+    .form-panel { display: none; }
+    .form-panel.active { display: block; }
+
+    /* Custom input */
+    .f-input {
+      width: 100%;
+      border: 1.5px solid #e2e8f0;
+      border-radius: 10px;
+      padding: 11px 14px;
+      font-size: 14px;
+      font-family: 'Montserrat', sans-serif;
+      color: #1a202c;
+      background: white;
+      transition: all .25s ease;
+      outline: none;
+    }
+    .f-input:focus { border-color: #d4a853; box-shadow: 0 0 0 3px rgba(212,168,83,.15); }
+    .f-input.error { border-color: #e53e3e; box-shadow: 0 0 0 3px rgba(229,62,62,.1); }
+    .f-input::placeholder { color: #a0aec0; }
+
+    .f-label { display: block; font-size: 12px; font-weight: 600; color: #4a5568; text-transform: uppercase; letter-spacing: .05em; margin-bottom: 6px; }
+    .f-label span { color: #e53e3e; margin-left: 2px; }
+
+    select.f-input { cursor: pointer; }
+    textarea.f-input { resize: vertical; min-height: 110px; }
+
+    /* Amenidad chip */
+    .amenidad-chip {
+      display: flex; align-items: center; gap: 8px;
+      padding: 8px 14px; border-radius: 9999px;
+      border: 1.5px solid #e2e8f0;
+      font-size: 12px; font-weight: 500; color: #4a5568;
+      cursor: pointer; transition: all .2s ease;
+      user-select: none; background: white;
+    }
+    .amenidad-chip:hover  { border-color: #d4a853; color: #0a2540; }
+    .amenidad-chip.on     { background: #0a2540; border-color: #0a2540; color: white; }
+    .amenidad-chip.on svg { stroke: #d4a853; }
+    .amenidad-chip input  { display: none; }
+
+    /* Modal T&C */
+    #modal-tc {
+      position: fixed; inset: 0; z-index: 9999;
+      background: rgba(10,37,64,.7); backdrop-filter: blur(6px);
+      display: flex; align-items: center; justify-content: center;
+      padding: 20px;
+      opacity: 0; pointer-events: none; transition: opacity .3s ease;
+    }
+    #modal-tc.open { opacity: 1; pointer-events: all; }
+    #modal-tc .inner {
+      background: white; border-radius: 20px;
+      max-width: 680px; width: 100%;
+      max-height: 88vh; display: flex; flex-direction: column;
+      box-shadow: 0 40px 80px rgba(0,0,0,.3);
+    }
+
+    /* Progress bar */
+    #progress-bar { transition: width .4s ease; }
+
+    /* Success */
+    #success-screen { display: none; }
+
+    /* Btn */
+    .btn-gold {
+      background: #d4a853; color: #0a2540;
+      font-weight: 700; font-size: 13px; letter-spacing: .1em; text-transform: uppercase;
+      padding: 14px 32px; border-radius: 9999px;
+      border: none; cursor: pointer; transition: all .3s ease;
+      display: inline-flex; align-items: center; gap: 8px;
+    }
+    .btn-gold:hover { background: #c5a059; transform: translateY(-1px); box-shadow: 0 8px 24px rgba(212,168,83,.4); }
+    .btn-gold:disabled { opacity: .6; cursor: not-allowed; transform: none; }
+
+    .btn-outline {
+      background: transparent; color: #4a5568;
+      font-weight: 600; font-size: 13px; letter-spacing: .05em;
+      padding: 13px 28px; border-radius: 9999px;
+      border: 1.5px solid #e2e8f0; cursor: pointer; transition: all .25s ease;
+    }
+    .btn-outline:hover { border-color: #0a2540; color: #0a2540; }
+
+    /* Cómo funciona */
+    .paso-card {
+      background: rgba(255,255,255,.12);
+      backdrop-filter: blur(16px); -webkit-backdrop-filter: blur(16px);
+      border: 1px solid rgba(255,255,255,.2);
+      border-radius: 20px; padding: 28px 24px; text-align: center;
+      transition: all .35s ease;
+    }
+    .paso-card:hover { transform: translateY(-6px); background: rgba(255,255,255,.18); }
+
+    @keyframes wa-pulse {
+      0%,100% { box-shadow:0 0 0 0 rgba(37,211,102,.6); }
+      60%      { box-shadow:0 0 0 16px rgba(37,211,102,0); }
+    }
+    .wa-float { animation: wa-pulse 2.8s infinite; }
+
+    /* Tooltip error */
+    .err-msg { font-size: 11px; color: #e53e3e; margin-top: 4px; display: none; }
+    .err-msg.show { display: block; }
+  </style>
+</head>
+
+<body class="page-bg text-gray-800">
+
+<!-- ══════════════════════════════════════════
+     NAVBAR
+══════════════════════════════════════════ -->
+<nav id="navbar" class="fixed top-0 inset-x-0 z-50 px-6 py-4">
+  <div class="max-w-7xl mx-auto flex items-center justify-between">
+    <a href="index.html" class="flex flex-col leading-none">
+      <span class="font-serif text-white text-xl font-semibold tracking-wider">ZENITH</span>
+      <span class="text-gold text-[10px] tracking-[0.35em] uppercase font-medium">Bahia Properties</span>
+    </a>
+
+    <div class="hidden md:flex items-center gap-8">
+      <a href="index.html"    class="text-white/70 hover:text-white text-sm tracking-wide transition">Inicio</a>
+      <a href="catalogo.html" class="text-white/70 hover:text-white text-sm tracking-wide transition">Propiedades</a>
+      <a href="publicar.html" class="text-white text-sm tracking-wide font-medium border-b border-gold pb-0.5">Publicar</a>
+      <a href="index.html#contacto" class="text-white/70 hover:text-white text-sm tracking-wide transition">Contacto</a>
+    </div>
+
+    <a href="catalogo.html" class="hidden md:inline-flex items-center gap-2 bg-gold hover:bg-gold-light text-ocean-900 font-semibold text-xs px-5 py-2.5 rounded-full transition tracking-wider uppercase">
+      Ver propiedades
+    </a>
+
+    <button class="md:hidden text-white" onclick="document.getElementById('mob-menu').classList.toggle('hidden')">
+      <i data-lucide="menu" class="w-6 h-6"></i>
+    </button>
+  </div>
+
+  <div id="mob-menu" class="hidden md:hidden mt-4 pb-4 border-t border-white/20">
+    <div class="flex flex-col gap-4 pt-4 px-2">
+      <a href="index.html"    class="text-white/80 hover:text-white text-sm">Inicio</a>
+      <a href="catalogo.html" class="text-white/80 hover:text-white text-sm">Propiedades</a>
+      <a href="publicar.html" class="text-gold font-medium text-sm">Publicar</a>
+      <a href="index.html#contacto" class="text-white/80 hover:text-white text-sm">Contacto</a>
+    </div>
+  </div>
+</nav>
+
+
+<!-- ══════════════════════════════════════════
+     HERO
+══════════════════════════════════════════ -->
+<section class="pt-32 pb-20 px-6 text-center relative overflow-hidden">
+  <div class="max-w-3xl mx-auto" data-aos="fade-up">
+    <p class="text-gold text-xs tracking-[0.35em] uppercase font-medium mb-4">Zenith Bahia Properties</p>
+    <h1 class="font-serif text-white text-5xl md:text-6xl font-semibold leading-tight mb-6">
+      Publica tu<br><em class="text-gold not-italic">Propiedad</em>
+    </h1>
+    <div class="gold-line mx-auto mb-6"></div>
+    <p class="text-white/70 text-base font-light leading-relaxed max-w-xl mx-auto">
+      Llega a miles de viajeros y compradores que buscan lo mejor de Bahía de Banderas y Puerto Vallarta. Proceso sencillo, revisión en 48 horas.
+    </p>
+  </div>
+</section>
+
+
+<!-- ══════════════════════════════════════════
+     CÓMO FUNCIONA
+══════════════════════════════════════════ -->
+<section class="pb-20 px-6">
+  <div class="max-w-5xl mx-auto">
+    <div class="grid grid-cols-1 md:grid-cols-3 gap-6">
+
+      <div class="paso-card" data-aos="fade-up" data-aos-delay="0">
+        <div class="w-14 h-14 rounded-full bg-gold/20 flex items-center justify-center mx-auto mb-4">
+          <i data-lucide="file-text" class="w-6 h-6 text-gold"></i>
+        </div>
+        <p class="text-gold text-xs tracking-widest uppercase mb-2 font-medium">Paso 1</p>
+        <h3 class="font-serif text-white text-xl mb-2">Llena el formulario</h3>
+        <p class="text-white/55 text-sm font-light leading-relaxed">Comparte los datos de tu propiedad, amenidades, descripción y un link con tus fotos.</p>
+      </div>
+
+      <div class="paso-card" data-aos="fade-up" data-aos-delay="100">
+        <div class="w-14 h-14 rounded-full bg-gold/20 flex items-center justify-center mx-auto mb-4">
+          <i data-lucide="search" class="w-6 h-6 text-gold"></i>
+        </div>
+        <p class="text-gold text-xs tracking-widest uppercase mb-2 font-medium">Paso 2</p>
+        <h3 class="font-serif text-white text-xl mb-2">Revisamos tu solicitud</h3>
+        <p class="text-white/55 text-sm font-light leading-relaxed">Nuestro equipo revisa la información y las fotos en un plazo de 48 a 72 horas hábiles.</p>
+      </div>
+
+      <div class="paso-card" data-aos="fade-up" data-aos-delay="200">
+        <div class="w-14 h-14 rounded-full bg-gold/20 flex items-center justify-center mx-auto mb-4">
+          <i data-lucide="globe" class="w-6 h-6 text-gold"></i>
+        </div>
+        <p class="text-gold text-xs tracking-widest uppercase mb-2 font-medium">Paso 3</p>
+        <h3 class="font-serif text-white text-xl mb-2">Publicamos y difundimos</h3>
+        <p class="text-white/55 text-sm font-light leading-relaxed">Tu propiedad aparece en nuestro catálogo y en nuestros canales de difusión digital.</p>
+      </div>
+
+    </div>
+  </div>
+</section>
+
+
+<!-- ══════════════════════════════════════════
+     FORMULARIO MULTI-PASO
+══════════════════════════════════════════ -->
+<section class="pb-24 px-6">
+  <div class="max-w-3xl mx-auto">
+
+    <!-- Barra de progreso -->
+    <div class="mb-8" data-aos="fade-up">
+      <div class="flex items-center gap-2 mb-6">
+        <!-- Paso 1 -->
+        <div class="flex flex-col items-center gap-1.5" style="min-width:80px">
+          <div id="dot-1" class="step-dot active">1</div>
+          <span class="text-white/60 text-[10px] tracking-wide uppercase">Contacto</span>
+        </div>
+        <div id="line-1" class="step-line"></div>
+        <!-- Paso 2 -->
+        <div class="flex flex-col items-center gap-1.5" style="min-width:80px">
+          <div id="dot-2" class="step-dot">2</div>
+          <span class="text-white/60 text-[10px] tracking-wide uppercase">Propiedad</span>
+        </div>
+        <div id="line-2" class="step-line"></div>
+        <!-- Paso 3 -->
+        <div class="flex flex-col items-center gap-1.5" style="min-width:80px">
+          <div id="dot-3" class="step-dot">3</div>
+          <span class="text-white/60 text-[10px] tracking-wide uppercase">Fotos y envío</span>
+        </div>
+      </div>
+      <!-- Barra fina -->
+      <div class="h-1 bg-white/10 rounded-full overflow-hidden">
+        <div id="progress-bar" class="h-full bg-gold rounded-full" style="width:33%"></div>
+      </div>
+    </div>
+
+    <!-- Tarjeta del formulario -->
+    <div class="bg-white rounded-3xl shadow-2xl overflow-hidden" data-aos="fade-up" data-aos-delay="100">
+
+      <form id="pub-form"
+            action="https://formspree.io/f/YOUR_FORM_ID"
+            method="POST"
+            novalidate>
+
+        <!-- Honeypot anti-spam -->
+        <input type="text" name="_gotcha" style="display:none" tabindex="-1" autocomplete="off">
+        <input type="hidden" name="_subject" value="Nueva solicitud de publicación — Zenith Bahia Properties">
+
+        <!-- ─────────────────────────────
+             PASO 1: DATOS DE CONTACTO
+        ───────────────────────────── -->
+        <div id="panel-1" class="form-panel active p-8 md:p-10">
+          <div class="mb-8">
+            <h2 class="font-serif text-ocean-900 text-3xl font-semibold mb-1">Tus datos de contacto</h2>
+            <p class="text-gray-400 text-sm">Te contactaremos para coordinar la publicación.</p>
+          </div>
+
+          <div class="grid grid-cols-1 md:grid-cols-2 gap-6">
+
+            <div>
+              <label class="f-label">Nombre completo <span>*</span></label>
+              <input id="nombre" name="nombre" type="text" class="f-input" placeholder="Ej. Ana García" required>
+              <p id="err-nombre" class="err-msg">Por favor ingresa tu nombre completo.</p>
+            </div>
+
+            <div>
+              <label class="f-label">Correo electrónico <span>*</span></label>
+              <input id="email" name="email" type="email" class="f-input" placeholder="tu@correo.com" required>
+              <p id="err-email" class="err-msg">Ingresa un correo electrónico válido.</p>
+            </div>
+
+            <div>
+              <label class="f-label">Teléfono / WhatsApp <span>*</span></label>
+              <input id="telefono" name="telefono" type="tel" class="f-input" placeholder="+52 322 000 0000" required>
+              <p id="err-telefono" class="err-msg">Ingresa tu número de teléfono.</p>
+            </div>
+
+            <div>
+              <label class="f-label">¿Eres...? <span>*</span></label>
+              <select id="rol" name="rol" class="f-input" required>
+                <option value="" disabled selected>Selecciona una opción</option>
+                <option value="propietario">Propietario / Dueño</option>
+                <option value="agente">Agente inmobiliario</option>
+                <option value="administrador">Administrador de renta</option>
+              </select>
+              <p id="err-rol" class="err-msg">Selecciona tu rol.</p>
+            </div>
+
+          </div>
+
+          <div class="flex justify-end mt-10">
+            <button type="button" onclick="goStep(2)" class="btn-gold">
+              Siguiente <i data-lucide="arrow-right" class="w-4 h-4"></i>
+            </button>
+          </div>
+        </div>
+
+
+        <!-- ─────────────────────────────
+             PASO 2: DATOS DE LA PROPIEDAD
+        ───────────────────────────── -->
+        <div id="panel-2" class="form-panel p-8 md:p-10">
+          <div class="mb-8">
+            <h2 class="font-serif text-ocean-900 text-3xl font-semibold mb-1">Detalles de la propiedad</h2>
+            <p class="text-gray-400 text-sm">Información básica y amenidades.</p>
+          </div>
+
+          <div class="grid grid-cols-1 md:grid-cols-2 gap-6 mb-6">
+
+            <div>
+              <label class="f-label">Nombre de la propiedad <span>*</span></label>
+              <input id="nombre-prop" name="nombre_propiedad" type="text" class="f-input" placeholder="Ej. Villa Azul Punta Mita" required>
+              <p id="err-nombre-prop" class="err-msg">Ingresa el nombre de tu propiedad.</p>
+            </div>
+
+            <div>
+              <label class="f-label">Tipo de propiedad <span>*</span></label>
+              <select id="tipo" name="tipo" class="f-input" required>
+                <option value="" disabled selected>Selecciona</option>
+                <option>Casa</option>
+                <option>Villa</option>
+                <option>Departamento</option>
+                <option>Penthouse</option>
+                <option>Estudio</option>
+                <option>Condominio</option>
+                <option>Terreno</option>
+              </select>
+              <p id="err-tipo" class="err-msg">Selecciona el tipo de propiedad.</p>
+            </div>
+
+            <div>
+              <label class="f-label">Zona / Ubicación <span>*</span></label>
+              <select id="zona" name="zona" class="f-input" required>
+                <option value="" disabled selected>Selecciona</option>
+                <option>Puerto Vallarta</option>
+                <option>Bucerías</option>
+                <option>La Cruz de Huanacaxtle</option>
+                <option>Punta Mita</option>
+                <option>Sayulita</option>
+                <option>San Pancho</option>
+                <option>Nuevo Vallarta</option>
+                <option>Bahía de Banderas (otro)</option>
+                <option>Riviera Nayarit (otro)</option>
+              </select>
+              <p id="err-zona" class="err-msg">Selecciona la zona.</p>
+            </div>
+
+            <div>
+              <label class="f-label">Colonia / Fraccionamiento</label>
+              <input name="colonia" type="text" class="f-input" placeholder="Ej. Versalles, Litibú, El Tigre">
+            </div>
+
+            <div>
+              <label class="f-label">Tipo de operación <span>*</span></label>
+              <select id="operacion" name="operacion" class="f-input" required>
+                <option value="" disabled selected>Selecciona</option>
+                <option value="renta-vacacional">Renta vacacional (por noche)</option>
+                <option value="renta-mensual">Renta mensual (largo plazo)</option>
+                <option value="venta">Venta</option>
+                <option value="renta-venta">Renta y venta</option>
+              </select>
+              <p id="err-operacion" class="err-msg">Selecciona el tipo de operación.</p>
+            </div>
+
+            <div>
+              <label class="f-label" id="label-precio">Precio por noche (USD) <span>*</span></label>
+              <input id="precio" name="precio" type="text" class="f-input" placeholder="Ej. $250 USD / noche" required>
+              <p id="err-precio" class="err-msg">Ingresa el precio de la propiedad.</p>
+            </div>
+
+            <div>
+              <label class="f-label">Recámaras <span>*</span></label>
+              <select id="recamaras" name="recamaras" class="f-input" required>
+                <option value="" disabled selected>Selecciona</option>
+                <option>Estudio</option>
+                <option>1</option>
+                <option>2</option>
+                <option>3</option>
+                <option>4</option>
+                <option>5</option>
+                <option>6+</option>
+              </select>
+              <p id="err-recamaras" class="err-msg">Selecciona el número de recámaras.</p>
+            </div>
+
+            <div>
+              <label class="f-label">Baños <span>*</span></label>
+              <select id="banos" name="banos" class="f-input" required>
+                <option value="" disabled selected>Selecciona</option>
+                <option>1</option>
+                <option>1.5</option>
+                <option>2</option>
+                <option>2.5</option>
+                <option>3</option>
+                <option>3.5</option>
+                <option>4+</option>
+              </select>
+              <p id="err-banos" class="err-msg">Selecciona el número de baños.</p>
+            </div>
+
+            <div>
+              <label class="f-label">Capacidad (personas)</label>
+              <select name="capacidad" class="f-input">
+                <option value="" disabled selected>Selecciona</option>
+                <option>2</option><option>4</option><option>6</option><option>8</option>
+                <option>10</option><option>12</option><option>14</option><option>16+</option>
+              </select>
+            </div>
+
+            <div>
+              <label class="f-label">Superficie (m²)</label>
+              <input name="superficie" type="text" class="f-input" placeholder="Ej. 180 m²">
+            </div>
+
+          </div>
+
+          <!-- Amenidades -->
+          <div class="mt-2">
+            <label class="f-label mb-4">Amenidades</label>
+            <div class="flex flex-wrap gap-2" id="amenidades-grid">
+
+              <label class="amenidad-chip" onclick="toggleChip(this)">
+                <input type="checkbox" name="amenidades[]" value="Alberca privada">
+                <i data-lucide="waves" class="w-3.5 h-3.5"></i> Alberca privada
+              </label>
+              <label class="amenidad-chip" onclick="toggleChip(this)">
+                <input type="checkbox" name="amenidades[]" value="Alberca compartida">
+                <i data-lucide="waves" class="w-3.5 h-3.5"></i> Alberca compartida
+              </label>
+              <label class="amenidad-chip" onclick="toggleChip(this)">
+                <input type="checkbox" name="amenidades[]" value="Vista al mar">
+                <i data-lucide="eye" class="w-3.5 h-3.5"></i> Vista al mar
+              </label>
+              <label class="amenidad-chip" onclick="toggleChip(this)">
+                <input type="checkbox" name="amenidades[]" value="Frente a playa">
+                <i data-lucide="anchor" class="w-3.5 h-3.5"></i> Frente a playa
+              </label>
+              <label class="amenidad-chip" onclick="toggleChip(this)">
+                <input type="checkbox" name="amenidades[]" value="Jacuzzi">
+                <i data-lucide="droplets" class="w-3.5 h-3.5"></i> Jacuzzi
+              </label>
+              <label class="amenidad-chip" onclick="toggleChip(this)">
+                <input type="checkbox" name="amenidades[]" value="Roof garden">
+                <i data-lucide="tree-pine" class="w-3.5 h-3.5"></i> Roof garden
+              </label>
+              <label class="amenidad-chip" onclick="toggleChip(this)">
+                <input type="checkbox" name="amenidades[]" value="Estacionamiento">
+                <i data-lucide="car" class="w-3.5 h-3.5"></i> Estacionamiento
+              </label>
+              <label class="amenidad-chip" onclick="toggleChip(this)">
+                <input type="checkbox" name="amenidades[]" value="Aire acondicionado">
+                <i data-lucide="wind" class="w-3.5 h-3.5"></i> Aire acondicionado
+              </label>
+              <label class="amenidad-chip" onclick="toggleChip(this)">
+                <input type="checkbox" name="amenidades[]" value="WiFi">
+                <i data-lucide="wifi" class="w-3.5 h-3.5"></i> WiFi
+              </label>
+              <label class="amenidad-chip" onclick="toggleChip(this)">
+                <input type="checkbox" name="amenidades[]" value="Smart TV / Netflix">
+                <i data-lucide="tv" class="w-3.5 h-3.5"></i> Smart TV / Netflix
+              </label>
+              <label class="amenidad-chip" onclick="toggleChip(this)">
+                <input type="checkbox" name="amenidades[]" value="Cocina equipada">
+                <i data-lucide="utensils" class="w-3.5 h-3.5"></i> Cocina equipada
+              </label>
+              <label class="amenidad-chip" onclick="toggleChip(this)">
+                <input type="checkbox" name="amenidades[]" value="BBQ / Asador">
+                <i data-lucide="flame" class="w-3.5 h-3.5"></i> BBQ / Asador
+              </label>
+              <label class="amenidad-chip" onclick="toggleChip(this)">
+                <input type="checkbox" name="amenidades[]" value="Pet friendly">
+                <i data-lucide="heart" class="w-3.5 h-3.5"></i> Pet friendly
+              </label>
+              <label class="amenidad-chip" onclick="toggleChip(this)">
+                <input type="checkbox" name="amenidades[]" value="Seguridad / Caseta">
+                <i data-lucide="shield" class="w-3.5 h-3.5"></i> Seguridad
+              </label>
+              <label class="amenidad-chip" onclick="toggleChip(this)">
+                <input type="checkbox" name="amenidades[]" value="Servicio de limpieza">
+                <i data-lucide="sparkles" class="w-3.5 h-3.5"></i> Limpieza
+              </label>
+              <label class="amenidad-chip" onclick="toggleChip(this)">
+                <input type="checkbox" name="amenidades[]" value="Cancha / Gym">
+                <i data-lucide="dumbbell" class="w-3.5 h-3.5"></i> Gym / Cancha
+              </label>
+
+            </div>
+          </div>
+
+          <div class="flex justify-between mt-10">
+            <button type="button" onclick="goStep(1)" class="btn-outline">
+              <i data-lucide="arrow-left" class="w-4 h-4"></i> Atrás
+            </button>
+            <button type="button" onclick="goStep(3)" class="btn-gold">
+              Siguiente <i data-lucide="arrow-right" class="w-4 h-4"></i>
+            </button>
+          </div>
+        </div>
+
+
+        <!-- ─────────────────────────────
+             PASO 3: FOTOS + DESCRIPCIÓN + T&C
+        ───────────────────────────── -->
+        <div id="panel-3" class="form-panel p-8 md:p-10">
+          <div class="mb-8">
+            <h2 class="font-serif text-ocean-900 text-3xl font-semibold mb-1">Fotos y descripción</h2>
+            <p class="text-gray-400 text-sm">El último paso antes de enviar tu solicitud.</p>
+          </div>
+
+          <!-- Instrucciones fotos -->
+          <div class="bg-ocean-50 border border-ocean-200 rounded-2xl p-5 mb-6">
+            <div class="flex gap-3">
+              <i data-lucide="image" class="w-5 h-5 text-ocean-700 flex-shrink-0 mt-0.5"></i>
+              <div>
+                <p class="text-ocean-900 text-sm font-semibold mb-1">¿Cómo compartir tus fotos?</p>
+                <ol class="text-ocean-700 text-xs font-light leading-relaxed space-y-1 list-decimal list-inside">
+                  <li>Sube tus fotos a Google Drive o Dropbox</li>
+                  <li>Genera un enlace compartido con acceso de visualización</li>
+                  <li>Pega el enlace en el campo de abajo</li>
+                </ol>
+                <p class="text-ocean-700/70 text-xs mt-2">Mínimo 10 fotos · JPG o PNG · Mayor a 1200px · Buena iluminación</p>
+              </div>
+            </div>
+          </div>
+
+          <div class="grid grid-cols-1 gap-6 mb-6">
+
+            <div>
+              <label class="f-label">Enlace de fotos (Google Drive / Dropbox) <span>*</span></label>
+              <input id="fotos-link" name="fotos_link" type="url" class="f-input" placeholder="https://drive.google.com/drive/folders/..." required>
+              <p id="err-fotos" class="err-msg">Por favor ingresa el enlace de tus fotos.</p>
+            </div>
+
+            <div>
+              <label class="f-label">Descripción de la propiedad <span>*</span></label>
+              <textarea id="descripcion" name="descripcion" class="f-input" rows="5"
+                placeholder="Describe lo más especial de tu propiedad: vistas, diseño, ubicación, experiencias cercanas..." required></textarea>
+              <p id="err-descripcion" class="err-msg">Escribe una descripción de la propiedad.</p>
+            </div>
+
+            <div>
+              <label class="f-label">Disponibilidad / notas adicionales</label>
+              <textarea name="notas" class="f-input" rows="3"
+                placeholder="Ej. Disponible todo el año excepto diciembre. Mínimo 3 noches..."></textarea>
+            </div>
+
+          </div>
+
+          <!-- Términos y condiciones -->
+          <div class="border border-gray-200 rounded-2xl p-5 mb-6">
+            <div class="flex items-start gap-3">
+              <input type="checkbox" id="acepto-tc" name="acepto_terminos" value="si" class="mt-1 w-4 h-4 accent-ocean-700 flex-shrink-0 cursor-pointer" required>
+              <div>
+                <label for="acepto-tc" class="text-sm text-gray-700 cursor-pointer leading-relaxed">
+                  He leído y acepto los
+                  <button type="button" onclick="abrirTC()"
+                    class="text-ocean-700 underline font-semibold hover:text-gold transition">
+                    Términos y Condiciones de Publicación
+                  </button>
+                  de Zenith Bahia Properties. Confirmo que la información y fotografías proporcionadas son verídicas y de mi propiedad o tengo autorización para usarlas.
+                </label>
+                <p id="err-tc" class="err-msg">Debes aceptar los términos y condiciones para continuar.</p>
+              </div>
+            </div>
+          </div>
+
+          <div class="flex justify-between mt-6">
+            <button type="button" onclick="goStep(2)" class="btn-outline">
+              <i data-lucide="arrow-left" class="w-4 h-4"></i> Atrás
+            </button>
+            <button type="submit" id="btn-submit" class="btn-gold">
+              <i data-lucide="send" class="w-4 h-4"></i> Enviar solicitud
+            </button>
+          </div>
+        </div>
+
+      </form>
+
+      <!-- SUCCESS -->
+      <div id="success-screen" class="p-12 text-center">
+        <div class="w-20 h-20 rounded-full bg-green-100 flex items-center justify-center mx-auto mb-6">
+          <i data-lucide="check-circle" class="w-10 h-10 text-green-600"></i>
+        </div>
+        <h2 class="font-serif text-ocean-900 text-3xl font-semibold mb-3">¡Solicitud enviada!</h2>
+        <p class="text-gray-500 text-sm leading-relaxed mb-8 max-w-md mx-auto">
+          Hemos recibido la información de tu propiedad. Nuestro equipo la revisará y te contactará en un plazo de <strong>48 a 72 horas hábiles</strong>.
+        </p>
+        <a href="catalogo.html" class="btn-gold inline-flex">
+          <i data-lucide="grid" class="w-4 h-4"></i> Ver catálogo
+        </a>
+      </div>
+
+    </div><!-- /card -->
+  </div>
+</section>
+
+
+<!-- ══════════════════════════════════════════
+     MODAL TÉRMINOS Y CONDICIONES
+══════════════════════════════════════════ -->
+<div id="modal-tc" role="dialog" aria-modal="true" aria-labelledby="tc-title">
+  <div class="inner">
+    <!-- Header -->
+    <div class="flex items-center justify-between px-8 py-5 border-b border-gray-100 flex-shrink-0">
+      <div>
+        <h3 id="tc-title" class="font-serif text-ocean-900 text-2xl font-semibold">Términos y Condiciones</h3>
+        <p class="text-gray-400 text-xs mt-0.5">Publicación de Propiedades — Zenith Bahia Properties</p>
+      </div>
+      <button onclick="cerrarTC()" class="text-gray-400 hover:text-gray-700 transition">
+        <i data-lucide="x" class="w-5 h-5"></i>
+      </button>
+    </div>
+
+    <!-- Contenido scrollable -->
+    <div class="overflow-y-auto flex-1 px-8 py-6 text-sm text-gray-600 leading-relaxed space-y-5">
+
+      <p class="text-gray-400 text-xs">Vigentes a partir del 1 de mayo de 2025 · Bahía de Banderas, Nayarit, México</p>
+
+      <div>
+        <h4 class="font-semibold text-ocean-900 mb-1">1. Aceptación de los términos</h4>
+        <p>Al enviar el formulario de publicación en el sitio web de Zenith Bahia Properties ("la Plataforma"), el propietario o representante ("el Publicante") declara haber leído, comprendido y aceptado íntegramente los presentes Términos y Condiciones.</p>
+      </div>
+
+      <div>
+        <h4 class="font-semibold text-ocean-900 mb-1">2. Veracidad de la información</h4>
+        <p>El Publicante garantiza que toda la información proporcionada —incluyendo características de la propiedad, precios, ubicación, capacidad y amenidades— es verídica, precisa y está actualizada al momento del envío. Zenith Bahia Properties no se hace responsable de información inexacta proporcionada por el Publicante.</p>
+      </div>
+
+      <div>
+        <h4 class="font-semibold text-ocean-900 mb-1">3. Derechos sobre las fotografías</h4>
+        <p>El Publicante declara ser el titular de los derechos de las imágenes proporcionadas o contar con la autorización expresa del titular para su uso comercial. Al enviar las imágenes, el Publicante otorga a Zenith Bahia Properties una licencia no exclusiva, gratuita y vigente durante la publicación, para reproducir, adaptar y distribuir dichas imágenes en la Plataforma y en canales de difusión digitales asociados.</p>
+      </div>
+
+      <div>
+        <h4 class="font-semibold text-ocean-900 mb-1">4. Proceso de revisión y aprobación</h4>
+        <p>Toda solicitud de publicación será revisada por el equipo de Zenith Bahia Properties en un plazo de 48 a 72 horas hábiles. Zenith Bahia Properties se reserva el derecho de rechazar, modificar o solicitar información adicional sin necesidad de justificación, especialmente si la propiedad no cumple con los estándares de calidad de la Plataforma.</p>
+      </div>
+
+      <div>
+        <h4 class="font-semibold text-ocean-900 mb-1">5. Duración de la publicación</h4>
+        <p>Una vez aprobada, la publicación tendrá una vigencia de <strong>3 meses calendario</strong>, renovables a solicitud del Publicante. Zenith Bahia Properties podrá despublicar una propiedad en cualquier momento si detecta información incorrecta, incumplimiento de estos términos, o a petición del Publicante.</p>
+      </div>
+
+      <div>
+        <h4 class="font-semibold text-ocean-900 mb-1">6. Comisiones y tarifas</h4>
+        <p>Los términos específicos de comisiones o tarifas por difusión serán acordados por separado entre Zenith Bahia Properties y el Publicante, previo a la publicación. La presentación de la solicitud no genera ningún cargo automático.</p>
+      </div>
+
+      <div>
+        <h4 class="font-semibold text-ocean-900 mb-1">7. Actualizaciones de la publicación</h4>
+        <p>Cualquier cambio en la información de la propiedad (precio, disponibilidad, amenidades) deberá comunicarse a Zenith Bahia Properties con al menos 24 horas de anticipación, enviando un correo a <strong>hola@zenithbahia.com</strong>. Zenith Bahia Properties no se responsabiliza por publicaciones con información desactualizada cuya modificación no haya sido solicitada.</p>
+      </div>
+
+      <div>
+        <h4 class="font-semibold text-ocean-900 mb-1">8. Privacidad y protección de datos</h4>
+        <p>Los datos personales del Publicante (nombre, correo, teléfono) serán utilizados exclusivamente para la gestión de la publicación y la comunicación entre las partes. No serán vendidos ni cedidos a terceros. El tratamiento de datos se apega a la Ley Federal de Protección de Datos Personales en Posesión de los Particulares (LFPDPPP) vigente en México.</p>
+      </div>
+
+      <div>
+        <h4 class="font-semibold text-ocean-900 mb-1">9. Limitación de responsabilidad</h4>
+        <p>Zenith Bahia Properties actúa como plataforma de difusión. No es parte en las transacciones entre el Publicante y los interesados, y no se hace responsable por incumplimientos, daños o disputas que surjan de las relaciones entre ellos.</p>
+      </div>
+
+      <div>
+        <h4 class="font-semibold text-ocean-900 mb-1">10. Modificaciones a los términos</h4>
+        <p>Zenith Bahia Properties se reserva el derecho de actualizar estos Términos en cualquier momento. Los cambios serán notificados por correo electrónico o mediante aviso en la Plataforma. El uso continuado del servicio implica la aceptación de los nuevos términos.</p>
+      </div>
+
+      <div>
+        <h4 class="font-semibold text-ocean-900 mb-1">11. Jurisdicción</h4>
+        <p>Para cualquier controversia derivada de estos Términos, las partes se someten a la jurisdicción de los tribunales competentes de Bahía de Banderas, Nayarit, México, renunciando a cualquier otro fuero que pudiera corresponderles.</p>
+      </div>
+
+    </div>
+
+    <!-- Footer modal -->
+    <div class="px-8 py-5 border-t border-gray-100 flex-shrink-0 flex justify-between items-center gap-4">
+      <p class="text-gray-400 text-xs">Al cerrar y marcar la casilla confirmas tu aceptación.</p>
+      <button onclick="aceptarTC()" class="btn-gold text-sm px-6 py-3">
+        <i data-lucide="check" class="w-4 h-4"></i> Acepto los términos
+      </button>
+    </div>
+  </div>
+</div>
+
+
+<!-- ══════════════════════════════════════════
+     FOOTER
+══════════════════════════════════════════ -->
+<footer class="bg-ocean-900 py-16 px-6">
+  <div class="max-w-6xl mx-auto">
+    <div class="grid grid-cols-1 md:grid-cols-3 gap-10 mb-10">
+      <div>
+        <div class="flex flex-col leading-none mb-4">
+          <span class="font-serif text-white text-2xl font-semibold tracking-wider">ZENITH</span>
+          <span class="text-gold text-[10px] tracking-[0.35em] uppercase font-medium">Bahia Properties</span>
+        </div>
+        <p class="text-white/40 text-sm font-light leading-relaxed">Tu propiedad, nuestra pasión. Difusión y rentas en Bahía de Banderas y Puerto Vallarta.</p>
+      </div>
+      <div>
+        <p class="text-gold text-xs tracking-widest uppercase mb-4 font-medium">Navegación</p>
+        <ul class="space-y-2 text-sm text-white/50 font-light">
+          <li><a href="index.html"    class="hover:text-white transition">Inicio</a></li>
+          <li><a href="catalogo.html" class="hover:text-white transition">Propiedades</a></li>
+          <li><a href="publicar.html" class="hover:text-white transition text-gold/80">Publicar propiedad</a></li>
+          <li><a href="index.html#contacto" class="hover:text-white transition">Contacto</a></li>
+        </ul>
+      </div>
+      <div>
+        <p class="text-gold text-xs tracking-widest uppercase mb-4 font-medium">Contacto</p>
+        <div class="space-y-3 text-sm text-white/50 font-light">
+          <a href="tel:+523221234567" class="flex items-center gap-2 hover:text-white transition">
+            <i data-lucide="phone" class="w-4 h-4 text-gold"></i>+52 322 123 4567
+          </a>
+          <a href="mailto:hola@zenithbahia.com" class="flex items-center gap-2 hover:text-white transition">
+            <i data-lucide="mail" class="w-4 h-4 text-gold"></i>hola@zenithbahia.com
+          </a>
+          <p class="flex items-start gap-2">
+            <i data-lucide="map-pin" class="w-4 h-4 text-gold flex-shrink-0 mt-0.5"></i>
+            Bahía de Banderas, Nayarit &<br>Puerto Vallarta, Jalisco
+          </p>
+        </div>
+      </div>
+    </div>
+    <div class="border-t border-white/10 pt-6 flex flex-col sm:flex-row justify-between items-center gap-4">
+      <p class="text-white/20 text-xs font-light">© 2025 Zenith Bahia Properties. Todos los derechos reservados.</p>
+      <p class="text-white/15 text-xs font-light">Bahía de Banderas · Puerto Vallarta · Riviera Nayarit</p>
+    </div>
+  </div>
+</footer>
+
+
+<!-- ══════════════════════════════════════════
+     FLOATING WHATSAPP
+══════════════════════════════════════════ -->
+<a href="https://wa.me/523221234567?text=Hola%20Zenith%2C%20quiero%20publicar%20mi%20propiedad" target="_blank"
+   class="wa-float fixed bottom-6 right-6 z-50 w-14 h-14 rounded-full bg-[#25D366] hover:bg-[#1fba5c] flex items-center justify-center shadow-2xl transition-transform hover:scale-110 group">
+  <svg class="w-7 h-7 fill-white" viewBox="0 0 24 24"><path d="M17.472 14.382c-.297-.149-1.758-.867-2.03-.967-.273-.099-.471-.148-.67.15-.197.297-.767.966-.94 1.164-.173.199-.347.223-.644.075-.297-.15-1.255-.463-2.39-1.475-.883-.788-1.48-1.761-1.653-2.059-.173-.297-.018-.458.13-.606.134-.133.298-.347.446-.52.149-.174.198-.298.298-.497.099-.198.05-.371-.025-.52-.075-.149-.669-1.612-.916-2.207-.242-.579-.487-.5-.669-.51-.173-.008-.371-.01-.57-.01-.198 0-.52.074-.792.372-.272.297-1.04 1.016-1.04 2.479 0 1.462 1.065 2.875 1.213 3.074.149.198 2.096 3.2 5.077 4.487.709.306 1.262.489 1.694.625.712.227 1.36.195 1.871.118.571-.085 1.758-.719 2.006-1.413.248-.694.248-1.289.173-1.413-.074-.124-.272-.198-.57-.347m-5.421 7.403h-.004a9.87 9.87 0 01-5.031-1.378l-.361-.214-3.741.982.998-3.648-.235-.374a9.86 9.86 0 01-1.51-5.26c.001-5.45 4.436-9.884 9.888-9.884 2.64 0 5.122 1.03 6.988 2.898a9.825 9.825 0 012.893 6.994c-.003 5.45-4.437 9.884-9.885 9.884m8.413-18.297A11.815 11.815 0 0012.05 0C5.495 0 .16 5.335.157 11.892c0 2.096.547 4.142 1.588 5.945L.057 24l6.305-1.654a11.882 11.882 0 005.683 1.448h.005c6.554 0 11.89-5.335 11.893-11.893a11.821 11.821 0 00-3.48-8.413z"/></svg>
+  <span class="absolute right-16 bg-ocean-900 text-white text-xs px-3 py-1.5 rounded-full whitespace-nowrap opacity-0 group-hover:opacity-100 transition-opacity pointer-events-none shadow-lg">¡Escríbenos!</span>
+</a>
+
+
+<!-- ══════════════════════════════════════════
+     SCRIPTS
+══════════════════════════════════════════ -->
+<script src="https://unpkg.com/aos@2.3.4/dist/aos.js"></script>
+<script>
+AOS.init({ duration: 900, easing: 'ease-out-cubic', once: true, offset: 60 });
+lucide.createIcons();
+
+// Navbar scroll
+const navbar = document.getElementById('navbar');
+window.addEventListener('scroll', () => {
+  navbar.classList.toggle('scrolled', window.scrollY > 60);
+}, { passive: true });
+
+// ── PASO ACTUAL ──
+let currentStep = 1;
+
+function updateStepUI(step) {
+  for (let i = 1; i <= 3; i++) {
+    const dot  = document.getElementById('dot-' + i);
+    const line = document.getElementById('line-' + i);
+    dot.className = 'step-dot ' + (i < step ? 'done' : i === step ? 'active' : '');
+    if (line) line.className = 'step-line ' + (i < step ? 'done' : '');
+    document.getElementById('panel-' + i).className = 'form-panel ' + (i === step ? 'active' : '');
+  }
+  const pct = { 1: '33%', 2: '66%', 3: '100%' }[step];
+  document.getElementById('progress-bar').style.width = pct;
+  window.scrollTo({ top: document.getElementById('pub-form').offsetTop - 120, behavior: 'smooth' });
+}
+
+function validateStep(step) {
+  let ok = true;
+
+  const check = (id, errId, condition) => {
+    const el  = document.getElementById(id);
+    const err = document.getElementById(errId);
+    if (!el) return;
+    if (condition(el)) {
+      el.classList.remove('error'); err.classList.remove('show');
+    } else {
+      el.classList.add('error'); err.classList.add('show'); ok = false;
+    }
+  };
+
+  if (step === 1) {
+    check('nombre',   'err-nombre',   el => el.value.trim().length >= 3);
+    check('email',    'err-email',    el => /^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(el.value.trim()));
+    check('telefono', 'err-telefono', el => el.value.trim().length >= 8);
+    check('rol',      'err-rol',      el => el.value !== '');
+  }
+
+  if (step === 2) {
+    check('nombre-prop', 'err-nombre-prop', el => el.value.trim().length >= 3);
+    check('tipo',        'err-tipo',        el => el.value !== '');
+    check('zona',        'err-zona',        el => el.value !== '');
+    check('operacion',   'err-operacion',   el => el.value !== '');
+    check('precio',      'err-precio',      el => el.value.trim().length >= 1);
+    check('recamaras',   'err-recamaras',   el => el.value !== '');
+    check('banos',       'err-banos',       el => el.value !== '');
+  }
+
+  if (step === 3) {
+    check('fotos-link',  'err-fotos',       el => el.value.trim().length >= 10);
+    check('descripcion', 'err-descripcion', el => el.value.trim().length >= 30);
+    const tc    = document.getElementById('acepto-tc');
+    const errTc = document.getElementById('err-tc');
+    if (tc.checked) { errTc.classList.remove('show'); }
+    else            { errTc.classList.add('show'); ok = false; }
+  }
+
+  return ok;
+}
+
+function goStep(step) {
+  if (step > currentStep && !validateStep(currentStep)) return;
+  currentStep = step;
+  updateStepUI(step);
+  lucide.createIcons();
+}
+
+// ── AMENIDADES ──
+function toggleChip(el) {
+  el.classList.toggle('on');
+  el.querySelector('input').checked = el.classList.contains('on');
+}
+
+// ── MODAL T&C ──
+function abrirTC() {
+  document.getElementById('modal-tc').classList.add('open');
+  document.body.style.overflow = 'hidden';
+}
+function cerrarTC() {
+  document.getElementById('modal-tc').classList.remove('open');
+  document.body.style.overflow = '';
+}
+function aceptarTC() {
+  document.getElementById('acepto-tc').checked = true;
+  document.getElementById('err-tc').classList.remove('show');
+  cerrarTC();
+}
+document.getElementById('modal-tc').addEventListener('click', e => {
+  if (e.target === e.currentTarget) cerrarTC();
+});
+
+// ── CAMBIAR LABEL DE PRECIO SEGÚN OPERACIÓN ──
+document.getElementById('operacion').addEventListener('change', function() {
+  const labels = {
+    'renta-vacacional': 'Precio por noche (USD)',
+    'renta-mensual':    'Precio por mes (MXN o USD)',
+    'venta':            'Precio de venta',
+    'renta-venta':      'Precio (renta y/o venta)',
+  };
+  const lbl = document.getElementById('label-precio');
+  lbl.textContent = (labels[this.value] || 'Precio') + ' ';
+  const span = document.createElement('span');
+  span.textContent = '*'; span.style.color = '#e53e3e';
+  lbl.appendChild(span);
+});
+
+// ── ENVÍO DEL FORMULARIO ──
+document.getElementById('pub-form').addEventListener('submit', async function(e) {
+  e.preventDefault();
+  if (!validateStep(3)) return;
+
+  const btn = document.getElementById('btn-submit');
+  btn.disabled = true;
+  btn.innerHTML = '<svg class="w-4 h-4 animate-spin" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M12 2v4M12 18v4M4.93 4.93l2.83 2.83M16.24 16.24l2.83 2.83M2 12h4M18 12h4M4.93 19.07l2.83-2.83M16.24 7.76l2.83-2.83"/></svg> Enviando...';
+
+  try {
+    const res = await fetch(this.action, {
+      method: 'POST',
+      body: new FormData(this),
+      headers: { 'Accept': 'application/json' }
+    });
+
+    if (res.ok) {
+      this.style.display = 'none';
+      document.getElementById('success-screen').style.display = 'block';
+      lucide.createIcons();
+      window.scrollTo({ top: 0, behavior: 'smooth' });
+    } else {
+      const data = await res.json();
+      alert('Hubo un problema al enviar: ' + (data.error || 'Error desconocido. Intenta de nuevo o contáctanos por WhatsApp.'));
+      btn.disabled = false;
+      btn.innerHTML = '<i data-lucide="send" class="w-4 h-4"></i> Enviar solicitud';
+      lucide.createIcons();
+    }
+  } catch (err) {
+    alert('Error de conexión. Por favor intenta de nuevo o contáctanos directamente por WhatsApp.');
+    btn.disabled = false;
+    btn.innerHTML = '<i data-lucide="send" class="w-4 h-4"></i> Enviar solicitud';
+    lucide.createIcons();
+  }
+});
+</script>
+</body>
+</html>
