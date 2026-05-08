@@ -86,6 +86,8 @@ def generate_copy(data: dict) -> dict:
     client = anthropic.Anthropic()
     print("✍️  Generando copy de marketing con IA...", flush=True)
 
+    ubicacion_safe = data.get('ubicacion', 'RIVIERA NAYARIT · MÉXICO').upper().replace('"', "'")
+
     response = client.messages.create(
         model="claude-opus-4-7",
         max_tokens=4000,
@@ -155,7 +157,7 @@ Devuelve este JSON exacto con copy evocador y poético para cada sección:
         "titular_linea2": "Segunda línea del título CTA (1-2 palabras)",
         "cuerpo": "Párrafo de cierre — 30-40 palabras, crea urgencia elegante y emocional",
         "boton": "CONSULTA DISPONIBILIDAD AHORA",
-        "pie": "{data.get('ubicacion', 'RIVIERA NAYARIT · MÉXICO').upper()}"
+        "pie": "{ubicacion_safe}"
     }}
 }}"""
         }],
