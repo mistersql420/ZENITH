@@ -5,12 +5,12 @@
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <meta name="description" content="Catálogo de propiedades en renta – Zenith Bahia Properties. Bahía de Banderas y Puerto Vallarta.">
   <title>Propiedades | Zenith Bahia Properties</title>
+  <link rel="icon" type="image/svg+xml" href="assets/favicon.svg">
 
   <script src="https://cdn.tailwindcss.com"></script>
   <link rel="preconnect" href="https://fonts.googleapis.com">
   <link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:ital,wght@0,400;0,600;1,400;1,600&family=Montserrat:wght@300;400;500;600;700&display=swap" rel="stylesheet">
   <link href="https://unpkg.com/aos@2.3.4/dist/aos.css" rel="stylesheet">
-  <script src="https://unpkg.com/lucide@latest"></script>
 
   <script>
     tailwind.config = {
@@ -43,7 +43,6 @@
       background-attachment: fixed;
     }
 
-    /* Navbar */
     #navbar { transition: all 0.4s ease; }
     #navbar.scrolled {
       background: rgba(10,37,64,.90);
@@ -51,10 +50,8 @@
       box-shadow: 0 2px 32px rgba(0,0,0,.3);
     }
 
-    /* Gold line */
     .gold-line { width:56px; height:2px; background:linear-gradient(90deg,transparent,#d4a853,transparent); }
 
-    /* Glass */
     .glass {
       background: rgba(255,255,255,.10);
       backdrop-filter: blur(20px); -webkit-backdrop-filter: blur(20px);
@@ -83,31 +80,159 @@
       font-weight: 600;
     }
 
-    /* Prop card */
+    /* ── GRID EDITORIAL ── */
+    #grid {
+      display: grid;
+      grid-template-columns: 1fr;
+      gap: 24px;
+      grid-auto-flow: dense;
+    }
+    @media (min-width: 640px) {
+      #grid { grid-template-columns: repeat(2, 1fr); }
+    }
+    @media (min-width: 1024px) {
+      #grid { grid-template-columns: repeat(3, 1fr); }
+    }
+
+    /* ── PROP CARD ── */
     .prop-card {
       background: white;
       border-radius: 16px;
       overflow: hidden;
-      border: 1px solid #eee;
-      transition: all 0.4s ease;
+      border: 1px solid rgba(0,0,0,.06);
+      box-shadow: 0 8px 32px rgba(10,37,64,.08);
+      transition: transform .4s ease, box-shadow .4s ease, border-color .4s ease;
+      display: flex;
+      flex-direction: column;
     }
     .prop-card:hover {
       transform: translateY(-10px);
-      box-shadow: 0 24px 48px rgba(10,77,104,.14);
-      border-color: rgba(212,168,83,.4);
+      box-shadow: 0 28px 72px rgba(10,37,64,.16);
+      border-color: rgba(212,168,83,.35);
     }
-    .prop-card .card-img { overflow: hidden; height: 220px; }
-    .prop-card .card-img img {
-      width: 100%; height: 100%; object-fit: cover;
-      transition: transform .5s ease;
-      border-radius: 0;
-      filter: brightness(.95);
-    }
-    .prop-card:hover .card-img img { transform: scale(1.06); }
 
-    /* Badge zona */
-    .badge-bahia    { background:#e0f2fe; color:#0369a1; border:1px solid #bae6fd; }
-    .badge-vallarta { background:#f0fdf4; color:#15803d; border:1px solid #bbf7d0; }
+    /* Featured card spans 2 columns on md+ */
+    @media (min-width: 640px) {
+      .prop-card.featured { grid-column: span 2; }
+    }
+
+    /* ── CARD IMAGE ── */
+    .card-img {
+      position: relative;
+      overflow: hidden;
+      flex-shrink: 0;
+    }
+    .prop-card.featured .card-img { height: 320px; }
+    .prop-card:not(.featured) .card-img { height: 230px; }
+
+    .card-img img {
+      width: 100%; height: 100%;
+      object-fit: cover;
+      border-radius: 0;
+      filter: brightness(.92);
+      transition: transform .55s ease, filter .55s ease;
+    }
+    .prop-card:hover .card-img img {
+      transform: scale(1.06);
+      filter: brightness(.98);
+    }
+
+    /* Zona badge — top left */
+    .badge-zona {
+      position: absolute;
+      top: 12px; left: 12px;
+      padding: 4px 14px;
+      border-radius: 9999px;
+      font-size: 10px;
+      font-weight: 600;
+      letter-spacing: .07em;
+      text-transform: uppercase;
+      backdrop-filter: blur(10px);
+      -webkit-backdrop-filter: blur(10px);
+    }
+    .badge-bahia    { background: rgba(3,105,161,.75);  color: #e0f2fe; border: 1px solid rgba(186,230,253,.3); }
+    .badge-vallarta { background: rgba(21,128,61,.75);  color: #dcfce7; border: 1px solid rgba(187,247,208,.3); }
+
+    /* Destacada badge — top right */
+    .badge-destacada {
+      position: absolute;
+      top: 12px; right: 12px;
+      background: #d4a853;
+      color: #0a2540;
+      padding: 4px 12px;
+      border-radius: 9999px;
+      font-size: 10px;
+      font-weight: 700;
+      letter-spacing: .1em;
+      text-transform: uppercase;
+    }
+
+    /* Price overlay — bottom right glassmorphism */
+    .price-overlay {
+      position: absolute;
+      bottom: 12px; right: 12px;
+      background: rgba(10,37,64,.65);
+      backdrop-filter: blur(14px);
+      -webkit-backdrop-filter: blur(14px);
+      border: 1px solid rgba(255,255,255,.18);
+      border-radius: 12px;
+      padding: 6px 14px;
+      text-align: right;
+    }
+    .price-overlay .amount {
+      font-family: 'Cormorant Garamond', serif;
+      font-size: 20px;
+      font-weight: 600;
+      color: white;
+      line-height: 1;
+    }
+    .price-overlay .unit {
+      font-size: 10px;
+      color: rgba(255,255,255,.55);
+      font-weight: 300;
+      letter-spacing: .05em;
+    }
+
+    /* ── CARD BODY ── */
+    .card-body {
+      padding: 20px 22px 0;
+      flex: 1;
+    }
+    .card-footer {
+      margin-top: 18px;
+      border-top: 1px solid rgba(0,0,0,.06);
+    }
+    .card-footer a {
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      gap: 8px;
+      width: 100%;
+      padding: 14px;
+      font-size: 11px;
+      font-weight: 700;
+      letter-spacing: .14em;
+      text-transform: uppercase;
+      color: #0a2540;
+      background: transparent;
+      transition: background .3s ease, color .3s ease;
+    }
+    .card-footer a:hover {
+      background: #0a2540;
+      color: white;
+    }
+    .card-footer a:hover .cta-arrow { stroke: #d4a853; }
+
+    /* Amenidad chip */
+    .chip {
+      display: inline-block;
+      background: #f0f8ff;
+      color: #005f73;
+      border-radius: 9999px;
+      padding: 3px 10px;
+      font-size: 10px;
+      font-weight: 500;
+    }
 
     /* WhatsApp */
     @keyframes wa-pulse {
@@ -116,15 +241,13 @@
     }
     .wa-float { animation: wa-pulse 2.8s infinite; }
 
-    /* Sin resultados */
     #no-results { display: none; }
 
-    /* Animación cards al filtrar */
-    .prop-card { animation: cardIn .35s ease both; }
     @keyframes cardIn {
-      from { opacity:0; transform:translateY(16px); }
+      from { opacity:0; transform:translateY(18px); }
       to   { opacity:1; transform:translateY(0); }
     }
+    .prop-card { animation: cardIn .38s ease both; }
   </style>
 </head>
 
@@ -140,32 +263,33 @@
       <span class="text-gold text-[10px] tracking-[0.35em] uppercase font-medium">Bahia Properties</span>
     </a>
     <div class="hidden md:flex items-center gap-8">
-      <a href="index.html"    class="text-white/70 hover:text-white text-sm tracking-wide transition">Inicio</a>
-      <a href="catalogo.html" class="text-white text-sm tracking-wide font-medium border-b border-gold pb-0.5">Propiedades</a>
+      <a href="index.html"     class="text-white/70 hover:text-white text-sm tracking-wide transition">Inicio</a>
+      <a href="catalogo.html"  class="text-white text-sm tracking-wide font-medium border-b border-gold pb-0.5">Propiedades</a>
       <a href="index.html#servicios" class="text-white/70 hover:text-white text-sm tracking-wide transition">Servicios</a>
-      <a href="publicar.html" class="text-white/70 hover:text-white text-sm tracking-wide transition">Publicar</a>
-      <a href="index.html#contacto"  class="text-white/70 hover:text-white text-sm tracking-wide transition">Contacto</a>
+      <a href="publicar.html"  class="text-white/70 hover:text-white text-sm tracking-wide transition">Publicar</a>
+      <a href="contacto.html"  class="text-white/70 hover:text-white text-sm tracking-wide transition">Contacto</a>
     </div>
-    <a href="index.html#contacto" class="hidden md:inline-flex items-center gap-2 bg-gold hover:bg-gold-light text-ocean-900 font-semibold text-xs px-5 py-2.5 rounded-full transition tracking-wider uppercase">
+    <a href="publicar.html" class="hidden md:inline-flex items-center gap-2 bg-gold hover:bg-gold-light text-ocean-900 font-semibold text-xs px-5 py-2.5 rounded-full transition tracking-wider uppercase">
       Publicar propiedad
     </a>
     <button class="md:hidden text-white" onclick="document.getElementById('mob-menu').classList.toggle('hidden')">
-      <i data-lucide="menu" class="w-6 h-6"></i>
+      <svg xmlns="http://www.w3.org/2000/svg" class="w-6 h-6" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="2"><line x1="3" y1="12" x2="21" y2="12"/><line x1="3" y1="6" x2="21" y2="6"/><line x1="3" y1="18" x2="21" y2="18"/></svg>
     </button>
   </div>
   <div id="mob-menu" class="hidden md:hidden mt-4 pb-4 border-t border-white/20">
     <div class="flex flex-col gap-4 pt-4 px-2">
-      <a href="index.html"           class="text-white/80 text-sm">Inicio</a>
+      <a href="index.html"     class="text-white/80 text-sm">Inicio</a>
       <a href="index.html#servicios" class="text-white/80 text-sm">Servicios</a>
-      <a href="index.html#contacto"  class="text-white/80 text-sm">Contacto</a>
-      <a href="index.html#contacto"  class="bg-gold text-ocean-900 font-semibold text-sm px-5 py-2.5 rounded-full text-center tracking-wider uppercase">Publicar propiedad</a>
+      <a href="publicar.html"  class="text-white/80 text-sm">Publicar</a>
+      <a href="contacto.html"  class="text-white/80 text-sm">Contacto</a>
+      <a href="publicar.html"  class="bg-gold text-ocean-900 font-semibold text-sm px-5 py-2.5 rounded-full text-center tracking-wider uppercase">Publicar propiedad</a>
     </div>
   </div>
 </nav>
 
 
 <!-- ══════════════════════════════════════════
-     HEADER DE SECCIÓN
+     HEADER
 ══════════════════════════════════════════ -->
 <section class="pt-36 pb-16 px-6 text-center">
   <p class="text-gold text-xs tracking-[0.35em] uppercase font-medium mb-3" data-aos="fade-down">
@@ -188,7 +312,6 @@
   <div class="glass rounded-2xl p-5 md:p-6">
     <div class="flex flex-wrap gap-3 items-center">
 
-      <!-- Zona -->
       <div class="flex flex-wrap gap-2 items-center">
         <span class="text-white/40 text-xs uppercase tracking-widest font-medium mr-1">Zona</span>
         <button class="filter-pill active" data-filter="zona" data-value="todas">Todas</button>
@@ -198,7 +321,6 @@
 
       <div class="w-px h-6 bg-white/20 hidden md:block"></div>
 
-      <!-- Recámaras -->
       <div class="flex flex-wrap gap-2 items-center">
         <span class="text-white/40 text-xs uppercase tracking-widest font-medium mr-1">Rec.</span>
         <button class="filter-pill active" data-filter="rec" data-value="todas">Todas</button>
@@ -209,7 +331,6 @@
 
       <div class="w-px h-6 bg-white/20 hidden md:block"></div>
 
-      <!-- Precio -->
       <div class="flex flex-wrap gap-2 items-center">
         <span class="text-white/40 text-xs uppercase tracking-widest font-medium mr-1">Precio/noche</span>
         <button class="filter-pill active" data-filter="precio" data-value="todas">Todos</button>
@@ -218,7 +339,6 @@
         <button class="filter-pill" data-filter="precio" data-value="alto">+$10,000</button>
       </div>
 
-      <!-- Contador -->
       <div class="ml-auto text-white/40 text-xs font-light whitespace-nowrap">
         <span id="count">0</span> propiedades
       </div>
@@ -232,16 +352,13 @@
 ══════════════════════════════════════════ -->
 <section class="max-w-7xl mx-auto px-6 pb-28">
 
-  <!-- Sin resultados -->
   <div id="no-results" class="text-center py-20">
-    <i data-lucide="search-x" class="w-12 h-12 text-white/20 mx-auto mb-4"></i>
+    <svg xmlns="http://www.w3.org/2000/svg" class="w-12 h-12 text-white/20 mx-auto mb-4" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="1.5"><circle cx="11" cy="11" r="8"/><line x1="21" y1="21" x2="16.65" y2="16.65"/><line x1="8" y1="11" x2="14" y2="11"/></svg>
     <p class="text-white/50 font-light">No hay propiedades con esos filtros.</p>
     <button onclick="resetFiltros()" class="mt-4 text-gold text-sm hover:underline">Limpiar filtros</button>
   </div>
 
-  <div id="grid" class="grid sm:grid-cols-2 lg:grid-cols-3 gap-7">
-    <!-- Las cards se generan con JavaScript -->
-  </div>
+  <div id="grid"></div>
 </section>
 
 
@@ -250,7 +367,7 @@
 ══════════════════════════════════════════ -->
 <section class="max-w-4xl mx-auto px-6 pb-24">
   <div class="glass rounded-3xl p-10 text-center" data-aos="fade-up">
-    <i data-lucide="plus-circle" class="w-10 h-10 text-gold mx-auto mb-4"></i>
+    <svg xmlns="http://www.w3.org/2000/svg" class="w-10 h-10 text-gold mx-auto mb-4" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="1.5"><circle cx="12" cy="12" r="10"/><line x1="12" y1="8" x2="12" y2="16"/><line x1="8" y1="12" x2="16" y2="12"/></svg>
     <h2 class="font-serif text-white text-3xl md:text-4xl font-semibold mb-3">
       ¿Tienes una propiedad?
     </h2>
@@ -258,9 +375,10 @@
       Publica tu propiedad con nosotros y llega a miles de huéspedes en Bahía de Banderas y Puerto Vallarta.
     </p>
     <div class="flex flex-wrap justify-center gap-4">
-      <a href="index.html#contacto"
+      <a href="publicar.html"
          class="flex items-center gap-2 bg-gold hover:bg-gold-light text-ocean-900 font-semibold text-sm px-7 py-3.5 rounded-full transition tracking-wide">
-        <i data-lucide="send" class="w-4 h-4"></i> Publicar mi propiedad
+        <svg xmlns="http://www.w3.org/2000/svg" class="w-4 h-4" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="2"><line x1="22" y1="2" x2="11" y2="13"/><polygon points="22 2 15 22 11 13 2 9 22 2"/></svg>
+        Publicar mi propiedad
       </a>
       <a href="https://wa.me/523221234567?text=Hola%20Zenith%2C%20quiero%20publicar%20mi%20propiedad" target="_blank"
          class="flex items-center gap-2 bg-[#25D366] hover:bg-[#1fba5c] text-white font-medium text-sm px-7 py-3.5 rounded-full transition">
@@ -283,10 +401,10 @@
       <p class="text-white/30 text-xs font-light mt-2">Bahía de Banderas · Puerto Vallarta · Riviera Nayarit</p>
     </div>
     <div class="flex gap-8 text-sm text-white/50">
-      <a href="index.html"           class="hover:text-white transition">Inicio</a>
-      <a href="catalogo.html"        class="hover:text-white transition">Propiedades</a>
-      <a href="index.html#servicios" class="hover:text-white transition">Servicios</a>
-      <a href="index.html#contacto"  class="hover:text-white transition">Contacto</a>
+      <a href="index.html"     class="hover:text-white transition">Inicio</a>
+      <a href="catalogo.html"  class="hover:text-white transition">Propiedades</a>
+      <a href="publicar.html"  class="hover:text-white transition">Publicar</a>
+      <a href="contacto.html"  class="hover:text-white transition">Contacto</a>
     </div>
     <p class="text-white/20 text-xs font-light">© 2025 Zenith Bahia Properties</p>
   </div>
@@ -307,160 +425,30 @@
 <script src="https://unpkg.com/aos@2.3.4/dist/aos.js"></script>
 <script>
 AOS.init({ duration: 900, easing: 'ease-out-cubic', once: true, offset: 60 });
-lucide.createIcons();
 
-// Navbar
 window.addEventListener('scroll', () => {
   document.getElementById('navbar').classList.toggle('scrolled', window.scrollY > 60);
 }, { passive: true });
 
-// ─────────────────────────────────────────────
-// DATOS DE PROPIEDADES
-// Para agregar una propiedad: añade un objeto al array
-// ─────────────────────────────────────────────
-const propiedades = [
-  {
-    id:         'casa-naga-sayulita',
-    nombre:     'Casa Naga',
-    zona:       'bahia',
-    ubicacion:  'Sayulita, Nayarit',
-    recamaras:  5,
-    banos:      5,
-    m2:         null,
-    precio:     4000,
-    foto:       'assets/casa-naga-thumb.jpg',
-    url:        'propiedades/casa-naga-sayulita.html',
-    destacada:  true,
-    amenidades: ['Piscina infinita climatizada', 'Chef personal', 'Vista al Pacífico'],
-  },
-  {
-    id:         'casa-cielo-azul',
-    nombre:     'Casa Cielo Azul',
-    zona:       'bahia',
-    ubicacion:  'Bucerias, Bahía de Banderas',
-    recamaras:  5,
-    banos:      6,
-    m2:         650,
-    precio:     12000,
-    foto:       'https://images.unsplash.com/photo-1613490493576-7fde63acd811?w=700&q=80',
-    url:        'propiedades/casa-cielo-azul.html',
-    destacada:  true,
-    amenidades: ['Alberca infinita', 'Playa privada', 'Jacuzzi'],
-  },
-  {
-    id:         'villa-palmeras',
-    nombre:     'Villa Palmeras',
-    zona:       'vallarta',
-    ubicacion:  'Conchas Chinas, Puerto Vallarta',
-    recamaras:  4,
-    banos:      4,
-    m2:         420,
-    precio:     8500,
-    foto:       'https://images.unsplash.com/photo-1600585154340-be6161a56a0c?w=700&q=80',
-    url:        'propiedades/villa-palmeras.html',
-    destacada:  true,
-    amenidades: ['Alberca', 'Vista al mar', 'Jardín'],
-  },
-  {
-    id:         'penthouse-marina',
-    nombre:     'Penthouse Marina',
-    zona:       'vallarta',
-    ubicacion:  'Marina, Puerto Vallarta',
-    recamaras:  3,
-    banos:      3,
-    m2:         280,
-    precio:     5200,
-    foto:       'https://images.unsplash.com/photo-1571003123894-1f0594d2b5d9?w=700&q=80',
-    url:        'propiedades/penthouse-marina.html',
-    destacada:  true,
-    amenidades: ['Rooftop', 'Vista 360°', 'Gym'],
-  },
-  {
-    id:         'hacienda-punta-mita',
-    nombre:     'Hacienda Punta Mita',
-    zona:       'bahia',
-    ubicacion:  'Punta Mita, Bahía de Banderas',
-    recamaras:  6,
-    banos:      7,
-    m2:         900,
-    precio:     18000,
-    foto:       'https://images.unsplash.com/photo-1512917774080-9991f1c4c750?w=700&q=80',
-    url:        'propiedades/hacienda-punta-mita.html',
-    destacada:  false,
-    amenidades: ['Cancha de tenis', 'Playa', 'Chef privado'],
-  },
-  {
-    id:         'casa-sayulita',
-    nombre:     'Casa Sayulita Surf',
-    zona:       'bahia',
-    ubicacion:  'Sayulita, Nayarit',
-    recamaras:  3,
-    banos:      2,
-    m2:         180,
-    precio:     3800,
-    foto:       'https://images.unsplash.com/photo-1600607687920-4e2a09cf159d?w=700&q=80',
-    url:        'propiedades/casa-sayulita.html',
-    destacada:  false,
-    amenidades: ['A 50m del mar', 'Surf', 'Terraza'],
-  },
-  {
-    id:         'departamento-zona-romantica',
-    nombre:     'Depto. Zona Romántica',
-    zona:       'vallarta',
-    ubicacion:  'Zona Romántica, Puerto Vallarta',
-    recamaras:  2,
-    banos:      2,
-    m2:         120,
-    precio:     2200,
-    foto:       'https://images.unsplash.com/photo-1564013799919-ab600027ffc6?w=700&q=80',
-    url:        'propiedades/depto-zona-romantica.html',
-    destacada:  false,
-    amenidades: ['Centro histórico', 'Rooftop compartido', 'A/C'],
-  },
-  {
-    id:         'villa-la-cruz',
-    nombre:     'Villa La Cruz',
-    zona:       'bahia',
-    ubicacion:  'La Cruz de Huanacaxtle, Nayarit',
-    recamaras:  4,
-    banos:      4,
-    m2:         380,
-    precio:     7200,
-    foto:       'https://images.unsplash.com/photo-1580587771525-78b9dba3b914?w=700&q=80',
-    url:        'propiedades/villa-la-cruz.html',
-    destacada:  false,
-    amenidades: ['Alberca', 'Vista a la marina', 'BBQ'],
-  },
-  {
-    id:         'casa-col-5ta',
-    nombre:     'Casa 5ª Avenida',
-    zona:       'vallarta',
-    ubicacion:  '5ª Avenida, Puerto Vallarta',
-    recamaras:  5,
-    banos:      5,
-    m2:         520,
-    precio:     9800,
-    foto:       'https://images.unsplash.com/photo-1600596542815-ffad4c1539a9?w=700&q=80',
-    url:        'propiedades/casa-5ta.html',
-    destacada:  false,
-    amenidades: ['Alberca privada', 'Cocina gourmet', 'Cine'],
-  },
-];
+// ── ICONS (inline SVG helpers) ──────────────────
+const IC = {
+  bed:   `<svg xmlns="http://www.w3.org/2000/svg" class="w-3.5 h-3.5" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="2"><path d="M2 4v16M2 8h20v12H2"/><path d="M2 12h20M12 8V4"/></svg>`,
+  bath:  `<svg xmlns="http://www.w3.org/2000/svg" class="w-3.5 h-3.5" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="2"><path d="M4 12h16a1 1 0 011 1v3a4 4 0 01-4 4H7a4 4 0 01-4-4v-3a1 1 0 011-1z"/><path d="M6 12V5a2 2 0 012-2h4"/></svg>`,
+  area:  `<svg xmlns="http://www.w3.org/2000/svg" class="w-3.5 h-3.5" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="2"><rect x="3" y="3" width="18" height="18" rx="1"/></svg>`,
+  arrow: `<svg class="cta-arrow w-3.5 h-3.5 transition-colors" xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="2.5"><line x1="5" y1="12" x2="19" y2="12"/><polyline points="12 5 19 12 12 19"/></svg>`,
+  pin:   `<svg xmlns="http://www.w3.org/2000/svg" class="w-3 h-3 flex-shrink-0" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="2"><path d="M21 10c0 7-9 13-9 13s-9-6-9-13a9 9 0 0118 0z"/><circle cx="12" cy="10" r="3"/></svg>`,
+};
 
-// ─────────────────────────────────────────────
-// ESTADO DE FILTROS
-// ─────────────────────────────────────────────
+// ── ESTADO DE FILTROS ────────────────────────────
 const filtros = { zona: 'todas', rec: 'todas', precio: 'todas' };
+let propiedades = [];
 
-function zonaMatch(p) {
-  if (filtros.zona === 'todas') return true;
-  return p.zona === filtros.zona;
-}
-function recMatch(p) {
+function zonaMatch(p)   { return filtros.zona  === 'todas' || p.zona === filtros.zona; }
+function recMatch(p)    {
   if (filtros.rec === 'todas') return true;
-  if (filtros.rec === '1-2')  return p.recamaras <= 2;
-  if (filtros.rec === '3')    return p.recamaras === 3;
-  if (filtros.rec === '4+')   return p.recamaras >= 4;
+  if (filtros.rec === '1-2')   return p.recamaras <= 2;
+  if (filtros.rec === '3')     return p.recamaras === 3;
+  if (filtros.rec === '4+')    return p.recamaras >= 4;
 }
 function precioMatch(p) {
   if (filtros.precio === 'todas') return true;
@@ -470,91 +458,82 @@ function precioMatch(p) {
   if (filtros.precio === 'alto')  return p.precio > 10000;
 }
 
+// ── CARD TEMPLATE ────────────────────────────────
+function cardHTML(p, delay) {
+  const zonaNombre = p.zona === 'bahia' ? 'Bahía de Banderas' : 'Puerto Vallarta';
+  const precioLabel = p.precio ? `$${p.precio.toLocaleString()}` : 'Consultar';
+  const precioUnit  = p.precio ? '/ noche' : '';
+
+  return `
+  <div class="prop-card ${p.destacada ? 'featured' : ''}" style="animation-delay:${delay}ms">
+
+    <!-- Imagen -->
+    <div class="card-img">
+      <img src="${p.foto}" alt="${p.nombre}" loading="lazy">
+
+      <span class="badge-zona ${p.zona === 'bahia' ? 'badge-bahia' : 'badge-vallarta'}">${zonaNombre}</span>
+
+      ${p.destacada ? '<span class="badge-destacada">★ Destacada</span>' : ''}
+
+      <div class="price-overlay">
+        <div class="amount">${precioLabel}</div>
+        ${precioUnit ? `<div class="unit">${precioUnit}</div>` : ''}
+      </div>
+    </div>
+
+    <!-- Body -->
+    <div class="card-body">
+      <h3 class="font-serif text-ocean-900 text-xl font-semibold leading-tight mb-1">${p.nombre}</h3>
+      <p class="flex items-center gap-1 text-gray-400 text-xs font-light mb-4">
+        ${IC.pin} ${p.ubicacion}
+      </p>
+
+      <!-- Métricas -->
+      <div class="flex items-center gap-5 text-xs text-gray-500 font-medium mb-4 pb-4 border-b border-gray-100">
+        <span class="flex items-center gap-1.5 text-ocean-700">${IC.bed} <span class="text-gray-600">${p.recamaras} rec.</span></span>
+        <span class="flex items-center gap-1.5 text-ocean-700">${IC.bath} <span class="text-gray-600">${p.banos} baños</span></span>
+        ${p.m2 ? `<span class="flex items-center gap-1.5 text-ocean-700">${IC.area} <span class="text-gray-600">${p.m2} m²</span></span>` : ''}
+      </div>
+
+      <!-- Amenidades -->
+      <div class="flex flex-wrap gap-1.5 pb-1">
+        ${p.amenidades.map(a => `<span class="chip">${a}</span>`).join('')}
+      </div>
+    </div>
+
+    <!-- CTA footer -->
+    <div class="card-footer">
+      <a href="${p.url}">
+        Ver propiedad ${IC.arrow}
+      </a>
+    </div>
+
+  </div>`;
+}
+
+// ── RENDER ───────────────────────────────────────
 function render() {
   const visible = propiedades.filter(p => zonaMatch(p) && recMatch(p) && precioMatch(p));
-  const grid = document.getElementById('grid');
+  const grid  = document.getElementById('grid');
   const noRes = document.getElementById('no-results');
   document.getElementById('count').textContent = visible.length;
 
   if (visible.length === 0) {
     grid.innerHTML = '';
     noRes.style.display = 'block';
-    lucide.createIcons();
     return;
   }
   noRes.style.display = 'none';
-
-  grid.innerHTML = visible.map((p, i) => `
-    <div class="prop-card" style="animation-delay:${i * 60}ms">
-      <div class="card-img">
-        <img src="${p.foto}" alt="${p.nombre}" loading="lazy">
-      </div>
-      <div class="p-6">
-        <div class="flex items-center justify-between mb-3">
-          <span class="text-xs rounded-full px-3 py-1 font-medium tracking-wide ${p.zona === 'bahia' ? 'badge-bahia' : 'badge-vallarta'}">
-            ${p.zona === 'bahia' ? 'Bahía de Banderas' : 'Puerto Vallarta'}
-          </span>
-          ${p.destacada ? '<span class="text-[10px] text-gold font-semibold tracking-widest uppercase">★ Destacada</span>' : ''}
-        </div>
-
-        <h3 class="font-serif text-ocean-900 text-xl font-semibold mb-1">${p.nombre}</h3>
-        <p class="text-gray-400 text-xs font-light mb-3 flex items-center gap-1">
-          <svg xmlns="http://www.w3.org/2000/svg" class="w-3 h-3" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M21 10c0 7-9 13-9 13s-9-6-9-13a9 9 0 0118 0z"/><circle cx="12" cy="10" r="3"/></svg>
-          ${p.ubicacion}
-        </p>
-
-        <!-- Métricas -->
-        <div class="flex gap-4 text-xs text-gray-500 font-light mb-4 pb-4 border-b border-gray-100">
-          <span class="flex items-center gap-1">
-            <svg xmlns="http://www.w3.org/2000/svg" class="w-3.5 h-3.5 text-ocean-500" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M3 9l9-7 9 7v11a2 2 0 01-2 2H5a2 2 0 01-2-2z"/><polyline points="9 22 9 12 15 12 15 22"/></svg>
-            ${p.recamaras} rec.
-          </span>
-          <span class="flex items-center gap-1">
-            <svg xmlns="http://www.w3.org/2000/svg" class="w-3.5 h-3.5 text-ocean-500" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M4 12h16M4 6h16M4 18h7"/></svg>
-            ${p.banos} baños
-          </span>
-          ${p.m2 ? `<span class="flex items-center gap-1"><svg xmlns="http://www.w3.org/2000/svg" class="w-3.5 h-3.5 text-ocean-500" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><rect x="3" y="3" width="18" height="18"/></svg>${p.m2} m²</span>` : ''}
-        </div>
-
-        <!-- Amenidades -->
-        <div class="flex flex-wrap gap-1.5 mb-5">
-          ${p.amenidades.map(a => `<span class="text-[10px] bg-ocean-50 text-ocean-700 rounded-full px-2.5 py-1 font-medium">${a}</span>`).join('')}
-        </div>
-
-        <!-- Precio y CTA -->
-        <div class="flex items-center justify-between">
-          <div>
-            <p class="font-serif text-ocean-900 text-xl font-semibold">
-              ${p.precio ? '$' + p.precio.toLocaleString() : 'Consultar'}
-            </p>
-            <p class="text-gray-400 text-xs font-light">${p.precio ? 'MXN / noche' : 'precio'}</p>
-          </div>
-          <a href="${p.url}"
-             class="flex items-center gap-1.5 bg-ocean-900 hover:bg-gold text-white text-xs px-5 py-2.5 rounded-full transition font-medium tracking-wide">
-            Ver propiedad
-            <svg xmlns="http://www.w3.org/2000/svg" class="w-3 h-3" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><line x1="5" y1="12" x2="19" y2="12"/><polyline points="12 5 19 12 12 19"/></svg>
-          </a>
-        </div>
-      </div>
-    </div>
-  `).join('');
+  grid.innerHTML = visible.map((p, i) => cardHTML(p, i * 60)).join('');
 }
 
-// ─────────────────────────────────────────────
-// FILTRO EVENT LISTENERS
-// ─────────────────────────────────────────────
+// ── FILTROS ──────────────────────────────────────
 document.querySelectorAll('.filter-pill').forEach(btn => {
   btn.addEventListener('click', () => {
     const tipo = btn.dataset.filter;
-    const valor = btn.dataset.value;
-
-    // Actualizar estado
-    filtros[tipo] = valor;
-
-    // Actualizar estilos del grupo
+    filtros[tipo] = btn.dataset.value;
     document.querySelectorAll(`.filter-pill[data-filter="${tipo}"]`).forEach(b => b.classList.remove('active'));
     btn.classList.add('active');
-
     render();
   });
 });
@@ -567,20 +546,30 @@ function resetFiltros() {
   render();
 }
 
-// ─────────────────────────────────────────────
-// FILTRO DESDE URL (?zona=bahia)
-// ─────────────────────────────────────────────
-const params = new URLSearchParams(window.location.search);
-if (params.get('zona')) {
-  const z = params.get('zona');
-  filtros.zona = z;
-  document.querySelectorAll('[data-filter="zona"]').forEach(b => {
-    b.classList.toggle('active', b.dataset.value === z);
-  });
+// ── FILTRO DESDE URL (?zona=bahia) ────────────────
+function applyURLParams() {
+  const z = new URLSearchParams(window.location.search).get('zona');
+  if (z) {
+    filtros.zona = z;
+    document.querySelectorAll('[data-filter="zona"]').forEach(b => {
+      b.classList.toggle('active', b.dataset.value === z);
+    });
+  }
 }
 
-// Render inicial
-render();
+// ── CARGA DE DATOS DESDE JSON ─────────────────────
+fetch('propiedades.json')
+  .then(r => r.json())
+  .then(data => {
+    propiedades = data;
+    applyURLParams();
+    render();
+  })
+  .catch(() => {
+    document.getElementById('no-results').style.display = 'block';
+    document.getElementById('no-results').querySelector('p').textContent =
+      'No se pudieron cargar las propiedades. Intenta recargar la página.';
+  });
 </script>
 
 </body>
