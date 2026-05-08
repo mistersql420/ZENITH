@@ -1,0 +1,64 @@
+HERRAMIENTAS REQUERIDAS — ZENITH BAHIA PROPERTIES
+==================================================
+
+PROGRAMAS BASE
+--------------
+- Python 3.10 o superior
+  Descarga: https://www.python.org/downloads/
+  (marcar la casilla "Add Python to PATH" al instalar)
+
+- Google Chrome o Microsoft Edge
+  Para abrir y revisar los archivos HTML generados
+
+
+LIBRERÍAS PYTHON (instalar con pip)
+------------------------------------
+Abrir terminal y correr estos comandos uno por uno:
+
+  pip install anthropic
+  pip install reportlab
+
+- anthropic  → conecta el script con Claude (IA que genera el HTML)
+- reportlab  → genera los archivos PDF de fichas de propiedad
+
+
+CLAVE API
+---------
+- Cuenta en Anthropic Console: https://console.anthropic.com/
+- Crear una API Key en la sección "API Keys"
+- Guardarla como variable de entorno en Windows:
+    Nombre: ANTHROPIC_API_KEY
+    Valor:  tu-clave-aqui
+
+  (Panel de control → Sistema → Variables de entorno → Nueva)
+
+
+CLAUDE CODE (ya instalado)
+--------------------------
+- CLI de Anthropic que usas en este chat
+- No requiere instalación adicional
+
+
+OPCIONAL PERO RECOMENDADO
+--------------------------
+- Visual Studio Code
+  Para editar archivos HTML, JSON y Python
+  Descarga: https://code.visualstudio.com/
+
+- Extensión "Live Server" en VS Code
+  Para previsualizar el HTML con recarga automática
+
+
+VERIFICAR QUE TODO ESTÉ INSTALADO
+-----------------------------------
+Abrir terminal (cmd o PowerShell) y correr:
+
+  python --version        → debe mostrar Python 3.x.x
+  pip show anthropic      → debe mostrar info de la librería
+  pip show reportlab      → debe mostrar info de la librería
+
+
+==================================================
+Proyecto: Zenith Bahia Properties
+Directorio: C:\Users\RAlvarez\Desktop\pro\ww
+==================================================

@@ -1,0 +1,58 @@
+{
+  "titulo": "Casa Naga — Riviera Nayarit",
+  "subtitulo": "Villa privada de lujo con vistas al mar y servicio integral",
+  "precio": "$4,000 USD / noche",
+  "ubicacion": "Riviera Nayarit, México",
+  "whatsapp": "+523221399350",
+  "descripcion_larga": "Casa Naga es una villa privada de lujo ubicada al final de una calle empedrada sin salida, en una de las zonas más exclusivas y tranquilas de la Riviera Nayarit. Diseñada para alojar hasta 10 personas en 5 suites, ofrece una experiencia de hospitalidad integral con chef personal, gerente bilingüe, meseros y limpieza diaria. Su piscina infinita climatizada con vistas al Océano Pacífico, su salón en azotea con hoguera y sus acabados de mármol la convierten en una de las propiedades más destacadas de la región. A solo 5 minutos de Sayulita, 20 de Punta Mita y 40 del aeropuerto de Puerto Vallarta.",
+  "caracteristicas": [
+    "5 Master Suites con cama King",
+    "Capacidad para 10 huéspedes",
+    "Piscina infinita climatizada con vista al mar",
+    "Chef personal para todas las comidas",
+    "Gerente bilingüe (español, inglés, italiano)",
+    "Servicio de conserjería y lavandería",
+    "Salón en azotea con hoguera",
+    "Comedor para 12 comensales",
+    "Cocina profesional con electrodomésticos de alta gama",
+    "Cuarto frío",
+    "Sistema de sonido Bose",
+    "Wi-Fi de alta velocidad",
+    "Sala multimedia con TV 70'', Apple TV y satélite",
+    "Oficina privada con vista al Pacífico",
+    "Área de barbacoa",
+    "Bañeras de mármol exteriores en suites",
+    "Sistema de filtración de agua",
+    "Ropa de cama italiana de lujo",
+    "A 5 min de Sayulita / 20 min de Punta Mita",
+    "A 15 min caminando de Playa Patzcuaritos"
+  ],
+  "fotos": [
+    "prueba para fotos zenith/editadas/765cff2d-bf25-46fe-9555-0b06bafafa29.jpg",
+    "prueba para fotos zenith/editadas/994124a7-1805-4a6e-bddc-e22ebb6e3492.jpg",
+    "prueba para fotos zenith/editadas/8a437d50-4e13-433d-aecb-754346655305.jpg",
+    "prueba para fotos zenith/editadas/1226f0d9-11cf-4901-a0a0-5484ee300abd.jpg",
+    "prueba para fotos zenith/editadas/ed1a772b-f6d2-4d1b-9ffc-c678033a56cf.jpg",
+    "prueba para fotos zenith/editadas/a0b46638-7757-476c-bf2f-223eab5659ac.jpg",
+    "prueba para fotos zenith/editadas/98922d16-c971-45fc-bbcc-90eeb60e0874.jpg",
+    "prueba para fotos zenith/editadas/a0c84313-d4bc-4c93-aa8d-9a53b651f470.jpg",
+    "prueba para fotos zenith/editadas/b106b826-6a62-43c9-8436-bc1e9379a140.jpg",
+    "prueba para fotos zenith/editadas/b4926129-b855-4ca4-990e-fef9d81534e6.jpg",
+    "prueba para fotos zenith/editadas/c4e97457-b1c0-4a9e-a2d6-fcf54f2c49b0.jpg",
+    "prueba para fotos zenith/editadas/cef45c6b-e3b9-4d24-8174-09340b19aeef.jpg",
+    "prueba para fotos zenith/editadas/d6a39455-db1d-452d-a6ac-6ab66925a998.jpg"
+  ],
+  "agente": {
+    "nombre": "Zenith Bahia Properties",
+    "titulo": "Especialistas en Propiedades de Lujo",
+    "telefono": "+52 322 139 9350",
+    "email": "hola@zenithbahia.com",
+    "experiencia_anos": "5"
+  },
+  "extras": {
+    "año_construccion": "2020",
+    "estrato": "Residencial de lujo",
+    "uso_suelo": "Turístico / Habitacional",
+    "amueblada": true
+  }
+}

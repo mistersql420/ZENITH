@@ -1,0 +1,866 @@
+<!DOCTYPE html>
+<html lang="es" class="scroll-smooth">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <meta name="description" content="Casa Cielo Azul – Mansión de lujo frente al mar en Bahía de Banderas, Nayarit. 5 recámaras, alberca infinita, acceso a playa privada.">
+  <meta property="og:title" content="Casa Cielo Azul – Bahía de Banderas">
+  <meta property="og:image" content="https://images.unsplash.com/photo-1613490493576-7fde63acd811?w=1200">
+  <title>Casa Cielo Azul – Bahía de Banderas | Mansión de Lujo</title>
+
+  <script src="https://cdn.tailwindcss.com"></script>
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link href="https://fonts.googleapis.com/css2?family=Playfair+Display:ital,wght@0,400;0,700;0,900;1,400;1,700&family=Inter:wght@300;400;500;600;700&family=Cormorant+Garamond:ital,wght@1,600&family=Montserrat:wght@300;600&display=swap" rel="stylesheet">
+  <link href="https://unpkg.com/aos@2.3.4/dist/aos.css" rel="stylesheet">
+  <script src="https://unpkg.com/lucide@latest"></script>
+
+  <script>
+    tailwind.config = {
+      theme: {
+        extend: {
+          fontFamily: {
+            serif: ['"Playfair Display"', 'Georgia', 'serif'],
+            sans: ['Inter', 'system-ui', 'sans-serif'],
+          },
+          colors: {
+            ocean: { 900:'#0a2540', 800:'#0a4d68', 700:'#005f73', 500:'#0096c7', 200:'#b8d8e8', 50:'#f0f8ff' },
+            gold:  { DEFAULT:'#d4a853', light:'#e9c46a', dark:'#b8860b' },
+          }
+        }
+      }
+    }
+  </script>
+
+  <style>
+    *, *::before, *::after { box-sizing: border-box; }
+
+    body {
+      font-family: 'Inter', sans-serif;
+      background: linear-gradient(
+        180deg,
+        #0a2540  0%,
+        #003d5c 12%,
+        #005f73 22%,
+        #4a9ab5 38%,
+        #a8d5e8 52%,
+        #dff0f8 65%,
+        #f0f8ff 78%,
+        #f8fbff 90%,
+        #ffffff 100%
+      );
+      background-attachment: fixed;
+    }
+
+    h1, h2, h3, h4 { font-family: 'Playfair Display', serif; }
+
+    /* Navbar */
+    #navbar { transition: all 0.4s ease; }
+    #navbar.scrolled {
+      background: rgba(10,37,64,.88);
+      backdrop-filter: blur(20px);
+      -webkit-backdrop-filter: blur(20px);
+      box-shadow: 0 2px 32px rgba(0,0,0,.35);
+    }
+
+    /* Hero asymmetric grid */
+    .hero-grid {
+      display: grid;
+      grid-template-columns: 55fr 45fr;
+      min-height: 100vh;
+    }
+    @media (max-width: 900px) {
+      .hero-grid { grid-template-columns: 1fr; }
+      .hero-right { min-height: 60vw; }
+    }
+
+    .photo-mosaic {
+      display: grid;
+      grid-template-columns: 60fr 40fr;
+      grid-template-rows: 1fr 1fr;
+      height: 100%;
+      gap: 3px;
+    }
+    .p-main { grid-column:1; grid-row:1/3; }
+    .p-top  { grid-column:2; grid-row:1; }
+    .p-bot  { grid-column:2; grid-row:2; }
+
+    /* Masonry */
+    .masonry { column-count:4; column-gap:10px; }
+    .masonry-item {
+      break-inside:avoid; margin-bottom:10px;
+      overflow:hidden; border-radius:10px;
+      cursor:pointer; position:relative;
+    }
+    .masonry-item img { width:100%; display:block; transition:transform .5s ease; }
+    .masonry-item:hover img { transform:scale(1.06); }
+    .masonry-overlay {
+      position:absolute; inset:0;
+      background:linear-gradient(to top,rgba(10,37,64,.7) 0%,transparent 55%);
+      opacity:0; transition:opacity .35s ease;
+      display:flex; align-items:flex-end; padding:14px;
+    }
+    .masonry-item:hover .masonry-overlay { opacity:1; }
+    @media (max-width:1100px) { .masonry { column-count:3; } }
+    @media (max-width:768px)  { .masonry { column-count:2; } }
+    @media (max-width:480px)  { .masonry { column-count:1; } }
+
+    /* Glassmorphism */
+    .glass {
+      background:rgba(255,255,255,.10);
+      backdrop-filter:blur(24px); -webkit-backdrop-filter:blur(24px);
+      border:1px solid rgba(255,255,255,.22);
+    }
+    .glass-dark {
+      background:rgba(10,37,64,.45);
+      backdrop-filter:blur(20px); -webkit-backdrop-filter:blur(20px);
+      border:1px solid rgba(255,255,255,.15);
+    }
+    .glass-input {
+      width:100%;
+      background:rgba(255,255,255,.08);
+      backdrop-filter:blur(8px);
+      border:1px solid rgba(255,255,255,.25);
+      border-radius:10px; padding:12px 16px;
+      color:white; font-size:14px; font-family:'Inter',sans-serif;
+      transition:all .3s ease;
+    }
+    .glass-input::placeholder { color:rgba(255,255,255,.42); }
+    .glass-input:focus {
+      outline:none;
+      background:rgba(255,255,255,.14);
+      border-color:#d4a853;
+      box-shadow:0 0 0 3px rgba(212,168,83,.2);
+    }
+
+    /* Amenity card */
+    .amenity-card {
+      background:rgba(255,255,255,.82);
+      backdrop-filter:blur(10px);
+      border:1px solid rgba(212,168,83,.18);
+      border-radius:16px;
+      transition:all .35s ease;
+    }
+    .amenity-card:hover {
+      transform:translateY(-8px);
+      box-shadow:0 24px 48px rgba(10,77,104,.18);
+      border-color:rgba(212,168,83,.55);
+      background:rgba(255,255,255,.96);
+    }
+
+    /* Gold line */
+    .gold-line { width:56px; height:2px; background:linear-gradient(90deg,transparent,#d4a853,transparent); }
+
+    /* WhatsApp pulse */
+    @keyframes wa-pulse {
+      0%,100% { box-shadow:0 0 0 0 rgba(37,211,102,.6); }
+      60%      { box-shadow:0 0 0 16px rgba(37,211,102,0); }
+    }
+    .wa-float { animation:wa-pulse 2.8s infinite; }
+
+    /* Lightbox */
+    #lightbox {
+      display:none; position:fixed; inset:0;
+      background:rgba(0,0,0,.93); z-index:9999;
+      align-items:center; justify-content:center;
+    }
+    #lightbox.open { display:flex; }
+    #lightbox img { max-width:90vw; max-height:85vh; object-fit:contain; border-radius:6px; }
+    #lb-counter { position:absolute; bottom:24px; left:50%; transform:translateX(-50%); color:rgba(255,255,255,.6); font-size:13px; }
+    #lb-close { position:absolute; top:20px; right:24px; color:white; font-size:28px; cursor:pointer; background:none; border:none; line-height:1; }
+    #lb-prev, #lb-next {
+      position:absolute; top:50%; transform:translateY(-50%);
+      background:rgba(255,255,255,.1); border:1px solid rgba(255,255,255,.2);
+      color:white; width:48px; height:48px; border-radius:50%;
+      display:flex; align-items:center; justify-content:center;
+      cursor:pointer; font-size:20px; transition:background .2s;
+    }
+    #lb-prev:hover, #lb-next:hover { background:rgba(255,255,255,.25); }
+    #lb-prev { left:20px; } #lb-next { right:20px; }
+
+    /* ── Tipografía de revista ──────────────── */
+    h1, h2 { font-family: 'Cormorant Garamond', 'Playfair Display', serif; }
+    body    { font-family: 'Montserrat', 'Inter', sans-serif; }
+
+    /* ── Propiedad card ─────────────────────── */
+    .propiedad-card {
+      transition: all 0.4s ease;
+      border: 1px solid #eee;
+    }
+    .propiedad-card:hover {
+      transform: translateY(-10px);
+      box-shadow: 0 20px 40px rgba(0,0,0,0.05);
+    }
+
+    /* ── Botón de lujo ──────────────────────── */
+    .btn-luxury {
+      background: #1a1a1a;
+      color: white;
+      letter-spacing: 2px;
+      text-transform: uppercase;
+      transition: background 0.3s;
+    }
+    .btn-luxury:hover { background: #c5a059; }
+
+    /* ── Imágenes con toque editorial ──────── */
+    img {
+      border-radius: 4px;
+      filter: brightness(0.95);
+    }
+  </style>
+</head>
+
+<body>
+
+<!-- ══════════════════════════════════════════
+     NAVBAR
+══════════════════════════════════════════ -->
+<nav id="navbar" class="fixed top-0 inset-x-0 z-50 px-6 py-4">
+  <div class="max-w-7xl mx-auto flex items-center justify-between">
+    <a href="#" class="flex flex-col leading-none">
+      <span class="font-serif text-white text-lg font-bold tracking-wide">BANDERAS</span>
+      <span class="text-gold text-xs tracking-widest uppercase">Propiedades de Lujo</span>
+    </a>
+    <div class="hidden md:flex items-center gap-8">
+      <a href="#galeria"    class="text-white/75 hover:text-white text-sm tracking-wide transition">Galería</a>
+      <a href="#amenidades" class="text-white/75 hover:text-white text-sm tracking-wide transition">Amenidades</a>
+      <a href="#ubicacion"  class="text-white/75 hover:text-white text-sm tracking-wide transition">Ubicación</a>
+      <a href="#contacto"   class="text-white/75 hover:text-white text-sm tracking-wide transition">Contacto</a>
+    </div>
+    <a href="#contacto" class="hidden md:inline-flex items-center gap-2 bg-gold text-ocean-900 font-semibold text-sm px-5 py-2.5 rounded-full hover:bg-gold-light transition">
+      Agendar visita
+    </a>
+    <button class="md:hidden text-white" onclick="document.getElementById('mobile-menu').classList.toggle('hidden')">
+      <i data-lucide="menu" class="w-6 h-6"></i>
+    </button>
+  </div>
+  <div id="mobile-menu" class="hidden md:hidden mt-4 pb-4 border-t border-white/20">
+    <div class="flex flex-col gap-4 pt-4 px-2">
+      <a href="#galeria"    class="text-white/75 hover:text-white text-sm">Galería</a>
+      <a href="#amenidades" class="text-white/75 hover:text-white text-sm">Amenidades</a>
+      <a href="#ubicacion"  class="text-white/75 hover:text-white text-sm">Ubicación</a>
+      <a href="#contacto"   class="text-white/75 hover:text-white text-sm">Contacto</a>
+      <a href="#contacto"   class="bg-gold text-ocean-900 font-semibold text-sm px-5 py-2.5 rounded-full text-center">Agendar visita</a>
+    </div>
+  </div>
+</nav>
+
+
+<!-- ══════════════════════════════════════════
+     HERO — Grid asimétrico + AOS
+══════════════════════════════════════════ -->
+<section class="hero-grid overflow-hidden">
+
+  <!-- Left: copy -->
+  <div class="relative flex flex-col justify-center px-10 md:px-16 lg:px-20 py-32 md:py-0 bg-ocean-900/5">
+    <div class="relative z-10 max-w-xl">
+
+      <p class="text-gold text-xs tracking-[0.32em] uppercase font-medium mb-5"
+         data-aos="fade-down" data-aos-delay="0">
+        Riviera Nayarit · Propiedad Exclusiva
+      </p>
+
+      <h1 class="font-serif text-white text-5xl md:text-6xl lg:text-7xl font-black leading-[1.05] mb-5"
+          data-aos="fade-right" data-aos-delay="150">
+        Casa<br><em class="text-gold not-italic">Cielo Azul</em>
+      </h1>
+
+      <p class="font-serif italic text-ocean-200 text-xl md:text-2xl mb-6"
+         data-aos="fade-right" data-aos-delay="300">
+        Mansión de lujo frente al mar
+      </p>
+
+      <div class="gold-line mb-7" data-aos="fade-right" data-aos-delay="360"></div>
+
+      <div class="mb-6" data-aos="fade-up" data-aos-delay="430">
+        <span class="font-serif font-bold text-2xl md:text-3xl text-white border border-gold/55 rounded-full px-6 py-2.5 bg-white/5 backdrop-blur-sm">
+          $18,500,000 MXN
+        </span>
+      </div>
+
+      <p class="text-ocean-200/75 text-sm leading-relaxed max-w-sm mb-9"
+         data-aos="fade-up" data-aos-delay="520">
+        650 m² de arquitectura contemporánea en 1,200 m² de terreno, con vistas
+        panorámicas al Pacífico y acceso a playa privada en Bahía de Banderas.
+      </p>
+
+      <div class="flex flex-wrap gap-4" data-aos="fade-up" data-aos-delay="660">
+        <a href="#galeria"
+           class="flex items-center gap-2 bg-gold hover:bg-gold-light text-ocean-900 font-semibold text-sm px-6 py-3 rounded-full transition-all shadow-lg hover:-translate-y-0.5">
+          <i data-lucide="images" class="w-4 h-4"></i> Ver Galería
+        </a>
+        <a href="https://wa.me/523221234567?text=Hola%2C%20me%20interesa%20Casa%20Cielo%20Azul" target="_blank"
+           class="flex items-center gap-2 border border-white/40 text-white hover:bg-white/10 font-medium text-sm px-6 py-3 rounded-full transition backdrop-blur-sm">
+          <svg class="w-4 h-4 fill-current" viewBox="0 0 24 24"><path d="M17.472 14.382c-.297-.149-1.758-.867-2.03-.967-.273-.099-.471-.148-.67.15-.197.297-.767.966-.94 1.164-.173.199-.347.223-.644.075-.297-.15-1.255-.463-2.39-1.475-.883-.788-1.48-1.761-1.653-2.059-.173-.297-.018-.458.13-.606.134-.133.298-.347.446-.52.149-.174.198-.298.298-.497.099-.198.05-.371-.025-.52-.075-.149-.669-1.612-.916-2.207-.242-.579-.487-.5-.669-.51-.173-.008-.371-.01-.57-.01-.198 0-.52.074-.792.372-.272.297-1.04 1.016-1.04 2.479 0 1.462 1.065 2.875 1.213 3.074.149.198 2.096 3.2 5.077 4.487.709.306 1.262.489 1.694.625.712.227 1.36.195 1.871.118.571-.085 1.758-.719 2.006-1.413.248-.694.248-1.289.173-1.413-.074-.124-.272-.198-.57-.347m-5.421 7.403h-.004a9.87 9.87 0 01-5.031-1.378l-.361-.214-3.741.982.998-3.648-.235-.374a9.86 9.86 0 01-1.51-5.26c.001-5.45 4.436-9.884 9.888-9.884 2.64 0 5.122 1.03 6.988 2.898a9.825 9.825 0 012.893 6.994c-.003 5.45-4.437 9.884-9.885 9.884m8.413-18.297A11.815 11.815 0 0012.05 0C5.495 0 .16 5.335.157 11.892c0 2.096.547 4.142 1.588 5.945L.057 24l6.305-1.654a11.882 11.882 0 005.683 1.448h.005c6.554 0 11.89-5.335 11.893-11.893a11.821 11.821 0 00-3.48-8.413z"/></svg>
+          WhatsApp
+        </a>
+      </div>
+    </div>
+  </div>
+
+  <!-- Right: photo mosaic -->
+  <div class="hero-right photo-mosaic" style="min-height:100vh;">
+    <div class="p-main overflow-hidden" data-aos="fade-left" data-aos-delay="200">
+      <img src="https://images.unsplash.com/photo-1613490493576-7fde63acd811?w=900&q=85"
+           alt="Vista exterior" class="w-full h-full object-cover">
+    </div>
+    <div class="p-top overflow-hidden" data-aos="fade-left" data-aos-delay="380">
+      <img src="https://images.unsplash.com/photo-1600585154340-be6161a56a0c?w=600&q=80"
+           alt="Sala" class="w-full h-full object-cover">
+    </div>
+    <div class="p-bot overflow-hidden" data-aos="fade-left" data-aos-delay="540">
+      <img src="https://images.unsplash.com/photo-1512917774080-9991f1c4c750?w=600&q=80"
+           alt="Alberca" class="w-full h-full object-cover">
+    </div>
+  </div>
+</section>
+
+
+<!-- ══════════════════════════════════════════
+     STATS BAR
+══════════════════════════════════════════ -->
+<div class="max-w-5xl mx-auto px-6 py-10 -mt-1 relative z-10">
+  <div class="glass rounded-2xl px-6 py-7 grid grid-cols-2 md:grid-cols-4 gap-6 text-center"
+       data-aos="fade-up">
+    <div>
+      <p class="font-serif text-white text-3xl font-bold">5</p>
+      <p class="text-white/55 text-xs mt-1 tracking-widest uppercase">Recámaras</p>
+    </div>
+    <div class="border-l border-white/20">
+      <p class="font-serif text-white text-3xl font-bold">6</p>
+      <p class="text-white/55 text-xs mt-1 tracking-widest uppercase">Baños</p>
+    </div>
+    <div class="border-l border-white/20">
+      <p class="font-serif text-white text-3xl font-bold">650<span class="text-xl">m²</span></p>
+      <p class="text-white/55 text-xs mt-1 tracking-widest uppercase">Construcción</p>
+    </div>
+    <div class="border-l border-white/20">
+      <p class="font-serif text-white text-3xl font-bold">1,200<span class="text-xl">m²</span></p>
+      <p class="text-white/55 text-xs mt-1 tracking-widest uppercase">Terreno</p>
+    </div>
+  </div>
+</div>
+
+
+<!-- ══════════════════════════════════════════
+     DESCRIPTION
+══════════════════════════════════════════ -->
+<section class="max-w-6xl mx-auto px-6 py-20">
+  <div class="grid md:grid-cols-2 gap-16 items-center">
+
+    <div data-aos="fade-right">
+      <p class="text-gold text-xs tracking-[0.3em] uppercase font-medium mb-3">La Propiedad</p>
+      <h2 class="font-serif text-4xl md:text-5xl text-ocean-900 font-bold leading-tight mb-6">
+        Donde el lujo<br>se encuentra<br><em>con el océano</em>
+      </h2>
+      <div class="gold-line mb-6"></div>
+      <p class="text-gray-600 leading-relaxed mb-4">
+        Casa Cielo Azul es una obra maestra de la arquitectura contemporánea tropical, ubicada en uno de los litorales más privilegiados de la Bahía de Banderas. Cada espacio fue diseñado para maximizar las vistas al Pacífico y conectar de manera fluida el interior con el exterior.
+      </p>
+      <p class="text-gray-600 leading-relaxed">
+        Construida en 2021 con mármol de Carrara, madera teca y acero corten, esta mansión integra domótica de última generación ofreciendo una experiencia de vida sin precedentes en la Riviera Nayarit.
+      </p>
+      <div class="flex flex-wrap gap-3 mt-7">
+        <span class="flex items-center gap-2 text-sm text-ocean-800 bg-ocean-50 border border-ocean-200 rounded-full px-4 py-1.5">
+          <i data-lucide="calendar" class="w-3.5 h-3.5"></i> 2021
+        </span>
+        <span class="flex items-center gap-2 text-sm text-ocean-800 bg-ocean-50 border border-ocean-200 rounded-full px-4 py-1.5">
+          <i data-lucide="home" class="w-3.5 h-3.5"></i> Residencial de Lujo
+        </span>
+        <span class="flex items-center gap-2 text-sm text-ocean-800 bg-ocean-50 border border-ocean-200 rounded-full px-4 py-1.5">
+          <i data-lucide="sofa" class="w-3.5 h-3.5"></i> Totalmente Amueblada
+        </span>
+      </div>
+    </div>
+
+    <div class="relative" data-aos="fade-left" data-aos-delay="150">
+      <img src="https://images.unsplash.com/photo-1600596542815-ffad4c1539a9?w=700&q=85"
+           alt="Interior" class="rounded-2xl w-full h-96 object-cover shadow-2xl">
+      <div class="absolute -bottom-5 -left-5 glass-dark rounded-xl p-4 hidden md:flex items-center gap-3">
+        <div class="w-10 h-10 rounded-full bg-gold/20 flex items-center justify-center">
+          <i data-lucide="star" class="w-5 h-5 text-gold"></i>
+        </div>
+        <div>
+          <p class="text-white text-xs font-semibold">Propiedad Premium</p>
+          <p class="text-white/45 text-xs">Riviera Nayarit · 2025</p>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+
+<!-- ══════════════════════════════════════════
+     MASONRY GALLERY
+══════════════════════════════════════════ -->
+<section id="galeria" class="max-w-7xl mx-auto px-6 py-20">
+  <div class="text-center mb-14" data-aos="fade-up">
+    <p class="text-gold text-xs tracking-[0.3em] uppercase font-medium mb-3">Galería de Imágenes</p>
+    <h2 class="font-serif text-4xl md:text-5xl text-ocean-900 font-bold">Cada rincón,<br><em>una obra de arte</em></h2>
+    <div class="gold-line mx-auto mt-5"></div>
+  </div>
+
+  <div class="masonry" data-aos="fade-up" data-aos-delay="100">
+    <div class="masonry-item" onclick="openLightbox(0)">
+      <img src="https://images.unsplash.com/photo-1613490493576-7fde63acd811?w=800&q=80" alt="Exterior" loading="lazy">
+      <div class="masonry-overlay"><span class="text-white text-xs font-medium">Vista exterior</span></div>
+    </div>
+    <div class="masonry-item" onclick="openLightbox(1)" style="margin-top:30px">
+      <img src="https://images.unsplash.com/photo-1600585154340-be6161a56a0c?w=800&q=80" alt="Sala" loading="lazy">
+      <div class="masonry-overlay"><span class="text-white text-xs font-medium">Sala principal</span></div>
+    </div>
+    <div class="masonry-item" onclick="openLightbox(2)" style="margin-top:50px">
+      <img src="https://images.unsplash.com/photo-1512917774080-9991f1c4c750?w=800&q=80" alt="Fachada" loading="lazy">
+      <div class="masonry-overlay"><span class="text-white text-xs font-medium">Fachada</span></div>
+    </div>
+    <div class="masonry-item" onclick="openLightbox(3)" style="margin-top:20px">
+      <img src="https://images.unsplash.com/photo-1600596542815-ffad4c1539a9?w=800&q=80" alt="Terraza" loading="lazy">
+      <div class="masonry-overlay"><span class="text-white text-xs font-medium">Terraza</span></div>
+    </div>
+    <div class="masonry-item" onclick="openLightbox(4)">
+      <img src="https://images.unsplash.com/photo-1580587771525-78b9dba3b914?w=800&q=80" alt="Alberca" loading="lazy">
+      <div class="masonry-overlay"><span class="text-white text-xs font-medium">Alberca infinita</span></div>
+    </div>
+    <div class="masonry-item" onclick="openLightbox(5)" style="margin-top:40px">
+      <img src="https://images.unsplash.com/photo-1600607687920-4e2a09cf159d?w=800&q=80" alt="Cocina" loading="lazy">
+      <div class="masonry-overlay"><span class="text-white text-xs font-medium">Cocina gourmet</span></div>
+    </div>
+    <div class="masonry-item" onclick="openLightbox(6)" style="margin-top:15px">
+      <img src="https://images.unsplash.com/photo-1564013799919-ab600027ffc6?w=800&q=80" alt="Recámara" loading="lazy">
+      <div class="masonry-overlay"><span class="text-white text-xs font-medium">Recámara master</span></div>
+    </div>
+    <div class="masonry-item" onclick="openLightbox(7)" style="margin-top:60px">
+      <img src="https://images.unsplash.com/photo-1571003123894-1f0594d2b5d9?w=800&q=80" alt="Vista" loading="lazy">
+      <div class="masonry-overlay"><span class="text-white text-xs font-medium">Vista al mar</span></div>
+    </div>
+  </div>
+</section>
+
+
+<!-- ══════════════════════════════════════════
+     AMENIDADES (Lucide icons)
+══════════════════════════════════════════ -->
+<section id="amenidades" class="py-24 px-6">
+  <div class="max-w-6xl mx-auto">
+    <div class="text-center mb-14" data-aos="fade-up">
+      <p class="text-gold text-xs tracking-[0.3em] uppercase font-medium mb-3">Lo que incluye</p>
+      <h2 class="font-serif text-4xl md:text-5xl text-ocean-900 font-bold">Amenidades<br><em>de clase mundial</em></h2>
+      <div class="gold-line mx-auto mt-5"></div>
+    </div>
+
+    <div class="grid grid-cols-2 sm:grid-cols-3 lg:grid-cols-4 gap-5">
+      <!-- 12 amenity cards -->
+      <div class="amenity-card p-6 text-center" data-aos="zoom-in" data-aos-delay="0">
+        <div class="w-12 h-12 mx-auto mb-4 rounded-xl bg-ocean-50 flex items-center justify-center">
+          <i data-lucide="waves" class="w-6 h-6 text-ocean-700"></i>
+        </div>
+        <h4 class="font-serif font-bold text-ocean-900 text-sm mb-1">Alberca Infinita</h4>
+        <p class="text-gray-500 text-xs leading-relaxed">Vista panorámica al Pacífico</p>
+      </div>
+
+      <div class="amenity-card p-6 text-center" data-aos="zoom-in" data-aos-delay="75">
+        <div class="w-12 h-12 mx-auto mb-4 rounded-xl bg-ocean-50 flex items-center justify-center">
+          <i data-lucide="anchor" class="w-6 h-6 text-ocean-700"></i>
+        </div>
+        <h4 class="font-serif font-bold text-ocean-900 text-sm mb-1">Playa Privada</h4>
+        <p class="text-gray-500 text-xs leading-relaxed">Acceso exclusivo a la playa</p>
+      </div>
+
+      <div class="amenity-card p-6 text-center" data-aos="zoom-in" data-aos-delay="150">
+        <div class="w-12 h-12 mx-auto mb-4 rounded-xl bg-ocean-50 flex items-center justify-center">
+          <i data-lucide="chef-hat" class="w-6 h-6 text-ocean-700"></i>
+        </div>
+        <h4 class="font-serif font-bold text-ocean-900 text-sm mb-1">Cocina Gourmet</h4>
+        <p class="text-gray-500 text-xs leading-relaxed">Electrodomésticos de lujo</p>
+      </div>
+
+      <div class="amenity-card p-6 text-center" data-aos="zoom-in" data-aos-delay="225">
+        <div class="w-12 h-12 mx-auto mb-4 rounded-xl bg-ocean-50 flex items-center justify-center">
+          <i data-lucide="wifi" class="w-6 h-6 text-ocean-700"></i>
+        </div>
+        <h4 class="font-serif font-bold text-ocean-900 text-sm mb-1">Casa Inteligente</h4>
+        <p class="text-gray-500 text-xs leading-relaxed">Domótica con control remoto</p>
+      </div>
+
+      <div class="amenity-card p-6 text-center" data-aos="zoom-in" data-aos-delay="300">
+        <div class="w-12 h-12 mx-auto mb-4 rounded-xl bg-ocean-50 flex items-center justify-center">
+          <i data-lucide="shield-check" class="w-6 h-6 text-ocean-700"></i>
+        </div>
+        <h4 class="font-serif font-bold text-ocean-900 text-sm mb-1">Seguridad 24/7</h4>
+        <p class="text-gray-500 text-xs leading-relaxed">Vigilancia y cámaras inteligentes</p>
+      </div>
+
+      <div class="amenity-card p-6 text-center" data-aos="zoom-in" data-aos-delay="375">
+        <div class="w-12 h-12 mx-auto mb-4 rounded-xl bg-ocean-50 flex items-center justify-center">
+          <i data-lucide="dumbbell" class="w-6 h-6 text-ocean-700"></i>
+        </div>
+        <h4 class="font-serif font-bold text-ocean-900 text-sm mb-1">Gimnasio</h4>
+        <p class="text-gray-500 text-xs leading-relaxed">Equipado con vista al jardín</p>
+      </div>
+
+      <div class="amenity-card p-6 text-center" data-aos="zoom-in" data-aos-delay="450">
+        <div class="w-12 h-12 mx-auto mb-4 rounded-xl bg-ocean-50 flex items-center justify-center">
+          <i data-lucide="film" class="w-6 h-6 text-ocean-700"></i>
+        </div>
+        <h4 class="font-serif font-bold text-ocean-900 text-sm mb-1">Sala de Cine</h4>
+        <p class="text-gray-500 text-xs leading-relaxed">Proyector 4K, Dolby Atmos</p>
+      </div>
+
+      <div class="amenity-card p-6 text-center" data-aos="zoom-in" data-aos-delay="525">
+        <div class="w-12 h-12 mx-auto mb-4 rounded-xl bg-ocean-50 flex items-center justify-center">
+          <i data-lucide="wine" class="w-6 h-6 text-ocean-700"></i>
+        </div>
+        <h4 class="font-serif font-bold text-ocean-900 text-sm mb-1">Bar Exterior</h4>
+        <p class="text-gray-500 text-xs leading-relaxed">Bar tropical junto a la alberca</p>
+      </div>
+
+      <div class="amenity-card p-6 text-center" data-aos="zoom-in" data-aos-delay="600">
+        <div class="w-12 h-12 mx-auto mb-4 rounded-xl bg-ocean-50 flex items-center justify-center">
+          <i data-lucide="sparkles" class="w-6 h-6 text-ocean-700"></i>
+        </div>
+        <h4 class="font-serif font-bold text-ocean-900 text-sm mb-1">Spa & Jacuzzi</h4>
+        <p class="text-gray-500 text-xs leading-relaxed">Relajación en terraza privada</p>
+      </div>
+
+      <div class="amenity-card p-6 text-center" data-aos="zoom-in" data-aos-delay="675">
+        <div class="w-12 h-12 mx-auto mb-4 rounded-xl bg-ocean-50 flex items-center justify-center">
+          <i data-lucide="car" class="w-6 h-6 text-ocean-700"></i>
+        </div>
+        <h4 class="font-serif font-bold text-ocean-900 text-sm mb-1">Estacionamiento</h4>
+        <p class="text-gray-500 text-xs leading-relaxed">Cochera techada para 4 autos</p>
+      </div>
+
+      <div class="amenity-card p-6 text-center" data-aos="zoom-in" data-aos-delay="750">
+        <div class="w-12 h-12 mx-auto mb-4 rounded-xl bg-ocean-50 flex items-center justify-center">
+          <i data-lucide="flame" class="w-6 h-6 text-ocean-700"></i>
+        </div>
+        <h4 class="font-serif font-bold text-ocean-900 text-sm mb-1">Área de BBQ</h4>
+        <p class="text-gray-500 text-xs leading-relaxed">Parrillera profesional en jardín</p>
+      </div>
+
+      <div class="amenity-card p-6 text-center" data-aos="zoom-in" data-aos-delay="825">
+        <div class="w-12 h-12 mx-auto mb-4 rounded-xl bg-ocean-50 flex items-center justify-center">
+          <i data-lucide="leaf" class="w-6 h-6 text-ocean-700"></i>
+        </div>
+        <h4 class="font-serif font-bold text-ocean-900 text-sm mb-1">Jardín Tropical</h4>
+        <p class="text-gray-500 text-xs leading-relaxed">Flora nativa del Pacífico</p>
+      </div>
+    </div>
+  </div>
+</section>
+
+
+<!-- ══════════════════════════════════════════
+     UBICACIÓN
+══════════════════════════════════════════ -->
+<section id="ubicacion" class="py-20 px-6">
+  <div class="max-w-6xl mx-auto grid md:grid-cols-2 gap-12 items-center">
+
+    <div data-aos="fade-right">
+      <p class="text-gold text-xs tracking-[0.3em] uppercase font-medium mb-3">Dónde encontrarnos</p>
+      <h2 class="font-serif text-4xl md:text-5xl text-ocean-900 font-bold leading-tight mb-6">
+        El paraíso del<br><em>Pacífico mexicano</em>
+      </h2>
+      <div class="gold-line mb-6"></div>
+      <p class="text-gray-600 leading-relaxed mb-7">
+        Bahía de Banderas es la bahía más grande de México y uno de los destinos más exclusivos del Pacífico. A 15 minutos del Aeropuerto Internacional de Puerto Vallarta, con acceso a marinas, campos de golf y restaurantes de alta cocina.
+      </p>
+      <div class="space-y-4">
+        <div class="flex items-start gap-4">
+          <div class="w-10 h-10 rounded-lg bg-ocean-50 flex items-center justify-center flex-shrink-0">
+            <i data-lucide="plane" class="w-5 h-5 text-ocean-700"></i>
+          </div>
+          <div>
+            <p class="font-semibold text-ocean-900 text-sm">Aeropuerto Internacional PVR</p>
+            <p class="text-gray-500 text-sm">Puerto Vallarta · 15 min en auto</p>
+          </div>
+        </div>
+        <div class="flex items-start gap-4">
+          <div class="w-10 h-10 rounded-lg bg-ocean-50 flex items-center justify-center flex-shrink-0">
+            <i data-lucide="anchor" class="w-5 h-5 text-ocean-700"></i>
+          </div>
+          <div>
+            <p class="font-semibold text-ocean-900 text-sm">Marina Riviera Nayarit</p>
+            <p class="text-gray-500 text-sm">La Cruz de Huanacaxtle · 8 min</p>
+          </div>
+        </div>
+        <div class="flex items-start gap-4">
+          <div class="w-10 h-10 rounded-lg bg-ocean-50 flex items-center justify-center flex-shrink-0">
+            <i data-lucide="utensils" class="w-5 h-5 text-ocean-700"></i>
+          </div>
+          <div>
+            <p class="font-semibold text-ocean-900 text-sm">Restaurantes & Clubs de Golf</p>
+            <p class="text-gray-500 text-sm">Sayulita · Punta Mita · Bucerías · 5–20 min</p>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <div data-aos="fade-left" data-aos-delay="200" class="rounded-2xl overflow-hidden shadow-2xl">
+      <iframe
+        src="https://www.google.com/maps/embed?pb=!1m14!1m12!1m3!1d59638!2d-105.28!3d20.73!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!5e0!3m2!1ses!2smx!4v1700000000000"
+        width="100%" height="420" style="border:0;display:block" allowfullscreen loading="lazy"
+        referrerpolicy="no-referrer-when-downgrade"></iframe>
+    </div>
+  </div>
+</section>
+
+
+<!-- ══════════════════════════════════════════
+     AGENTE
+══════════════════════════════════════════ -->
+<section class="py-16 px-6">
+  <div class="max-w-3xl mx-auto">
+    <div class="glass-dark rounded-3xl p-8 md:p-10 flex flex-col md:flex-row items-center gap-8"
+         data-aos="fade-up">
+      <div class="w-24 h-24 rounded-full bg-gradient-to-br from-ocean-700 to-gold flex items-center justify-center text-white font-serif text-3xl font-bold shadow-xl flex-shrink-0">
+        AG
+      </div>
+      <div class="text-center md:text-left flex-1">
+        <p class="text-gold text-xs tracking-[0.25em] uppercase mb-1">Tu agente</p>
+        <h3 class="font-serif text-white text-2xl font-bold mb-1">Ana García Martínez</h3>
+        <p class="text-ocean-200 text-sm mb-4">Especialista en Propiedades de Lujo · 12 años de experiencia</p>
+        <div class="flex flex-wrap justify-center md:justify-start gap-4 text-sm">
+          <a href="tel:+523221234567" class="flex items-center gap-2 text-white/65 hover:text-gold transition">
+            <i data-lucide="phone" class="w-4 h-4"></i>+52 322 123 4567
+          </a>
+          <a href="mailto:ana@propiedadesbanderas.com" class="flex items-center gap-2 text-white/65 hover:text-gold transition">
+            <i data-lucide="mail" class="w-4 h-4"></i>ana@propiedadesbanderas.com
+          </a>
+        </div>
+      </div>
+      <a href="https://wa.me/523221234567?text=Hola%20Ana" target="_blank"
+         class="flex-shrink-0 flex items-center gap-2 bg-[#25D366] hover:bg-[#1fba5c] text-white font-semibold text-sm px-5 py-3 rounded-full transition shadow-lg">
+        <svg class="w-5 h-5 fill-current" viewBox="0 0 24 24"><path d="M17.472 14.382c-.297-.149-1.758-.867-2.03-.967-.273-.099-.471-.148-.67.15-.197.297-.767.966-.94 1.164-.173.199-.347.223-.644.075-.297-.15-1.255-.463-2.39-1.475-.883-.788-1.48-1.761-1.653-2.059-.173-.297-.018-.458.13-.606.134-.133.298-.347.446-.52.149-.174.198-.298.298-.497.099-.198.05-.371-.025-.52-.075-.149-.669-1.612-.916-2.207-.242-.579-.487-.5-.669-.51-.173-.008-.371-.01-.57-.01-.198 0-.52.074-.792.372-.272.297-1.04 1.016-1.04 2.479 0 1.462 1.065 2.875 1.213 3.074.149.198 2.096 3.2 5.077 4.487.709.306 1.262.489 1.694.625.712.227 1.36.195 1.871.118.571-.085 1.758-.719 2.006-1.413.248-.694.248-1.289.173-1.413-.074-.124-.272-.198-.57-.347m-5.421 7.403h-.004a9.87 9.87 0 01-5.031-1.378l-.361-.214-3.741.982.998-3.648-.235-.374a9.86 9.86 0 01-1.51-5.26c.001-5.45 4.436-9.884 9.888-9.884 2.64 0 5.122 1.03 6.988 2.898a9.825 9.825 0 012.893 6.994c-.003 5.45-4.437 9.884-9.885 9.884m8.413-18.297A11.815 11.815 0 0012.05 0C5.495 0 .16 5.335.157 11.892c0 2.096.547 4.142 1.588 5.945L.057 24l6.305-1.654a11.882 11.882 0 005.683 1.448h.005c6.554 0 11.89-5.335 11.893-11.893a11.821 11.821 0 00-3.48-8.413z"/></svg>
+        WhatsApp
+      </a>
+    </div>
+  </div>
+</section>
+
+
+<!-- ══════════════════════════════════════════
+     CONTACT FORM — Glassmorphism
+══════════════════════════════════════════ -->
+<section id="contacto" class="py-24 px-6 relative overflow-hidden">
+  <div class="absolute top-0 left-1/4 w-96 h-96 rounded-full opacity-20 blur-3xl pointer-events-none" style="background:#005f73;"></div>
+  <div class="absolute bottom-0 right-1/4 w-80 h-80 rounded-full opacity-15 blur-3xl pointer-events-none" style="background:#d4a853;"></div>
+
+  <div class="max-w-2xl mx-auto relative z-10">
+    <div class="text-center mb-10" data-aos="fade-up">
+      <p class="text-gold text-xs tracking-[0.3em] uppercase font-medium mb-3">Contáctanos</p>
+      <h2 class="font-serif text-4xl md:text-5xl text-ocean-900 font-bold">Agenda tu<br><em>visita privada</em></h2>
+      <div class="gold-line mx-auto mt-5"></div>
+      <p class="text-gray-600 text-sm mt-4">Nuestro equipo te responde en menos de 2 horas</p>
+    </div>
+
+    <div class="rounded-3xl p-8 md:p-10 shadow-2xl"
+         style="background:rgba(10,37,64,.38);backdrop-filter:blur(28px);-webkit-backdrop-filter:blur(28px);border:1px solid rgba(255,255,255,.16);"
+         data-aos="fade-up" data-aos-delay="150">
+      <form onsubmit="submitForm(event)" class="space-y-5">
+        <div class="grid sm:grid-cols-2 gap-5">
+          <div>
+            <label class="block text-white/65 text-xs tracking-widest uppercase mb-2">Nombre</label>
+            <input type="text" placeholder="Carlos Hernández" class="glass-input" required>
+          </div>
+          <div>
+            <label class="block text-white/65 text-xs tracking-widest uppercase mb-2">Correo</label>
+            <input type="email" placeholder="correo@ejemplo.com" class="glass-input" required>
+          </div>
+        </div>
+        <div class="grid sm:grid-cols-2 gap-5">
+          <div>
+            <label class="block text-white/65 text-xs tracking-widest uppercase mb-2">Teléfono</label>
+            <input type="tel" placeholder="+52 322 123 4567" class="glass-input">
+          </div>
+          <div>
+            <label class="block text-white/65 text-xs tracking-widest uppercase mb-2">Fecha preferida</label>
+            <input type="date" class="glass-input">
+          </div>
+        </div>
+        <div>
+          <label class="block text-white/65 text-xs tracking-widest uppercase mb-2">Mensaje</label>
+          <textarea rows="4" placeholder="¿Tienes alguna pregunta específica?" class="glass-input resize-none"></textarea>
+        </div>
+        <div class="flex items-start gap-3">
+          <input type="checkbox" id="privacy" required
+                 class="mt-1 rounded border-white/30 bg-white/10 accent-amber-500">
+          <label for="privacy" class="text-white/45 text-xs leading-relaxed">
+            Acepto el aviso de privacidad y recibir información sobre esta y otras propiedades de Banderas Propiedades de Lujo.
+          </label>
+        </div>
+        <button type="submit" id="submit-btn"
+                class="w-full flex items-center justify-center gap-3 bg-gold hover:bg-gold-light text-ocean-900 font-bold text-base py-4 rounded-2xl transition-all duration-300 shadow-lg hover:-translate-y-0.5 active:translate-y-0">
+          <i data-lucide="send" class="w-5 h-5"></i>
+          Enviar solicitud de visita
+        </button>
+      </form>
+    </div>
+  </div>
+</section>
+
+
+<!-- ══════════════════════════════════════════
+     FOOTER
+══════════════════════════════════════════ -->
+<footer class="bg-ocean-900 text-white py-14 px-6">
+  <div class="max-w-6xl mx-auto">
+    <div class="grid md:grid-cols-3 gap-10 mb-10">
+      <div>
+        <h3 class="font-serif text-2xl font-bold mb-1">BANDERAS</h3>
+        <p class="text-gold text-xs tracking-widest uppercase mb-4">Propiedades de Lujo</p>
+        <p class="text-white/45 text-sm leading-relaxed max-w-xs">Especializados en propiedades premium en la Riviera Nayarit y Puerto Vallarta desde 2008.</p>
+      </div>
+      <div>
+        <p class="text-gold text-xs tracking-widest uppercase mb-4">Navegación</p>
+        <ul class="space-y-2 text-sm text-white/55">
+          <li><a href="#hero"       class="hover:text-white transition">Inicio</a></li>
+          <li><a href="#galeria"    class="hover:text-white transition">Galería</a></li>
+          <li><a href="#amenidades" class="hover:text-white transition">Amenidades</a></li>
+          <li><a href="#ubicacion"  class="hover:text-white transition">Ubicación</a></li>
+          <li><a href="#contacto"   class="hover:text-white transition">Contacto</a></li>
+        </ul>
+      </div>
+      <div>
+        <p class="text-gold text-xs tracking-widest uppercase mb-4">Contacto Directo</p>
+        <div class="space-y-3 text-sm text-white/55">
+          <a href="tel:+523221234567" class="flex items-center gap-2 hover:text-white transition">
+            <i data-lucide="phone" class="w-4 h-4 text-gold"></i>+52 322 123 4567
+          </a>
+          <a href="mailto:info@propiedadesbanderas.com" class="flex items-center gap-2 hover:text-white transition">
+            <i data-lucide="mail" class="w-4 h-4 text-gold"></i>info@propiedadesbanderas.com
+          </a>
+          <p class="flex items-start gap-2">
+            <i data-lucide="map-pin" class="w-4 h-4 text-gold flex-shrink-0 mt-0.5"></i>
+            Bahía de Banderas, Nayarit, México
+          </p>
+        </div>
+        <div class="flex gap-3 mt-5">
+          <a href="#" class="w-9 h-9 rounded-full border border-white/20 flex items-center justify-center text-white/45 hover:text-gold hover:border-gold transition">
+            <i data-lucide="instagram" class="w-4 h-4"></i>
+          </a>
+          <a href="#" class="w-9 h-9 rounded-full border border-white/20 flex items-center justify-center text-white/45 hover:text-gold hover:border-gold transition">
+            <i data-lucide="facebook" class="w-4 h-4"></i>
+          </a>
+          <a href="#" class="w-9 h-9 rounded-full border border-white/20 flex items-center justify-center text-white/45 hover:text-gold hover:border-gold transition">
+            <i data-lucide="youtube" class="w-4 h-4"></i>
+          </a>
+        </div>
+      </div>
+    </div>
+    <div class="border-t border-white/10 pt-6 flex flex-col sm:flex-row justify-between items-center gap-4">
+      <p class="text-white/25 text-xs">© 2025 Banderas Propiedades de Lujo. Todos los derechos reservados.</p>
+      <p class="text-white/20 text-xs">Casa Cielo Azul · Bahía de Banderas, Nayarit</p>
+    </div>
+  </div>
+</footer>
+
+
+<!-- ══════════════════════════════════════════
+     FLOATING WHATSAPP
+══════════════════════════════════════════ -->
+<a href="https://wa.me/523221234567?text=Hola%2C%20me%20interesa%20Casa%20Cielo%20Azul" target="_blank"
+   class="wa-float fixed bottom-6 right-6 z-50 w-14 h-14 rounded-full bg-[#25D366] hover:bg-[#1fba5c] flex items-center justify-center shadow-2xl transition-transform hover:scale-110 group"
+   title="¡Escríbenos ahora!">
+  <svg class="w-7 h-7 fill-white" viewBox="0 0 24 24"><path d="M17.472 14.382c-.297-.149-1.758-.867-2.03-.967-.273-.099-.471-.148-.67.15-.197.297-.767.966-.94 1.164-.173.199-.347.223-.644.075-.297-.15-1.255-.463-2.39-1.475-.883-.788-1.48-1.761-1.653-2.059-.173-.297-.018-.458.13-.606.134-.133.298-.347.446-.52.149-.174.198-.298.298-.497.099-.198.05-.371-.025-.52-.075-.149-.669-1.612-.916-2.207-.242-.579-.487-.5-.669-.51-.173-.008-.371-.01-.57-.01-.198 0-.52.074-.792.372-.272.297-1.04 1.016-1.04 2.479 0 1.462 1.065 2.875 1.213 3.074.149.198 2.096 3.2 5.077 4.487.709.306 1.262.489 1.694.625.712.227 1.36.195 1.871.118.571-.085 1.758-.719 2.006-1.413.248-.694.248-1.289.173-1.413-.074-.124-.272-.198-.57-.347m-5.421 7.403h-.004a9.87 9.87 0 01-5.031-1.378l-.361-.214-3.741.982.998-3.648-.235-.374a9.86 9.86 0 01-1.51-5.26c.001-5.45 4.436-9.884 9.888-9.884 2.64 0 5.122 1.03 6.988 2.898a9.825 9.825 0 012.893 6.994c-.003 5.45-4.437 9.884-9.885 9.884m8.413-18.297A11.815 11.815 0 0012.05 0C5.495 0 .16 5.335.157 11.892c0 2.096.547 4.142 1.588 5.945L.057 24l6.305-1.654a11.882 11.882 0 005.683 1.448h.005c6.554 0 11.89-5.335 11.893-11.893a11.821 11.821 0 00-3.48-8.413z"/></svg>
+  <span class="absolute right-16 bg-ocean-900 text-white text-xs px-3 py-1.5 rounded-full whitespace-nowrap opacity-0 group-hover:opacity-100 transition-opacity pointer-events-none shadow-lg">
+    ¡Escríbenos ahora!
+  </span>
+</a>
+
+
+<!-- ══════════════════════════════════════════
+     LIGHTBOX
+══════════════════════════════════════════ -->
+<div id="lightbox">
+  <button id="lb-close" onclick="closeLightbox()">✕</button>
+  <button id="lb-prev"  onclick="lightboxNav(-1)">&#8592;</button>
+  <img id="lb-img" src="" alt="Foto ampliada">
+  <button id="lb-next"  onclick="lightboxNav(1)">&#8594;</button>
+  <div id="lb-counter"></div>
+</div>
+
+
+<!-- ══════════════════════════════════════════
+     SCRIPTS
+══════════════════════════════════════════ -->
+<script src="https://unpkg.com/aos@2.3.4/dist/aos.js"></script>
+<script>
+// AOS
+AOS.init({ duration: 1000, easing: 'ease-out-cubic', once: true, offset: 80 });
+
+// Lucide
+lucide.createIcons();
+
+// Navbar scroll
+const navbar = document.getElementById('navbar');
+window.addEventListener('scroll', () => {
+  navbar.classList.toggle('scrolled', window.scrollY > 60);
+}, { passive: true });
+
+// Lightbox
+const lbImages = [
+  'https://images.unsplash.com/photo-1613490493576-7fde63acd811?w=1400&q=90',
+  'https://images.unsplash.com/photo-1600585154340-be6161a56a0c?w=1400&q=90',
+  'https://images.unsplash.com/photo-1512917774080-9991f1c4c750?w=1400&q=90',
+  'https://images.unsplash.com/photo-1600596542815-ffad4c1539a9?w=1400&q=90',
+  'https://images.unsplash.com/photo-1580587771525-78b9dba3b914?w=1400&q=90',
+  'https://images.unsplash.com/photo-1600607687920-4e2a09cf159d?w=1400&q=90',
+  'https://images.unsplash.com/photo-1564013799919-ab600027ffc6?w=1400&q=90',
+  'https://images.unsplash.com/photo-1571003123894-1f0594d2b5d9?w=1400&q=90',
+];
+let lbCurrent = 0;
+
+function openLightbox(idx) {
+  lbCurrent = idx;
+  updateLightbox();
+  document.getElementById('lightbox').classList.add('open');
+  document.body.style.overflow = 'hidden';
+}
+function closeLightbox() {
+  document.getElementById('lightbox').classList.remove('open');
+  document.body.style.overflow = '';
+}
+function lightboxNav(dir) {
+  lbCurrent = (lbCurrent + dir + lbImages.length) % lbImages.length;
+  updateLightbox();
+}
+function updateLightbox() {
+  document.getElementById('lb-img').src = lbImages[lbCurrent];
+  document.getElementById('lb-counter').textContent = `Foto ${lbCurrent + 1} de ${lbImages.length}`;
+}
+document.getElementById('lightbox').addEventListener('click', e => {
+  if (e.target.id === 'lightbox') closeLightbox();
+});
+document.addEventListener('keydown', e => {
+  if (!document.getElementById('lightbox').classList.contains('open')) return;
+  if (e.key === 'Escape')     closeLightbox();
+  if (e.key === 'ArrowLeft')  lightboxNav(-1);
+  if (e.key === 'ArrowRight') lightboxNav(1);
+});
+
+// Form
+function submitForm(e) {
+  e.preventDefault();
+  const btn = document.getElementById('submit-btn');
+  btn.disabled = true;
+  btn.textContent = 'Enviando...';
+  setTimeout(() => {
+    alert('✅ ¡Solicitud recibida!\n\nUn asesor te contactará en menos de 2 horas.\n\n— Banderas Propiedades de Lujo');
+    e.target.reset();
+    btn.disabled = false;
+    btn.innerHTML = '<i data-lucide="send" class="w-5 h-5"></i> Enviar solicitud de visita';
+    lucide.createIcons();
+  }, 1400);
+}
+
+// Hero parallax (subtle)
+window.addEventListener('scroll', () => {
+  const y = window.scrollY;
+  if (y < window.innerHeight) {
+    const mosaic = document.querySelector('.photo-mosaic');
+    if (mosaic) mosaic.style.transform = `translateY(${y * 0.12}px)`;
+  }
+}, { passive: true });
+</script>
+</body>
+</html>

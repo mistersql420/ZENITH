@@ -1,0 +1,449 @@
+<!DOCTYPE html>
+<html lang="es" class="scroll-smooth">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <meta name="description" content="Contáctanos — Zenith Bahia Properties. Rentas y difusión de propiedades de lujo en Bahía de Banderas y Puerto Vallarta, Riviera Nayarit.">
+  <title>Contacto | Zenith Bahia Properties</title>
+
+  <script src="https://cdn.tailwindcss.com"></script>
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:ital,wght@0,400;0,600;1,400;1,600&family=Montserrat:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+  <link href="https://unpkg.com/aos@2.3.4/dist/aos.css" rel="stylesheet">
+  <script src="https://unpkg.com/lucide@latest"></script>
+
+  <script>
+    tailwind.config = {
+      theme: {
+        extend: {
+          fontFamily: {
+            serif: ['"Cormorant Garamond"', 'Georgia', 'serif'],
+            sans:  ['Montserrat', 'system-ui', 'sans-serif'],
+          },
+          colors: {
+            ocean: { 900:'#0a2540', 800:'#0a4d68', 700:'#005f73', 500:'#0096c7', 200:'#b8d8e8', 50:'#f0f8ff' },
+            gold:  { DEFAULT:'#d4a853', light:'#e9c46a', dark:'#c5a059' },
+          }
+        }
+      }
+    }
+  </script>
+
+  <style>
+    *, *::before, *::after { box-sizing: border-box; }
+    body  { font-family: 'Montserrat', sans-serif; }
+    h1, h2, h3 { font-family: 'Cormorant Garamond', serif; }
+
+    .page-bg {
+      background: linear-gradient(180deg,
+        #0a2540 0%, #003d5c 8%, #005f73 16%,
+        #4a9ab5 28%, #a8d5e8 42%,
+        #dff0f8 55%, #f8fbff 70%, #ffffff 100%
+      );
+      background-attachment: fixed;
+    }
+
+    #navbar { transition: all 0.4s ease; }
+    #navbar.scrolled {
+      background: rgba(10,37,64,.90);
+      backdrop-filter: blur(20px); -webkit-backdrop-filter: blur(20px);
+      box-shadow: 0 2px 32px rgba(0,0,0,.3);
+    }
+
+    .gold-line { width:56px; height:2px; background:linear-gradient(90deg,transparent,#d4a853,transparent); }
+
+    .glass-input {
+      width: 100%;
+      background: rgba(255,255,255,.08);
+      backdrop-filter: blur(8px);
+      border: 1px solid rgba(255,255,255,.25);
+      border-radius: 10px; padding: 12px 16px;
+      color: white; font-size: 14px; font-family: 'Montserrat', sans-serif;
+      transition: all .3s ease;
+    }
+    .glass-input::placeholder { color: rgba(255,255,255,.45); }
+    .glass-input:focus { outline: none; border-color: #d4a853; box-shadow: 0 0 0 3px rgba(212,168,83,.2); }
+    select.glass-input option { background: #0a2540; color: white; }
+
+    .info-card {
+      background: rgba(255,255,255,.10);
+      backdrop-filter: blur(16px); -webkit-backdrop-filter: blur(16px);
+      border: 1px solid rgba(255,255,255,.18);
+      border-radius: 20px;
+      transition: all .35s ease;
+    }
+    .info-card:hover {
+      background: rgba(255,255,255,.16);
+      transform: translateY(-4px);
+    }
+
+    @keyframes wa-pulse {
+      0%,100% { box-shadow:0 0 0 0 rgba(37,211,102,.6); }
+      60%      { box-shadow:0 0 0 16px rgba(37,211,102,0); }
+    }
+    .wa-float { animation: wa-pulse 2.8s infinite; }
+  </style>
+</head>
+
+<body class="page-bg text-gray-800">
+
+<!-- ══════════════════════════════════════════
+     NAVBAR
+══════════════════════════════════════════ -->
+<nav id="navbar" class="fixed top-0 inset-x-0 z-50 px-6 py-4">
+  <div class="max-w-7xl mx-auto flex items-center justify-between">
+    <a href="index.html" class="flex flex-col leading-none">
+      <span class="font-serif text-white text-xl font-semibold tracking-wider">ZENITH</span>
+      <span class="text-gold text-[10px] tracking-[0.35em] uppercase font-medium">Bahia Properties</span>
+    </a>
+
+    <div class="hidden md:flex items-center gap-8">
+      <a href="index.html"    class="text-white/70 hover:text-white text-sm tracking-wide transition">Inicio</a>
+      <a href="catalogo.html" class="text-white/70 hover:text-white text-sm tracking-wide transition">Propiedades</a>
+      <a href="publicar.html" class="text-white/70 hover:text-white text-sm tracking-wide transition">Publicar</a>
+      <a href="contacto.html" class="text-white text-sm tracking-wide font-medium border-b border-gold pb-0.5">Contacto</a>
+    </div>
+
+    <a href="catalogo.html" class="hidden md:inline-flex items-center gap-2 bg-gold hover:bg-gold-light text-ocean-900 font-semibold text-xs px-5 py-2.5 rounded-full transition tracking-wider uppercase">
+      Ver propiedades
+    </a>
+
+    <button class="md:hidden text-white" onclick="document.getElementById('mob-menu').classList.toggle('hidden')">
+      <i data-lucide="menu" class="w-6 h-6"></i>
+    </button>
+  </div>
+
+  <div id="mob-menu" class="hidden md:hidden mt-4 pb-4 border-t border-white/20">
+    <div class="flex flex-col gap-4 pt-4 px-2">
+      <a href="index.html"    class="text-white/80 hover:text-white text-sm">Inicio</a>
+      <a href="catalogo.html" class="text-white/80 hover:text-white text-sm">Propiedades</a>
+      <a href="publicar.html" class="text-white/80 hover:text-white text-sm">Publicar</a>
+      <a href="contacto.html" class="text-gold font-medium text-sm">Contacto</a>
+      <a href="catalogo.html" class="bg-gold text-ocean-900 font-semibold text-sm px-5 py-2.5 rounded-full text-center tracking-wider uppercase">Ver propiedades</a>
+    </div>
+  </div>
+</nav>
+
+
+<!-- ══════════════════════════════════════════
+     HERO
+══════════════════════════════════════════ -->
+<section class="pt-36 pb-16 px-6 text-center relative overflow-hidden">
+  <div class="max-w-2xl mx-auto" data-aos="fade-up">
+    <p class="text-gold text-xs tracking-[0.35em] uppercase font-medium mb-4">Estamos aquí para ayudarte</p>
+    <h1 class="font-serif text-white text-5xl md:text-6xl font-semibold leading-tight mb-5">
+      Hablemos de tu<br><em class="text-gold not-italic">próximo paso</em>
+    </h1>
+    <div class="gold-line mx-auto mb-6"></div>
+    <p class="text-white/65 text-base font-light leading-relaxed max-w-lg mx-auto">
+      Ya sea que busques una propiedad para rentar, quieras publicar la tuya, o simplemente tengas preguntas — nuestro equipo te responde en menos de 2 horas.
+    </p>
+  </div>
+</section>
+
+
+<!-- ══════════════════════════════════════════
+     CONTENIDO PRINCIPAL
+══════════════════════════════════════════ -->
+<section class="pb-28 px-6">
+  <div class="max-w-6xl mx-auto">
+    <div class="grid lg:grid-cols-5 gap-10 items-start">
+
+
+      <!-- ── COLUMNA IZQUIERDA: info de contacto ── -->
+      <div class="lg:col-span-2 space-y-5" data-aos="fade-right">
+
+        <!-- Tarjeta teléfono -->
+        <div class="info-card p-6 flex items-start gap-4">
+          <div class="w-11 h-11 rounded-xl bg-gold/20 flex items-center justify-center flex-shrink-0">
+            <i data-lucide="phone" class="w-5 h-5 text-gold"></i>
+          </div>
+          <div>
+            <p class="text-white/50 text-xs tracking-widest uppercase mb-1">Teléfono</p>
+            <a href="tel:+523221234567" class="text-white font-medium text-sm hover:text-gold transition">+52 322 123 4567</a>
+            <p class="text-white/40 text-xs mt-0.5 font-light">Lun–Sáb · 9 am – 7 pm</p>
+          </div>
+        </div>
+
+        <!-- Tarjeta WhatsApp -->
+        <div class="info-card p-6 flex items-start gap-4">
+          <div class="w-11 h-11 rounded-xl bg-[#25D366]/20 flex items-center justify-center flex-shrink-0">
+            <svg class="w-5 h-5 fill-[#25D366]" viewBox="0 0 24 24"><path d="M17.472 14.382c-.297-.149-1.758-.867-2.03-.967-.273-.099-.471-.148-.67.15-.197.297-.767.966-.94 1.164-.173.199-.347.223-.644.075-.297-.15-1.255-.463-2.39-1.475-.883-.788-1.48-1.761-1.653-2.059-.173-.297-.018-.458.13-.606.134-.133.298-.347.446-.52.149-.174.198-.298.298-.497.099-.198.05-.371-.025-.52-.075-.149-.669-1.612-.916-2.207-.242-.579-.487-.5-.669-.51-.173-.008-.371-.01-.57-.01-.198 0-.52.074-.792.372-.272.297-1.04 1.016-1.04 2.479 0 1.462 1.065 2.875 1.213 3.074.149.198 2.096 3.2 5.077 4.487.709.306 1.262.489 1.694.625.712.227 1.36.195 1.871.118.571-.085 1.758-.719 2.006-1.413.248-.694.248-1.289.173-1.413-.074-.124-.272-.198-.57-.347m-5.421 7.403h-.004a9.87 9.87 0 01-5.031-1.378l-.361-.214-3.741.982.998-3.648-.235-.374a9.86 9.86 0 01-1.51-5.26c.001-5.45 4.436-9.884 9.888-9.884 2.64 0 5.122 1.03 6.988 2.898a9.825 9.825 0 012.893 6.994c-.003 5.45-4.437 9.884-9.885 9.884m8.413-18.297A11.815 11.815 0 0012.05 0C5.495 0 .16 5.335.157 11.892c0 2.096.547 4.142 1.588 5.945L.057 24l6.305-1.654a11.882 11.882 0 005.683 1.448h.005c6.554 0 11.89-5.335 11.893-11.893a11.821 11.821 0 00-3.48-8.413z"/></svg>
+          </div>
+          <div>
+            <p class="text-white/50 text-xs tracking-widest uppercase mb-1">WhatsApp</p>
+            <a href="https://wa.me/523221234567?text=Hola%20Zenith%2C%20me%20gustar%C3%ADa%20obtener%20m%C3%A1s%20informaci%C3%B3n" target="_blank"
+               class="text-white font-medium text-sm hover:text-[#25D366] transition">Escribir ahora</a>
+            <p class="text-white/40 text-xs mt-0.5 font-light">Respondemos en minutos</p>
+          </div>
+        </div>
+
+        <!-- Tarjeta correo -->
+        <div class="info-card p-6 flex items-start gap-4">
+          <div class="w-11 h-11 rounded-xl bg-gold/20 flex items-center justify-center flex-shrink-0">
+            <i data-lucide="mail" class="w-5 h-5 text-gold"></i>
+          </div>
+          <div>
+            <p class="text-white/50 text-xs tracking-widest uppercase mb-1">Correo</p>
+            <a href="mailto:hola@zenithbahia.com" class="text-white font-medium text-sm hover:text-gold transition">hola@zenithbahia.com</a>
+            <p class="text-white/40 text-xs mt-0.5 font-light">Respuesta en menos de 24 h</p>
+          </div>
+        </div>
+
+        <!-- Tarjeta zonas -->
+        <div class="info-card p-6 flex items-start gap-4">
+          <div class="w-11 h-11 rounded-xl bg-gold/20 flex items-center justify-center flex-shrink-0">
+            <i data-lucide="map-pin" class="w-5 h-5 text-gold"></i>
+          </div>
+          <div>
+            <p class="text-white/50 text-xs tracking-widest uppercase mb-2">Zonas de operación</p>
+            <p class="text-white font-medium text-sm">Bahía de Banderas, Nayarit</p>
+            <p class="text-white/50 text-xs font-light mb-2">Sayulita · Bucerías · La Cruz · Punta Mita</p>
+            <p class="text-white font-medium text-sm">Puerto Vallarta, Jalisco</p>
+            <p class="text-white/50 text-xs font-light">Zona Romántica · Marina · Conchas Chinas</p>
+          </div>
+        </div>
+
+        <!-- Redes sociales -->
+        <div class="info-card p-6">
+          <p class="text-white/50 text-xs tracking-widest uppercase mb-4">Síguenos</p>
+          <div class="flex gap-3">
+            <a href="#" class="w-10 h-10 rounded-full border border-white/20 flex items-center justify-center text-white/50 hover:text-gold hover:border-gold transition">
+              <i data-lucide="instagram" class="w-4 h-4"></i>
+            </a>
+            <a href="#" class="w-10 h-10 rounded-full border border-white/20 flex items-center justify-center text-white/50 hover:text-gold hover:border-gold transition">
+              <i data-lucide="facebook" class="w-4 h-4"></i>
+            </a>
+            <a href="#" class="w-10 h-10 rounded-full border border-white/20 flex items-center justify-center text-white/50 hover:text-gold hover:border-gold transition">
+              <i data-lucide="youtube" class="w-4 h-4"></i>
+            </a>
+          </div>
+        </div>
+
+      </div><!-- /col izquierda -->
+
+
+      <!-- ── COLUMNA DERECHA: formulario ── -->
+      <div class="lg:col-span-3" data-aos="fade-left" data-aos-delay="100">
+        <div class="rounded-3xl p-8 md:p-10 shadow-2xl"
+             style="background:rgba(10,37,64,.40);backdrop-filter:blur(28px);-webkit-backdrop-filter:blur(28px);border:1px solid rgba(255,255,255,.16);">
+
+          <div class="mb-8">
+            <h2 class="font-serif text-white text-3xl md:text-4xl font-semibold mb-2">Envíanos un mensaje</h2>
+            <p class="text-white/50 text-sm font-light">Te respondemos en menos de 2 horas en horario de atención.</p>
+          </div>
+
+          <form id="contact-form"
+                action="https://formspree.io/f/xaqvdzlg"
+                method="POST"
+                novalidate
+                class="space-y-5">
+
+            <input type="text" name="_gotcha" style="display:none" tabindex="-1" autocomplete="off">
+            <input type="hidden" name="_subject" value="Nuevo mensaje de contacto — Zenith Bahia Properties">
+
+            <div class="grid sm:grid-cols-2 gap-5">
+              <div>
+                <label class="block text-white/55 text-xs tracking-widest uppercase mb-2">Nombre <span class="text-red-400">*</span></label>
+                <input id="cf-nombre" name="nombre" type="text" placeholder="Tu nombre completo" class="glass-input" required>
+              </div>
+              <div>
+                <label class="block text-white/55 text-xs tracking-widest uppercase mb-2">Correo electrónico <span class="text-red-400">*</span></label>
+                <input id="cf-email" name="email" type="email" placeholder="tu@correo.com" class="glass-input" required>
+              </div>
+            </div>
+
+            <div class="grid sm:grid-cols-2 gap-5">
+              <div>
+                <label class="block text-white/55 text-xs tracking-widest uppercase mb-2">Teléfono / WhatsApp</label>
+                <input name="telefono" type="tel" placeholder="+52 322 000 0000" class="glass-input">
+              </div>
+              <div>
+                <label class="block text-white/55 text-xs tracking-widest uppercase mb-2">Motivo de contacto <span class="text-red-400">*</span></label>
+                <select id="cf-motivo" name="motivo" class="glass-input" required>
+                  <option value="" style="background:#0a2540">Selecciona una opción</option>
+                  <option value="renta" style="background:#0a2540">Quiero rentar una propiedad</option>
+                  <option value="publicar" style="background:#0a2540">Quiero publicar mi propiedad</option>
+                  <option value="informacion" style="background:#0a2540">Información general</option>
+                  <option value="precios" style="background:#0a2540">Consulta de precios</option>
+                  <option value="otro" style="background:#0a2540">Otro</option>
+                </select>
+              </div>
+            </div>
+
+            <div>
+              <label class="block text-white/55 text-xs tracking-widest uppercase mb-2">Mensaje <span class="text-red-400">*</span></label>
+              <textarea id="cf-mensaje" name="mensaje" rows="5" placeholder="Cuéntanos en qué podemos ayudarte..." class="glass-input resize-none" required></textarea>
+            </div>
+
+            <button type="submit" id="cf-btn"
+                    class="w-full flex items-center justify-center gap-3 bg-gold hover:bg-gold-light text-ocean-900 font-semibold text-sm py-4 rounded-2xl transition-all shadow-lg hover:-translate-y-0.5 tracking-wider uppercase">
+              <i data-lucide="send" class="w-4 h-4"></i>
+              Enviar mensaje
+            </button>
+          </form>
+
+          <!-- Success -->
+          <div id="cf-success" class="hidden py-8 text-center">
+            <div class="w-16 h-16 rounded-full bg-green-500/20 flex items-center justify-center mx-auto mb-5">
+              <i data-lucide="check-circle" class="w-8 h-8 text-green-400"></i>
+            </div>
+            <h3 class="font-serif text-white text-2xl font-semibold mb-2">¡Mensaje recibido!</h3>
+            <p class="text-white/55 text-sm font-light leading-relaxed mb-6 max-w-sm mx-auto">
+              Gracias por escribirnos. Un asesor de Zenith te contactará en menos de 2 horas en horario de atención.
+            </p>
+            <a href="catalogo.html" class="inline-flex items-center gap-2 bg-gold hover:bg-gold-light text-ocean-900 font-semibold text-xs px-6 py-3 rounded-full transition tracking-wider uppercase">
+              <i data-lucide="grid" class="w-4 h-4"></i>
+              Ver propiedades
+            </a>
+          </div>
+
+          <!-- Separador + WhatsApp -->
+          <div class="mt-7 pt-7 border-t border-white/10 text-center">
+            <p class="text-white/35 text-xs mb-3 font-light">¿Prefieres respuesta inmediata?</p>
+            <a href="https://wa.me/523221234567?text=Hola%20Zenith%2C%20me%20gustar%C3%ADa%20obtener%20m%C3%A1s%20informaci%C3%B3n" target="_blank"
+               class="inline-flex items-center gap-2 bg-[#25D366] hover:bg-[#1fba5c] text-white font-medium text-sm px-6 py-2.5 rounded-full transition">
+              <svg class="w-4 h-4 fill-current" viewBox="0 0 24 24"><path d="M17.472 14.382c-.297-.149-1.758-.867-2.03-.967-.273-.099-.471-.148-.67.15-.197.297-.767.966-.94 1.164-.173.199-.347.223-.644.075-.297-.15-1.255-.463-2.39-1.475-.883-.788-1.48-1.761-1.653-2.059-.173-.297-.018-.458.13-.606.134-.133.298-.347.446-.52.149-.174.198-.298.298-.497.099-.198.05-.371-.025-.52-.075-.149-.669-1.612-.916-2.207-.242-.579-.487-.5-.669-.51-.173-.008-.371-.01-.57-.01-.198 0-.52.074-.792.372-.272.297-1.04 1.016-1.04 2.479 0 1.462 1.065 2.875 1.213 3.074.149.198 2.096 3.2 5.077 4.487.709.306 1.262.489 1.694.625.712.227 1.36.195 1.871.118.571-.085 1.758-.719 2.006-1.413.248-.694.248-1.289.173-1.413-.074-.124-.272-.198-.57-.347m-5.421 7.403h-.004a9.87 9.87 0 01-5.031-1.378l-.361-.214-3.741.982.998-3.648-.235-.374a9.86 9.86 0 01-1.51-5.26c.001-5.45 4.436-9.884 9.888-9.884 2.64 0 5.122 1.03 6.988 2.898a9.825 9.825 0 012.893 6.994c-.003 5.45-4.437 9.884-9.885 9.884m8.413-18.297A11.815 11.815 0 0012.05 0C5.495 0 .16 5.335.157 11.892c0 2.096.547 4.142 1.588 5.945L.057 24l6.305-1.654a11.882 11.882 0 005.683 1.448h.005c6.554 0 11.89-5.335 11.893-11.893a11.821 11.821 0 00-3.48-8.413z"/></svg>
+              Escribir por WhatsApp
+            </a>
+          </div>
+
+        </div>
+      </div><!-- /col derecha -->
+
+    </div>
+  </div>
+</section>
+
+
+<!-- ══════════════════════════════════════════
+     FOOTER
+══════════════════════════════════════════ -->
+<footer class="bg-ocean-900 text-white py-14 px-6">
+  <div class="max-w-6xl mx-auto">
+    <div class="grid md:grid-cols-4 gap-10 mb-10">
+
+      <div class="md:col-span-2">
+        <div class="mb-2">
+          <span class="font-serif text-2xl font-semibold tracking-wider">ZENITH</span>
+          <span class="text-gold text-xs tracking-[0.3em] uppercase font-medium ml-2">Bahia Properties</span>
+        </div>
+        <p class="text-white/40 text-sm font-light leading-relaxed max-w-xs mt-3">
+          Especialistas en rentas y difusión de propiedades de lujo en Bahía de Banderas y Puerto Vallarta, Riviera Nayarit.
+        </p>
+        <div class="flex gap-3 mt-5">
+          <a href="#" class="w-9 h-9 rounded-full border border-white/20 flex items-center justify-center text-white/40 hover:text-gold hover:border-gold transition">
+            <i data-lucide="instagram" class="w-4 h-4"></i>
+          </a>
+          <a href="#" class="w-9 h-9 rounded-full border border-white/20 flex items-center justify-center text-white/40 hover:text-gold hover:border-gold transition">
+            <i data-lucide="facebook" class="w-4 h-4"></i>
+          </a>
+          <a href="#" class="w-9 h-9 rounded-full border border-white/20 flex items-center justify-center text-white/40 hover:text-gold hover:border-gold transition">
+            <i data-lucide="youtube" class="w-4 h-4"></i>
+          </a>
+        </div>
+      </div>
+
+      <div>
+        <p class="text-gold text-xs tracking-widest uppercase mb-4 font-medium">Navegación</p>
+        <ul class="space-y-2 text-sm text-white/50 font-light">
+          <li><a href="index.html"    class="hover:text-white transition">Inicio</a></li>
+          <li><a href="catalogo.html" class="hover:text-white transition">Propiedades</a></li>
+          <li><a href="publicar.html" class="hover:text-white transition">Publicar propiedad</a></li>
+          <li><a href="contacto.html" class="text-gold/80 hover:text-white transition">Contacto</a></li>
+        </ul>
+      </div>
+
+      <div>
+        <p class="text-gold text-xs tracking-widest uppercase mb-4 font-medium">Contacto</p>
+        <div class="space-y-3 text-sm text-white/50 font-light">
+          <a href="tel:+523221234567" class="flex items-center gap-2 hover:text-white transition">
+            <i data-lucide="phone" class="w-4 h-4 text-gold"></i>+52 322 123 4567
+          </a>
+          <a href="mailto:hola@zenithbahia.com" class="flex items-center gap-2 hover:text-white transition">
+            <i data-lucide="mail" class="w-4 h-4 text-gold"></i>hola@zenithbahia.com
+          </a>
+          <p class="flex items-start gap-2">
+            <i data-lucide="map-pin" class="w-4 h-4 text-gold flex-shrink-0 mt-0.5"></i>
+            Bahía de Banderas, Nayarit &<br>Puerto Vallarta, Jalisco
+          </p>
+        </div>
+      </div>
+    </div>
+
+    <div class="border-t border-white/10 pt-6 flex flex-col sm:flex-row justify-between items-center gap-4">
+      <p class="text-white/20 text-xs font-light">© 2025 Zenith Bahia Properties. Todos los derechos reservados.</p>
+      <p class="text-white/15 text-xs font-light">Bahía de Banderas · Puerto Vallarta · Riviera Nayarit</p>
+    </div>
+  </div>
+</footer>
+
+
+<!-- ══════════════════════════════════════════
+     FLOATING WHATSAPP
+══════════════════════════════════════════ -->
+<a href="https://wa.me/523221234567?text=Hola%20Zenith%2C%20me%20gustar%C3%ADa%20obtener%20m%C3%A1s%20informaci%C3%B3n" target="_blank"
+   class="wa-float fixed bottom-6 right-6 z-50 w-14 h-14 rounded-full bg-[#25D366] hover:bg-[#1fba5c] flex items-center justify-center shadow-2xl transition-transform hover:scale-110 group">
+  <svg class="w-7 h-7 fill-white" viewBox="0 0 24 24"><path d="M17.472 14.382c-.297-.149-1.758-.867-2.03-.967-.273-.099-.471-.148-.67.15-.197.297-.767.966-.94 1.164-.173.199-.347.223-.644.075-.297-.15-1.255-.463-2.39-1.475-.883-.788-1.48-1.761-1.653-2.059-.173-.297-.018-.458.13-.606.134-.133.298-.347.446-.52.149-.174.198-.298.298-.497.099-.198.05-.371-.025-.52-.075-.149-.669-1.612-.916-2.207-.242-.579-.487-.5-.669-.51-.173-.008-.371-.01-.57-.01-.198 0-.52.074-.792.372-.272.297-1.04 1.016-1.04 2.479 0 1.462 1.065 2.875 1.213 3.074.149.198 2.096 3.2 5.077 4.487.709.306 1.262.489 1.694.625.712.227 1.36.195 1.871.118.571-.085 1.758-.719 2.006-1.413.248-.694.248-1.289.173-1.413-.074-.124-.272-.198-.57-.347m-5.421 7.403h-.004a9.87 9.87 0 01-5.031-1.378l-.361-.214-3.741.982.998-3.648-.235-.374a9.86 9.86 0 01-1.51-5.26c.001-5.45 4.436-9.884 9.888-9.884 2.64 0 5.122 1.03 6.988 2.898a9.825 9.825 0 012.893 6.994c-.003 5.45-4.437 9.884-9.885 9.884m8.413-18.297A11.815 11.815 0 0012.05 0C5.495 0 .16 5.335.157 11.892c0 2.096.547 4.142 1.588 5.945L.057 24l6.305-1.654a11.882 11.882 0 005.683 1.448h.005c6.554 0 11.89-5.335 11.893-11.893a11.821 11.821 0 00-3.48-8.413z"/></svg>
+  <span class="absolute right-16 bg-ocean-900 text-white text-xs px-3 py-1.5 rounded-full whitespace-nowrap opacity-0 group-hover:opacity-100 transition-opacity pointer-events-none shadow-lg">¡Escríbenos!</span>
+</a>
+
+
+<!-- ══════════════════════════════════════════
+     SCRIPTS
+══════════════════════════════════════════ -->
+<script src="https://unpkg.com/aos@2.3.4/dist/aos.js"></script>
+<script>
+AOS.init({ duration: 900, easing: 'ease-out-cubic', once: true, offset: 60 });
+lucide.createIcons();
+
+const navbar = document.getElementById('navbar');
+window.addEventListener('scroll', () => {
+  navbar.classList.toggle('scrolled', window.scrollY > 60);
+}, { passive: true });
+
+document.getElementById('contact-form').addEventListener('submit', async function(e) {
+  e.preventDefault();
+
+  const nombre  = document.getElementById('cf-nombre').value.trim();
+  const email   = document.getElementById('cf-email').value.trim();
+  const motivo  = document.getElementById('cf-motivo').value;
+  const mensaje = document.getElementById('cf-mensaje').value.trim();
+
+  if (!nombre || nombre.length < 2) { alert('Por favor ingresa tu nombre.'); return; }
+  if (!/^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(email)) { alert('Ingresa un correo válido.'); return; }
+  if (!motivo) { alert('Selecciona el motivo de tu contacto.'); return; }
+  if (!mensaje || mensaje.length < 10) { alert('Por favor escribe tu mensaje.'); return; }
+
+  const btn = document.getElementById('cf-btn');
+  btn.disabled = true;
+  btn.innerHTML = '<svg class="w-4 h-4 animate-spin" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M12 2v4M12 18v4M4.93 4.93l2.83 2.83M16.24 16.24l2.83 2.83M2 12h4M18 12h4M4.93 19.07l2.83-2.83M16.24 7.76l2.83-2.83"/></svg> Enviando...';
+
+  try {
+    const res = await fetch(this.action, {
+      method: 'POST',
+      body: new FormData(this),
+      headers: { 'Accept': 'application/json' }
+    });
+
+    if (res.ok) {
+      this.style.display = 'none';
+      document.getElementById('cf-success').classList.remove('hidden');
+      lucide.createIcons();
+    } else {
+      const data = await res.json();
+      alert('Hubo un problema: ' + (data.error || 'Intenta de nuevo o escríbenos por WhatsApp.'));
+      btn.disabled = false;
+      btn.innerHTML = '<i data-lucide="send" class="w-4 h-4"></i> Enviar mensaje';
+      lucide.createIcons();
+    }
+  } catch {
+    alert('Error de conexión. Por favor escríbenos directamente por WhatsApp.');
+    btn.disabled = false;
+    btn.innerHTML = '<i data-lucide="send" class="w-4 h-4"></i> Enviar mensaje';
+    lucide.createIcons();
+  }
+});
+</script>
+</body>
+</html>
