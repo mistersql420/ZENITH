@@ -1,5 +1,5 @@
 <!DOCTYPE html>
-<html lang="es" class="scroll-smooth">
+<html lang="es" id="root-html" class="scroll-smooth">
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
@@ -7,7 +7,42 @@
   <title>Propiedades | Zenith Bahia Properties</title>
   <link rel="icon" type="image/svg+xml" href="assets/favicon.svg">
 
-  <script src="https://cdn.tailwindcss.com"></script>
+  <script src="https://cdn.tailwindcss.com">
+// ── i18n ─────────────────────────────────────────────────────────────────────
+const _t = {
+  es: {
+    nav_prop:'Propiedades', nav_list:'Publicar', nav_contact:'Contacto', nav_cta:'Publicar propiedad',
+    header_eyebrow:'Disponibles ahora',
+    header_h1:'Catálogo de<br><em>Propiedades</em>',
+    filter_zone:'Zona', filter_beds:'Rec.', filter_price:'Precio/noche',
+    footer_tagline:'Especialistas en rentas y difusión de propiedades de lujo en Bahía de Banderas y Puerto Vallarta, Riviera Nayarit.',
+  },
+  en: {
+    nav_prop:'Properties', nav_list:'List', nav_contact:'Contact', nav_cta:'List property',
+    header_eyebrow:'Available now',
+    header_h1:'Property<br><em>Catalog</em>',
+    filter_zone:'Area', filter_beds:'Beds', filter_price:'Price/night',
+    footer_tagline:'Specialists in luxury property rentals and marketing in Bahía de Banderas and Puerto Vallarta, Riviera Nayarit.',
+  }
+};
+let _lang = localStorage.getItem('zbp_lang') || 'es';
+function setLang(l) {
+  _lang = l;
+  document.getElementById('root-html').lang = l;
+  document.querySelectorAll('[data-i18n]').forEach(el => {
+    const v = _t[l][el.dataset.i18n]; if (v != null) el.textContent = v;
+  });
+  document.querySelectorAll('[data-i18n-html]').forEach(el => {
+    const v = _t[l][el.dataset.i18nHtml]; if (v != null) el.innerHTML = v;
+  });
+  const btn = document.getElementById('lang-toggle');
+  if (btn) btn.textContent = l === 'es' ? 'EN' : 'ES';
+  localStorage.setItem('zbp_lang', l);
+}
+function toggleLang() { setLang(_lang === 'es' ? 'en' : 'es'); }
+if (_lang === 'en') setLang('en');
+// ─────────────────────────────────────────────────────────────────────────────
+</script>
   <link rel="preconnect" href="https://fonts.googleapis.com">
   <link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:ital,wght@0,400;0,600;1,400;1,600&family=Montserrat:wght@300;400;500;600;700&display=swap" rel="stylesheet">
   <link href="https://unpkg.com/aos@2.3.4/dist/aos.css" rel="stylesheet">
@@ -264,14 +299,18 @@
     </a>
     <div class="hidden md:flex items-center gap-8">
       <a href="index.html"     class="text-white/70 hover:text-white text-sm tracking-wide transition">Inicio</a>
-      <a href="catalogo.html"  class="text-white text-sm tracking-wide font-medium border-b border-gold pb-0.5">Propiedades</a>
+      <a href="catalogo.html"  class="text-white text-sm tracking-wide font-medium border-b border-gold pb-0.5" data-i18n="nav_prop">Propiedades</a>
       <a href="index.html#servicios" class="text-white/70 hover:text-white text-sm tracking-wide transition">Servicios</a>
-      <a href="publicar.html"  class="text-white/70 hover:text-white text-sm tracking-wide transition">Publicar</a>
-      <a href="contacto.html"  class="text-white/70 hover:text-white text-sm tracking-wide transition">Contacto</a>
+      <a href="publicar.html"  class="text-white/70 hover:text-white text-sm tracking-wide transition" data-i18n="nav_list">Publicar</a>
+      <a href="contacto.html"  class="text-white/70 hover:text-white text-sm tracking-wide transition" data-i18n="nav_contact">Contacto</a>
     </div>
     <a href="publicar.html" class="hidden md:inline-flex items-center gap-2 bg-gold hover:bg-gold-light text-ocean-900 font-semibold text-xs px-5 py-2.5 rounded-full transition tracking-wider uppercase">
-      Publicar propiedad
+      <span data-i18n="nav_cta">Publicar propiedad</span>
     </a>
+    <button id="lang-toggle" onclick="toggleLang()"
+       class="text-white/80 hover:text-white text-xs font-semibold tracking-widest border border-white/30 hover:border-gold px-3 py-1.5 rounded-full transition mr-2">
+      ES
+    </button>
     <button class="md:hidden text-white" onclick="document.getElementById('mob-menu').classList.toggle('hidden')">
       <svg xmlns="http://www.w3.org/2000/svg" class="w-6 h-6" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="2"><line x1="3" y1="12" x2="21" y2="12"/><line x1="3" y1="6" x2="21" y2="6"/><line x1="3" y1="18" x2="21" y2="18"/></svg>
     </button>
@@ -292,11 +331,11 @@
      HEADER
 ══════════════════════════════════════════ -->
 <section class="pt-36 pb-16 px-6 text-center">
-  <p class="text-gold text-xs tracking-[0.35em] uppercase font-medium mb-3" data-aos="fade-down">
+  <p class="text-gold text-xs tracking-[0.35em] uppercase font-medium mb-3" data-aos="fade-down" data-i18n="header_eyebrow">
     Disponibles ahora
   </p>
   <h1 class="font-serif text-white text-5xl md:text-6xl font-semibold leading-tight mb-4" data-aos="fade-up" data-aos-delay="100">
-    Catálogo de<br><em>Propiedades</em>
+    <span data-i18n-html="header_h1">Catálogo de<br><em>Propiedades</em></span>
   </h1>
   <div class="gold-line mx-auto mt-5 mb-5" data-aos="fade-up" data-aos-delay="180"></div>
   <p class="text-white/60 text-sm font-light max-w-md mx-auto" data-aos="fade-up" data-aos-delay="240">
@@ -313,7 +352,7 @@
     <div class="flex flex-wrap gap-3 items-center">
 
       <div class="flex flex-wrap gap-2 items-center">
-        <span class="text-white/40 text-xs uppercase tracking-widest font-medium mr-1">Zona</span>
+        <span class="text-white/40 text-xs uppercase tracking-widest font-medium mr-1" data-i18n="filter_zone">Zona</span>
         <button class="filter-pill active" data-filter="zona" data-value="todas">Todas</button>
         <button class="filter-pill" data-filter="zona" data-value="bahia">Bahía de Banderas</button>
         <button class="filter-pill" data-filter="zona" data-value="vallarta">Puerto Vallarta</button>
@@ -322,7 +361,7 @@
       <div class="w-px h-6 bg-white/20 hidden md:block"></div>
 
       <div class="flex flex-wrap gap-2 items-center">
-        <span class="text-white/40 text-xs uppercase tracking-widest font-medium mr-1">Rec.</span>
+        <span class="text-white/40 text-xs uppercase tracking-widest font-medium mr-1" data-i18n="filter_beds">Rec.</span>
         <button class="filter-pill active" data-filter="rec" data-value="todas">Todas</button>
         <button class="filter-pill" data-filter="rec" data-value="1-2">1–2</button>
         <button class="filter-pill" data-filter="rec" data-value="3">3</button>
@@ -332,7 +371,7 @@
       <div class="w-px h-6 bg-white/20 hidden md:block"></div>
 
       <div class="flex flex-wrap gap-2 items-center">
-        <span class="text-white/40 text-xs uppercase tracking-widest font-medium mr-1">Precio/noche</span>
+        <span class="text-white/40 text-xs uppercase tracking-widest font-medium mr-1" data-i18n="filter_price">Precio/noche</span>
         <button class="filter-pill active" data-filter="precio" data-value="todas">Todos</button>
         <button class="filter-pill" data-filter="precio" data-value="bajo">Hasta $6,000</button>
         <button class="filter-pill" data-filter="precio" data-value="medio">$6,001–$10,000</button>

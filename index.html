@@ -1,5 +1,5 @@
 <!DOCTYPE html>
-<html lang="es" class="scroll-smooth">
+<html lang="es" id="root-html" class="scroll-smooth">
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
@@ -163,17 +163,21 @@
     <!-- Links desktop -->
     <div class="hidden md:flex items-center gap-8">
       <a href="index.html"     class="text-white text-sm tracking-wide font-medium border-b border-gold pb-0.5">Inicio</a>
-      <a href="catalogo.html"  class="text-white/70 hover:text-white text-sm tracking-wide transition">Propiedades</a>
+      <a href="catalogo.html"  class="text-white/70 hover:text-white text-sm tracking-wide transition" data-i18n="nav_prop">Propiedades</a>
       <a href="#servicios"     class="text-white/70 hover:text-white text-sm tracking-wide transition">Servicios</a>
-      <a href="#zonas"         class="text-white/70 hover:text-white text-sm tracking-wide transition">Zonas</a>
-      <a href="publicar.html"  class="text-white/70 hover:text-white text-sm tracking-wide transition">Publicar</a>
-      <a href="contacto.html"  class="text-white/70 hover:text-white text-sm tracking-wide transition">Contacto</a>
+      <a href="#zonas"         class="text-white/70 hover:text-white text-sm tracking-wide transition" data-i18n="nav_areas">Zonas</a>
+      <a href="publicar.html"  class="text-white/70 hover:text-white text-sm tracking-wide transition" data-i18n="nav_list">Publicar</a>
+      <a href="contacto.html"  class="text-white/70 hover:text-white text-sm tracking-wide transition" data-i18n="nav_contact">Contacto</a>
     </div>
 
     <a href="catalogo.html" class="hidden md:inline-flex items-center gap-2 bg-gold hover:bg-gold-light text-ocean-900 font-semibold text-xs px-5 py-2.5 rounded-full transition tracking-wider uppercase">
       Ver propiedades
     </a>
 
+    <button id="lang-toggle" onclick="toggleLang()"
+       class="text-white/80 hover:text-white text-xs font-semibold tracking-widest border border-white/30 hover:border-gold px-3 py-1.5 rounded-full transition mr-2">
+      ES
+    </button>
     <button class="md:hidden text-white" onclick="document.getElementById('mob-menu').classList.toggle('hidden')">
       <i data-lucide="menu" class="w-6 h-6"></i>
     </button>
@@ -182,11 +186,11 @@
   <!-- Mobile -->
   <div id="mob-menu" class="hidden md:hidden mt-4 pb-4 border-t border-white/20">
     <div class="flex flex-col gap-4 pt-4 px-2">
-      <a href="catalogo.html" class="text-white/80 hover:text-white text-sm">Propiedades</a>
+      <a href="catalogo.html" class="text-white/80 hover:text-white text-sm" data-i18n="nav_prop">Propiedades</a>
       <a href="#servicios"    class="text-white/80 hover:text-white text-sm">Servicios</a>
-      <a href="#zonas"        class="text-white/80 hover:text-white text-sm">Zonas</a>
-      <a href="contacto.html" class="text-white/80 hover:text-white text-sm">Contacto</a>
-      <a href="catalogo.html" class="bg-gold text-ocean-900 font-semibold text-sm px-5 py-2.5 rounded-full text-center tracking-wider uppercase">Ver propiedades</a>
+      <a href="#zonas"        class="text-white/80 hover:text-white text-sm" data-i18n="nav_areas">Zonas</a>
+      <a href="contacto.html" class="text-white/80 hover:text-white text-sm" data-i18n="nav_contact">Contacto</a>
+      <a href="catalogo.html" class="bg-gold text-ocean-900 font-semibold text-sm px-5 py-2.5 rounded-full text-center tracking-wider uppercase"><span data-i18n="hero_cta1">Ver propiedades</span></a>
     </div>
   </div>
 </nav>
@@ -215,21 +219,21 @@
 
       <h1 class="font-serif text-white text-5xl md:text-7xl font-semibold leading-[1.05] mb-6"
           data-aos="fade-right" data-aos-delay="150">
-        Encuentra tu<br>lugar en el<br><em class="text-gold">paraíso</em>
+        <span data-i18n-html="hero_h1">Encuentra tu<br>lugar en el<br><em class="text-gold">paraíso</em></span>
       </h1>
 
       <div class="gold-line mb-6" data-aos="fade-right" data-aos-delay="280"></div>
 
       <p class="text-white/70 text-base font-light leading-relaxed max-w-lg mb-10"
          data-aos="fade-up" data-aos-delay="380">
-        Somos la agencia especializada en rentas y difusión de propiedades de lujo en el Pacífico mexicano. Conectamos a los mejores anfitriones con los mejores huéspedes.
+        <span data-i18n="hero_desc">Somos la agencia especializada en rentas y difusión de propiedades de lujo en el Pacífico mexicano. Conectamos a los mejores anfitriones con los mejores huéspedes.</span>
       </p>
 
       <div class="flex flex-wrap gap-4" data-aos="fade-up" data-aos-delay="500">
         <a href="catalogo.html"
            class="flex items-center gap-2 bg-gold hover:bg-gold-light text-ocean-900 font-semibold text-sm px-7 py-3.5 rounded-full transition shadow-lg hover:-translate-y-0.5 tracking-wide">
           <i data-lucide="search" class="w-4 h-4"></i>
-          Explorar propiedades
+          <span data-i18n="hero_cta1">Explorar propiedades</span>
         </a>
         <a href="#contacto"
            class="flex items-center gap-2 border border-white/40 text-white hover:bg-white/10 font-medium text-sm px-7 py-3.5 rounded-full transition backdrop-blur-sm tracking-wide">
@@ -246,11 +250,11 @@
       <div class="glass rounded-2xl px-6 py-5 grid grid-cols-3 gap-4 text-center">
         <div>
           <p class="font-serif text-white text-2xl font-semibold">2</p>
-          <p class="text-white/55 text-xs mt-0.5 tracking-widest uppercase">Zonas</p>
+          <p class="text-white/55 text-xs mt-0.5 tracking-widest uppercase" data-i18n="stat_areas">Zonas</p>
         </div>
         <div class="border-l border-white/20">
           <p class="font-serif text-white text-2xl font-semibold">+50</p>
-          <p class="text-white/55 text-xs mt-0.5 tracking-widest uppercase">Propiedades</p>
+          <p class="text-white/55 text-xs mt-0.5 tracking-widest uppercase" data-i18n="nav_prop">Propiedades</p>
         </div>
         <div class="border-l border-white/20">
           <p class="font-serif text-white text-2xl font-semibold">100%</p>
@@ -269,7 +273,7 @@
 
   <div class="text-center mb-14" data-aos="fade-up">
     <p class="text-gold text-xs tracking-[0.3em] uppercase font-medium mb-3">Dónde operamos</p>
-    <h2 class="font-serif text-4xl md:text-5xl text-ocean-900 font-semibold">Dos destinos,<br><em>un solo paraíso</em></h2>
+    <h2 class="font-serif text-4xl md:text-5xl text-ocean-900 font-semibold"><span data-i18n-html="h2_destinos">Dos destinos,<br><em>un solo paraíso</em></span></h2>
     <div class="gold-line mx-auto mt-5"></div>
   </div>
 
@@ -318,7 +322,7 @@
   <div class="flex items-end justify-between mb-12" data-aos="fade-up">
     <div>
       <p class="text-gold text-xs tracking-[0.3em] uppercase font-medium mb-3">Disponibles ahora</p>
-      <h2 class="font-serif text-4xl md:text-5xl text-ocean-900 font-semibold">Propiedades<br><em>destacadas</em></h2>
+      <h2 class="font-serif text-4xl md:text-5xl text-ocean-900 font-semibold"><span data-i18n-html="h2_featured">Propiedades<br><em>destacadas</em></span></h2>
       <div class="gold-line mt-5"></div>
     </div>
     <a href="catalogo.html" class="hidden md:flex items-center gap-2 text-ocean-700 hover:text-ocean-900 text-sm font-medium tracking-wide transition">
@@ -415,7 +419,7 @@
 
     <div class="text-center mb-14" data-aos="fade-up">
       <p class="text-gold text-xs tracking-[0.3em] uppercase font-medium mb-3">Lo que hacemos</p>
-      <h2 class="font-serif text-4xl md:text-5xl text-ocean-900 font-semibold">Servicios <em>Zenith</em></h2>
+      <h2 class="font-serif text-4xl md:text-5xl text-ocean-900 font-semibold"><span data-i18n-html="h2_services">Servicios <em>Zenith</em></span></h2>
       <div class="gold-line mx-auto mt-5"></div>
     </div>
 
@@ -482,7 +486,7 @@
       <div>
         <p class="text-gold text-xs tracking-[0.3em] uppercase font-medium mb-4">Por qué elegirnos</p>
         <h2 class="font-serif text-white text-4xl md:text-5xl font-semibold leading-tight mb-6">
-          Tu propiedad,<br><em>nuestra pasión</em>
+          <span data-i18n-html="h2_passion">Tu propiedad,<br><em>nuestra pasión</em></span>
         </h2>
         <div class="gold-line mb-6"></div>
         <p class="text-white/65 font-light leading-relaxed text-sm">
@@ -526,10 +530,10 @@
 
   <div class="max-w-2xl mx-auto relative z-10">
     <div class="text-center mb-10" data-aos="fade-up">
-      <p class="text-gold text-xs tracking-[0.3em] uppercase font-medium mb-3">Hablemos</p>
-      <h2 class="font-serif text-4xl md:text-5xl text-ocean-900 font-semibold">¿Tienes una<br><em>propiedad?</em></h2>
+      <p class="text-gold text-xs tracking-[0.3em] uppercase font-medium mb-3" data-i18n="contact_eyebrow">Hablemos</p>
+      <h2 class="font-serif text-4xl md:text-5xl text-ocean-900 font-semibold"><span data-i18n-html="h2_list">¿Tienes una<br><em>propiedad?</em></span></h2>
       <div class="gold-line mx-auto mt-5"></div>
-      <p class="text-gray-600 text-sm mt-4 font-light">Cuéntanos sobre tu inmueble y te contactamos en menos de 2 horas</p>
+      <p class="text-gray-600 text-sm mt-4 font-light" data-i18n="contact_sub">Cuéntanos sobre tu inmueble y te contactamos en menos de 2 horas</p>
     </div>
 
     <div class="rounded-3xl p-8 md:p-10 shadow-2xl"
@@ -538,16 +542,16 @@
       <form onsubmit="enviarContacto(event)" class="space-y-5">
         <div class="grid sm:grid-cols-2 gap-5">
           <div>
-            <label class="block text-white/60 text-xs tracking-widest uppercase mb-2">Nombre</label>
+            <label class="block text-white/60 text-xs tracking-widest uppercase mb-2" data-i18n="form_name">Nombre</label>
             <input type="text" placeholder="Tu nombre" class="glass-input" required>
           </div>
           <div>
-            <label class="block text-white/60 text-xs tracking-widest uppercase mb-2">Teléfono / WhatsApp</label>
+            <label class="block text-white/60 text-xs tracking-widest uppercase mb-2" data-i18n="form_phone">Teléfono / WhatsApp</label>
             <input type="tel" placeholder="+52 322 000 0000" class="glass-input" required>
           </div>
         </div>
         <div>
-          <label class="block text-white/60 text-xs tracking-widest uppercase mb-2">Zona de la propiedad</label>
+          <label class="block text-white/60 text-xs tracking-widest uppercase mb-2" data-i18n="form_area">Zona de la propiedad</label>
           <select class="glass-input" style="color:rgba(255,255,255,.7);">
             <option value="" style="background:#0a2540">Selecciona una zona</option>
             <option value="bahia" style="background:#0a2540">Bahía de Banderas</option>
@@ -556,14 +560,14 @@
           </select>
         </div>
         <div>
-          <label class="block text-white/60 text-xs tracking-widest uppercase mb-2">Cuéntanos sobre tu propiedad</label>
+          <label class="block text-white/60 text-xs tracking-widest uppercase mb-2" data-i18n="form_tell">Cuéntanos sobre tu propiedad</label>
           <textarea rows="4" placeholder="Número de recámaras, ubicación, precio deseado, etc."
                     class="glass-input resize-none"></textarea>
         </div>
         <button type="submit" id="contact-btn"
                 class="w-full flex items-center justify-center gap-3 bg-gold hover:bg-gold-light text-ocean-900 font-semibold text-sm py-4 rounded-2xl transition-all shadow-lg hover:-translate-y-0.5 tracking-wider uppercase">
           <i data-lucide="send" class="w-4 h-4"></i>
-          Enviar mensaje
+          <span data-i18n="form_submit">Enviar mensaje</span>
         </button>
       </form>
 
@@ -686,6 +690,63 @@ function enviarContacto(e) {
     lucide.createIcons();
   }, 1200);
 }
+
+// ── i18n ─────────────────────────────────────────────────────────────────────
+const _t = {
+  es: {
+    nav_prop:'Propiedades', nav_list:'Publicar', nav_contact:'Contacto', nav_areas:'Zonas',
+    hero_cta1:'Explorar propiedades', hero_cta2:'Publicar mi propiedad',
+    hero_h1:'Encuentra tu<br>lugar en el<br><em class="text-gold">paraíso</em>',
+    hero_desc:'Somos la agencia especializada en rentas y difusión de propiedades de lujo en el Pacífico mexicano. Conectamos a los mejores anfitriones con los mejores huéspedes.',
+    stat_areas:'Zonas',
+    h2_destinos:'Dos destinos,<br><em>un solo paraíso</em>',
+    h2_featured:'Propiedades<br><em>destacadas</em>',
+    h2_services:'Servicios <em>Zenith</em>',
+    h2_list:'¿Tienes una<br><em>propiedad?</em>',
+    h2_passion:'Tu propiedad,<br><em>nuestra pasión</em>',
+    contact_eyebrow:'Hablemos',
+    contact_sub:'Cuéntanos sobre tu inmueble y te contactamos en menos de 2 horas',
+    form_name:'Nombre', form_phone:'Teléfono / WhatsApp',
+    form_area:'Zona de la propiedad', form_tell:'Cuéntanos sobre tu propiedad',
+    form_submit:'Enviar mensaje',
+    footer_tagline:'Especialistas en rentas y difusión de propiedades de lujo en Bahía de Banderas y Puerto Vallarta, Riviera Nayarit.',
+  },
+  en: {
+    nav_prop:'Properties', nav_list:'List', nav_contact:'Contact', nav_areas:'Areas',
+    hero_cta1:'Explore properties', hero_cta2:'List my property',
+    hero_h1:'Find your<br>place in<br><em class="text-gold">paradise</em>',
+    hero_desc:'We are the agency specialized in luxury property rentals and marketing on the Mexican Pacific. We connect the best hosts with the best guests.',
+    stat_areas:'Areas',
+    h2_destinos:'Two destinations,<br><em>one paradise</em>',
+    h2_featured:'Featured<br><em>properties</em>',
+    h2_services:'Zenith <em>Services</em>',
+    h2_list:'Do you own a<br><em>property?</em>',
+    h2_passion:'Your property,<br><em>our passion</em>',
+    contact_eyebrow:"Let's talk",
+    contact_sub:'Tell us about your property and we will contact you within 2 hours',
+    form_name:'Name', form_phone:'Phone / WhatsApp',
+    form_area:'Property area', form_tell:'Tell us about your property',
+    form_submit:'Send message',
+    footer_tagline:'Specialists in luxury property rentals and marketing in Bahía de Banderas and Puerto Vallarta, Riviera Nayarit.',
+  }
+};
+let _lang = localStorage.getItem('zbp_lang') || 'es';
+function setLang(l) {
+  _lang = l;
+  document.getElementById('root-html').lang = l;
+  document.querySelectorAll('[data-i18n]').forEach(el => {
+    const v = _t[l][el.dataset.i18n]; if (v != null) el.textContent = v;
+  });
+  document.querySelectorAll('[data-i18n-html]').forEach(el => {
+    const v = _t[l][el.dataset.i18nHtml]; if (v != null) el.innerHTML = v;
+  });
+  const btn = document.getElementById('lang-toggle');
+  if (btn) btn.textContent = l === 'es' ? 'EN' : 'ES';
+  localStorage.setItem('zbp_lang', l);
+}
+function toggleLang() { setLang(_lang === 'es' ? 'en' : 'es'); }
+if (_lang === 'en') setLang('en');
+// ─────────────────────────────────────────────────────────────────────────────
 </script>
 </body>
 </html>
