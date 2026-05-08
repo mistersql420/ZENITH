@@ -58,10 +58,13 @@ Devuelve ÚNICAMENTE JSON válido, sin markdown ni explicaciones."""
 
 # ── PROCESAMIENTO DE FOTOS ────────────────────────────────────────────────────
 
-def process_photos(fotos: list) -> list:
+def process_photos(fotos: list, json_dir: Path = None) -> list:
     sources = []
     for foto in fotos:
         path = Path(foto)
+        # Si la ruta es relativa, resolverla desde el directorio del JSON
+        if not path.is_absolute() and json_dir:
+            path = (json_dir / path).resolve()
         if path.exists() and path.is_file():
             mime, _ = mimetypes.guess_type(str(path))
             mime = mime or "image/jpeg"
@@ -723,6 +726,7 @@ def main():
     parser.add_argument("output", nargs="?", default="brochure.html", help="Archivo HTML de salida")
     args = parser.parse_args()
 
+    json_dir = Path.cwd()
     if args.input is None:
         data = EXAMPLE_DATA
         print("ℹ️  Usando datos de ejemplo.\n")
@@ -733,6 +737,7 @@ def main():
             sys.exit(1)
         try:
             data = json.loads(json_path.read_text(encoding="utf-8"))
+            json_dir = json_path.resolve().parent
             print(f"✅ Datos cargados desde: {json_path}\n")
         except json.JSONDecodeError as e:
             print(f"❌ JSON inválido: {e}")
@@ -748,7 +753,7 @@ def main():
 
     if data.get("fotos"):
         print("📸 Procesando fotos...")
-        data["fotos"] = process_photos(data["fotos"])
+        data["fotos"] = process_photos(data["fotos"], json_dir=json_dir)
         print()
 
     copy = generate_copy(data)

@@ -180,7 +180,7 @@ Devuelve SOLO el JSON, sin texto adicional ni markdown.""",
     return features
 
 
-def process_photos(fotos: list) -> tuple:
+def process_photos(fotos: list, json_dir: Path = None) -> tuple:
     """
     Procesa la lista de fotos.
     - URLs HTTP/HTTPS → se usan tal cual en HTML.
@@ -194,6 +194,9 @@ def process_photos(fotos: list) -> tuple:
 
     for foto in fotos:
         path = Path(foto)
+        # Si la ruta es relativa, resolverla desde el directorio del JSON
+        if not path.is_absolute() and json_dir:
+            path = (json_dir / path).resolve()
         if path.exists() and path.is_file():
             mime, _ = mimetypes.guess_type(str(path))
             mime = mime or "image/jpeg"
@@ -422,7 +425,7 @@ def clean_html(content: str) -> str:
     return content.strip()
 
 
-def generate_landing_page(features: dict, output_file: str = "propiedad.html") -> list:
+def generate_landing_page(features: dict, output_file: str = "propiedad.html", json_dir: Path = None) -> list:
     """
     Genera el HTML de la landing page.
     Retorna local_paths (lista de rutas absolutas de fotos locales, None para URLs)
@@ -434,7 +437,7 @@ def generate_landing_page(features: dict, output_file: str = "propiedad.html") -
     local_paths: list = []
     if features.get("fotos"):
         print("\n📸 Procesando fotos...", flush=True)
-        html_sources, local_paths = process_photos(features["fotos"])
+        html_sources, local_paths = process_photos(features["fotos"], json_dir=json_dir)
         features = {**features, "fotos": html_sources}
 
     print("━" * 50)
@@ -776,6 +779,7 @@ def main() -> None:
     args = parser.parse_args()
 
     # ── Cargar características ──────────────────────────────
+    json_dir = Path.cwd()
     if args.input is None:
         features = HOUSE_FEATURES
         print("ℹ️  Usando características de ejemplo.")
@@ -785,6 +789,7 @@ def main() -> None:
         if not input_path.exists():
             print(f"❌ Archivo no encontrado: {input_path}")
             sys.exit(1)
+        json_dir = input_path.resolve().parent
         raw_text = input_path.read_text(encoding="utf-8")
         try:
             features = parse_raw_description(raw_text)
@@ -796,6 +801,7 @@ def main() -> None:
         if not json_path.exists():
             print(f"❌ Archivo no encontrado: {json_path}")
             sys.exit(1)
+        json_dir = json_path.resolve().parent
         try:
             features = json.loads(json_path.read_text(encoding="utf-8"))
             print(f"✅ Características cargadas desde: {json_path}\n")
@@ -805,7 +811,7 @@ def main() -> None:
 
     # ── Generar HTML ────────────────────────────────────────
     try:
-        local_paths = generate_landing_page(features, args.output_html)
+        local_paths = generate_landing_page(features, args.output_html, json_dir=json_dir)
     except anthropic.AuthenticationError:
         print("\n❌ API key inválida. Verifica la variable ANTHROPIC_API_KEY.")
         sys.exit(1)
