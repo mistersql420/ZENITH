@@ -190,7 +190,7 @@
     </div>
 
     <a href="catalogo.html" class="hidden md:inline-flex items-center gap-2 bg-gold hover:bg-gold-light text-ocean-900 font-semibold text-xs px-5 py-2.5 rounded-full transition tracking-wider uppercase">
-      Ver propiedades
+      <span data-i18n="nav_view_props">Ver propiedades</span>
     </a>
 
     <button id="lang-toggle" onclick="toggleLang()"
@@ -220,10 +220,10 @@
   <div class="max-w-3xl mx-auto" data-aos="fade-up">
     <p class="text-gold text-xs tracking-[0.35em] uppercase font-medium mb-4">Zenith Bahia Properties</p>
     <h1 class="font-serif text-white text-5xl md:text-6xl font-semibold leading-tight mb-6">
-      Publica tu<br><em class="text-gold not-italic">Propiedad</em>
+      <span data-i18n-html="hero_h1">Publica tu<br><em class="text-gold not-italic">Propiedad</em></span>
     </h1>
     <div class="gold-line mx-auto mb-6"></div>
-    <p class="text-white/70 text-base font-light leading-relaxed max-w-xl mx-auto">
+    <p class="text-white/70 text-base font-light leading-relaxed max-w-xl mx-auto" data-i18n="hero_desc">
       Llega a miles de viajeros y compradores que buscan lo mejor de Bahía de Banderas y Puerto Vallarta. Proceso sencillo, revisión en 48 horas.
     </p>
   </div>
@@ -241,27 +241,27 @@
         <div class="w-14 h-14 rounded-full bg-gold/20 flex items-center justify-center mx-auto mb-4">
           <i data-lucide="file-text" class="w-6 h-6 text-gold"></i>
         </div>
-        <p class="text-gold text-xs tracking-widest uppercase mb-2 font-medium">Paso 1</p>
-        <h3 class="font-serif text-white text-xl mb-2">Llena el formulario</h3>
-        <p class="text-white/55 text-sm font-light leading-relaxed">Comparte los datos de tu propiedad, amenidades, descripción y un link con tus fotos.</p>
+        <p class="text-gold text-xs tracking-widest uppercase mb-2 font-medium" data-i18n="step1_label">Paso 1</p>
+        <h3 class="font-serif text-white text-xl mb-2" data-i18n="step1_title">Llena el formulario</h3>
+        <p class="text-white/55 text-sm font-light leading-relaxed" data-i18n="step1_desc">Comparte los datos de tu propiedad, amenidades, descripción y un link con tus fotos.</p>
       </div>
 
       <div class="paso-card" data-aos="fade-up" data-aos-delay="100">
         <div class="w-14 h-14 rounded-full bg-gold/20 flex items-center justify-center mx-auto mb-4">
           <i data-lucide="search" class="w-6 h-6 text-gold"></i>
         </div>
-        <p class="text-gold text-xs tracking-widest uppercase mb-2 font-medium">Paso 2</p>
-        <h3 class="font-serif text-white text-xl mb-2">Revisamos tu solicitud</h3>
-        <p class="text-white/55 text-sm font-light leading-relaxed">Nuestro equipo revisa la información y las fotos en un plazo de 48 a 72 horas hábiles.</p>
+        <p class="text-gold text-xs tracking-widest uppercase mb-2 font-medium" data-i18n="step2_label">Paso 2</p>
+        <h3 class="font-serif text-white text-xl mb-2" data-i18n="step2_title">Revisamos tu solicitud</h3>
+        <p class="text-white/55 text-sm font-light leading-relaxed" data-i18n="step2_desc">Nuestro equipo revisa la información y las fotos en un plazo de 48 a 72 horas hábiles.</p>
       </div>
 
       <div class="paso-card" data-aos="fade-up" data-aos-delay="200">
         <div class="w-14 h-14 rounded-full bg-gold/20 flex items-center justify-center mx-auto mb-4">
           <i data-lucide="globe" class="w-6 h-6 text-gold"></i>
         </div>
-        <p class="text-gold text-xs tracking-widest uppercase mb-2 font-medium">Paso 3</p>
-        <h3 class="font-serif text-white text-xl mb-2">Publicamos y difundimos</h3>
-        <p class="text-white/55 text-sm font-light leading-relaxed">Tu propiedad aparece en nuestro catálogo y en nuestros canales de difusión digital.</p>
+        <p class="text-gold text-xs tracking-widest uppercase mb-2 font-medium" data-i18n="step3_label">Paso 3</p>
+        <h3 class="font-serif text-white text-xl mb-2" data-i18n="step3_title">Publicamos y difundimos</h3>
+        <p class="text-white/55 text-sm font-light leading-relaxed" data-i18n="step3_desc">Tu propiedad aparece en nuestro catálogo y en nuestros canales de difusión digital.</p>
       </div>
 
     </div>
@@ -965,10 +965,32 @@ document.getElementById('pub-form').addEventListener('submit', async function(e)
 
 // ── i18n ─────────────────────────────────────────────────────────────────────
 const _t = {
-  es: { nav_prop:'Propiedades', nav_list:'Publicar', nav_contact:'Contacto',
-        footer_tagline:'Especialistas en rentas y difusión de propiedades de lujo en Bahía de Banderas y Puerto Vallarta, Riviera Nayarit.' },
-  en: { nav_prop:'Properties', nav_list:'List', nav_contact:'Contact',
-        footer_tagline:'Specialists in luxury property rentals and marketing in Bahía de Banderas and Puerto Vallarta, Riviera Nayarit.' }
+  es: {
+    nav_prop:'Propiedades', nav_list:'Publicar', nav_contact:'Contacto',
+    nav_view_props:'Ver propiedades',
+    hero_h1:'Publica tu<br><em class="text-gold not-italic">Propiedad</em>',
+    hero_desc:'Llega a miles de viajeros y compradores que buscan lo mejor de Bahía de Banderas y Puerto Vallarta. Proceso sencillo, revisión en 48 horas.',
+    step1_label:'Paso 1', step1_title:'Llena el formulario',
+    step1_desc:'Comparte los datos de tu propiedad, amenidades, descripción y un link con tus fotos.',
+    step2_label:'Paso 2', step2_title:'Revisamos tu solicitud',
+    step2_desc:'Nuestro equipo revisa la información y las fotos en un plazo de 48 a 72 horas hábiles.',
+    step3_label:'Paso 3', step3_title:'Publicamos y difundimos',
+    step3_desc:'Tu propiedad aparece en nuestro catálogo y en nuestros canales de difusión digital.',
+    footer_tagline:'Especialistas en rentas y difusión de propiedades de lujo en Bahía de Banderas y Puerto Vallarta, Riviera Nayarit.',
+  },
+  en: {
+    nav_prop:'Properties', nav_list:'List', nav_contact:'Contact',
+    nav_view_props:'View properties',
+    hero_h1:'List your<br><em class="text-gold not-italic">Property</em>',
+    hero_desc:'Reach thousands of travelers and buyers looking for the best of Bahía de Banderas and Puerto Vallarta. Simple process, reviewed within 48 hours.',
+    step1_label:'Step 1', step1_title:'Fill out the form',
+    step1_desc:'Share your property details, amenities, description and a link to your photos.',
+    step2_label:'Step 2', step2_title:'We review your request',
+    step2_desc:'Our team reviews the information and photos within 48 to 72 business hours.',
+    step3_label:'Step 3', step3_title:'We publish & promote',
+    step3_desc:'Your property appears in our catalog and across our digital marketing channels.',
+    footer_tagline:'Specialists in luxury property rentals and marketing in Bahía de Banderas and Puerto Vallarta, Riviera Nayarit.',
+  }
 };
 let _lang = localStorage.getItem('zbp_lang') || 'es';
 function setLang(l) {
